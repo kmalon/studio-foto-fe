@@ -1,0 +1,36 @@
+.gallery-page{
+    /*display: grid;*/
+    /*grid-template-rows: 100vh;*/
+    /*grid-template-columns: 100vw;*/
+    /*position: absolute;*/
+    position: relative;
+
+    /*display: flex;*/
+    /*justify-content: center;*/
+    /*align-items: center;*/
+    /*align-items: center;*/
+    /*text-align: center;*/
+    /*width: 100%;*/
+    /*align-content: center;*/
+    /*!*horiz-align: center;*!*/
+    /*!*height: 100vh;*!*/
+    /*background-color: #646cff;*/
+    /*aspect-ratio: auto;*/
+}
+
+
+.aaa{
+    /*margin: auto;*/
+    /*position: relative;*/
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%);
+
+    /*align-content: center;*/
+    /*text-align: center;*/
+    /*top: 50%;*/
+    /*left: 50%;*/
+    /*transform: translate(-50%, -50%);*/
+}
