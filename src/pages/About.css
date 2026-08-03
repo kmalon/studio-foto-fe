@@ -1,36 +1,80 @@
-.gallery-page{
-    /*display: grid;*/
-    /*grid-template-rows: 100vh;*/
-    /*grid-template-columns: 100vw;*/
-    /*position: absolute;*/
-    position: relative;
-
-    /*display: flex;*/
-    /*justify-content: center;*/
-    /*align-items: center;*/
-    /*align-items: center;*/
-    /*text-align: center;*/
-    /*width: 100%;*/
-    /*align-content: center;*/
-    /*!*horiz-align: center;*!*/
-    /*!*height: 100vh;*!*/
-    /*background-color: #646cff;*/
-    /*aspect-ratio: auto;*/
+.bio {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(2rem, 6vw, 5rem);
 }
 
+.bio h2 {
+    margin-bottom: 1.25rem;
+}
 
-.aaa{
-    /*margin: auto;*/
-    /*position: relative;*/
+.facts {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-top: 1px solid var(--line);
+}
 
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%);
+.facts li {
+    display: flex;
+    justify-content: space-between;
+    gap: 1.5rem;
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--line);
+    font-size: 0.9rem;
+    color: var(--muted);
+}
 
-    /*align-content: center;*/
-    /*text-align: center;*/
-    /*top: 50%;*/
-    /*left: 50%;*/
-    /*transform: translate(-50%, -50%);*/
+.facts li strong {
+    font-weight: 400;
+    color: var(--fg);
+}
+
+.gallery-wrap {
+    max-width: 980px;
+    margin: 0 auto;
+}
+
+/* --- dark overrides for react-image-gallery --- */
+.gallery-wrap .image-gallery-slide img {
+    max-height: 70vh;
+    object-fit: contain;
+    background: var(--bg-alt);
+}
+
+.gallery-wrap .image-gallery-thumbnail {
+    border: 1px solid transparent;
+    border-radius: 0;
+}
+
+.gallery-wrap .image-gallery-thumbnail:hover,
+.gallery-wrap .image-gallery-thumbnail.active,
+.gallery-wrap .image-gallery-thumbnail:focus {
+    border: 1px solid var(--accent);
+    border-radius: 0;
+}
+
+.gallery-wrap .image-gallery-icon:hover {
+    color: var(--accent);
+}
+
+.gallery-wrap .image-gallery-icon:focus {
+    outline: 1px solid var(--accent);
+}
+
+.gallery-wrap .image-gallery-bullets .image-gallery-bullet {
+    border: 1px solid var(--fg);
+    box-shadow: none;
+    padding: 3px;
+}
+
+.gallery-wrap .image-gallery-bullets .image-gallery-bullet.active {
+    background: var(--accent);
+    border-color: var(--accent);
+}
+
+@media (max-width: 900px) {
+    .bio {
+        grid-template-columns: 1fr;
+    }
 }

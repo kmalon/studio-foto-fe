@@ -1,0 +1,67 @@
+.masonry {
+    columns: 3;
+    column-gap: var(--gap);
+}
+
+.masonry .photo-card {
+    break-inside: avoid;
+    aspect-ratio: auto;
+    margin-bottom: var(--gap);
+    display: block;
+    width: 100%;
+    padding: 0;
+    text-align: left;
+    cursor: zoom-in;
+}
+
+.masonry .photo-card img {
+    height: auto;
+}
+
+/* --- lightbox --- */
+.lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: clamp(1rem, 4vw, 3rem);
+    background: rgba(13, 13, 13, 0.96);
+}
+
+.lightbox img {
+    max-width: 100%;
+    max-height: 85vh;
+    object-fit: contain;
+}
+
+.lightbox__caption {
+    position: absolute;
+    bottom: clamp(1rem, 3vw, 2rem);
+    font-size: var(--nav-size);
+    letter-spacing: var(--nav-track);
+    text-transform: uppercase;
+    color: var(--muted);
+}
+
+.lightbox__close {
+    position: absolute;
+    top: clamp(1rem, 3vw, 2rem);
+    right: clamp(1rem, 3vw, 2rem);
+    font-size: 2rem;
+    line-height: 1;
+    color: var(--fg);
+}
+
+@media (max-width: 900px) {
+    .masonry {
+        columns: 2;
+    }
+}
+
+@media (max-width: 560px) {
+    .masonry {
+        columns: 1;
+    }
+}
