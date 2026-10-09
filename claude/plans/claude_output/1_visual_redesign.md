@@ -3,7 +3,7 @@
 **Branch:** `feature/1-visual-redesign`
 
 ## Context
-Repo is a Vite+React starter skeleton with placeholder junk (`Czeeeee!`, `ffdsafdsa`), unstyled `<ul>` navbar, Vite default dark theme, dead commented code, `/contact` link with no route. `claude/plans/0_init.md` asks: make it visually like www.szymonolma.pl (minimal PL wedding-photo portfolio), fix styles + home menu, generate own content. Outcome: presentable dark portfolio site, 4 routes, responsive, deployable to GH Pages unchanged.
+Repo is a Vite+React starter skeleton with placeholder junk (`Czeeeee!`, `ffdsafdsa`), unstyled `<ul>` navbar, Vite default dark theme, dead commented code, `/contact` link with no route. `claude/plans/0_init.md` asks: minimal PL wedding-photo portfolio, fix styles + home menu, generate own content. Outcome: presentable dark portfolio site, 4 routes, responsive, deployable to GH Pages unchanged.
 
 Decisions (confirmed): Polish content · routes Home/Portfolio/About/Contact · local 3 photos + picsum for grids.
 

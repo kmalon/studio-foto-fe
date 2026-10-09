@@ -1,6 +1,5 @@
 As Frontend Developer and React Specialist:
 - project is only skeleton (Vite starter leftovers, placeholder text, unstyled navbar).
-- adjust it to be visually similar to www.szymonolma.pl.
 - adjust styles and home menu looks.
 - do not copy content, instead use generated content or used in the skeleton.
 

@@ -2,7 +2,7 @@
 
 ## What
 Photography studio portfolio site (SPA). Polish content. Static, no backend.
-Visual direction: minimal dark wedding-photographer portfolio (ref: www.szymonolma.pl).
+Visual direction: minimal dark wedding-photographer portfolio.
 
 ## Stack
 - React 19 + TypeScript, Vite 6

@@ -9,7 +9,11 @@ import './App.css'
 /** HashRouter keeps the scroll position between routes — reset it on navigation. */
 const ScrollToTop = () => {
     const { pathname } = useLocation()
-    useEffect(() => window.scrollTo(0, 0), [pathname])
+    // Block body on purpose: a concise arrow would return scrollTo's value,
+    // which React would then try to call as a cleanup function.
+    useEffect(() => {
+        window.scrollTo(0, 0)
+    }, [pathname])
     return null
 }
 

@@ -22,7 +22,9 @@ const Navbar = () => {
     }, [])
 
     // close the mobile drawer whenever the route changes
-    useEffect(() => setOpen(false), [pathname])
+    useEffect(() => {
+        setOpen(false)
+    }, [pathname])
 
     // don't let the page scroll behind the open drawer
     useEffect(() => {

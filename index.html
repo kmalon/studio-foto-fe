@@ -18,6 +18,96 @@
       rel="stylesheet"
     />
     <title>Studio Foto — fotografia ślubna</title>
+
+    <!--
+      TEMPORARY debug reporter — paints errors on screen for devices with no
+      reachable console (phones). Deliberately ES5 and non-module so it still
+      parses on browsers too old to run the app bundle. Remove once the mobile
+      blank-page issue is closed; `main.tsx` feeds React errors into it.
+    -->
+    <script>
+      (function () {
+        var reported = false
+
+        function esc(value) {
+          return String(value)
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+        }
+
+        // Render into a body-level overlay, not #root — React clears #root when
+        // it unmounts a crashed tree, which would wipe the message.
+        function report(label, detail) {
+          reported = true
+          var box = document.getElementById('debug-error')
+          if (!box) {
+            box = document.createElement('div')
+            box.id = 'debug-error'
+            box.setAttribute(
+              'style',
+              'position:fixed;inset:0;z-index:9999;overflow:auto;' +
+                'background:#0d0d0d;color:#f2f0ed;padding:16px;' +
+                'font:12px/1.5 ui-monospace,Menlo,Consolas,monospace;' +
+                'white-space:pre-wrap;word-break:break-word;'
+            )
+            document.body.appendChild(box)
+          }
+          box.innerHTML +=
+            '<div style="color:#c9a227;margin-top:12px"><strong>' +
+            esc(label) +
+            '</strong></div>' +
+            esc(detail) +
+            '\n\nUA: ' +
+            esc(navigator.userAgent) +
+            '\n'
+        }
+
+        window.__report = report
+
+        // Capture phase so failed <script>/<img> loads are caught too.
+        window.addEventListener(
+          'error',
+          function (e) {
+            if (e.target && e.target !== window && e.target.src) {
+              report('Resource failed to load', e.target.src)
+              return
+            }
+            report(
+              'JavaScript error',
+              (e.message || 'unknown') +
+                '\n' +
+                (e.filename || '?') +
+                ':' +
+                (e.lineno || 0) +
+                (e.error && e.error.stack ? '\n\n' + e.error.stack : '')
+            )
+          },
+          true
+        )
+
+        window.addEventListener('unhandledrejection', function (e) {
+          var reason = e.reason
+          report(
+            'Unhandled promise rejection',
+            (reason && (reason.stack || reason.message)) || String(reason)
+          )
+        })
+
+        // Silent failure: no error fired, but React never rendered anything.
+        setTimeout(function () {
+          var root = document.getElementById('root')
+          if (!reported && root && root.childElementCount === 0) {
+            report(
+              'App never mounted',
+              'No JS error fired within 5s and #root is still empty.\n' +
+                'The ES module bundle most likely never executed — browser too old ' +
+                'for untranspiled dev output, or the script request failed.'
+            )
+          }
+        }, 5000)
+      })()
+    </script>
   </head>
   <body>
     <div id="root"></div>

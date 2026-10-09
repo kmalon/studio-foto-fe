@@ -27,7 +27,7 @@ const Home = () => (
                 </figure>
                 <div className="intro__body">
                     <p className="eyebrow">Kilka słów</p>
-                    <h2>Cześć, tu Studio Foto</h2>
+                    <h2>Cześć, tu Studio Foto Angela!!! :D</h2>
                     <p>
                         Fotografuję od dwunastu lat, a najbardziej lubię te kadry, o których nikt
                         nie wiedział, że powstają. Ślub to jeden dzień — ale emocje, które w nim
