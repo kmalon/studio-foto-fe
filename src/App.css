@@ -1,89 +1,147 @@
-#root {
-  /*max-width: 1280px;*/
-  margin: 0 auto;
-  /*padding: 2rem;*/
-  text-align: center;
+/* --- layout primitives --- */
+.shell-main {
+    min-height: 60vh;
 }
 
-.logo {
-  height: 16em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-/*.logo:hover {*/
-/*  filter: drop-shadow(0 0 2em #646cffaa);*/
-/*}*/
-/*.logo.react:hover {*/
-/*  filter: drop-shadow(0 0 2em #61dafbaa);*/
-/*}*/
-
-@keyframes logo-spin {
-  from {
-    /*transform: rotate(0deg);*/
-    transform: rotateY(0deg);
-  }
-  to {
-    transform: rotateY(360deg);
-  }
+.container {
+    width: 100%;
+    max-width: var(--maxw);
+    margin: 0 auto;
+    padding-inline: var(--pad-x);
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  /*a:nth-of-type(2) .logo {*/
-.logo {
-    animation: logo-spin infinite 20s linear;
-  }
+.section {
+    padding-block: var(--section-y);
 }
 
-.card {
-  padding: 2em;
+.section--alt {
+    background: var(--bg-alt);
 }
 
-.read-the-docs {
-  color: #888;
+/* --- shared typography helpers --- */
+.eyebrow {
+    font-size: var(--nav-size);
+    letter-spacing: var(--nav-track);
+    text-transform: uppercase;
+    color: var(--accent);
+    margin: 0 0 1.25rem;
 }
 
-.first-page{
-  /* The image used */
-  background-image: url(./assets/bbb.jpg);
-
-  /* Full height */
-  /*height: 100%;*/
-
-  /* Center and scale the image nicely */
-  background-position: top;
-  background-repeat: no-repeat;
-  background-size: cover;
+.lead {
+    font-size: clamp(1rem, 1.4vw, 1.15rem);
+    max-width: 58ch;
 }
 
-.main{
-  position: absolute;
-  width: 100%;
-  height: 100%;
+.section-head {
+    max-width: 46ch;
+    margin-bottom: clamp(2.5rem, 5vw, 4rem);
 }
 
-.first-page-first-part{
-  /* The image used */
-  background-image: url(./assets/bbb.jpg);
-  background-attachment:fixed;
-  background-size: cover;
-  background-position: top;
-  background-repeat: no-repeat;
-  position: relative;
-  width: 100%;
-  min-height: 97%;
+/* --- page header (inner pages) --- */
+.page-head {
+    padding-top: calc(var(--nav-h) + clamp(3.5rem, 8vw, 7rem));
+    padding-bottom: clamp(2.5rem, 5vw, 4rem);
+    border-bottom: 1px solid var(--line);
 }
 
-.first-page-second-part{
-  position: relative;
-  /*float: none;*/
-  /*padding-top: 10rem;
-  /*bottom: 0rem;*/
-  /*padding-top: 10rem;*/
-  /*margin-top: 10rem;*/
-  /*display: block;*/
+/* --- link / button --- */
+.btn {
+    display: inline-block;
+    padding: 0.95rem 2.25rem;
+    border: 1px solid var(--line);
+    font-size: var(--nav-size);
+    letter-spacing: var(--nav-track);
+    text-transform: uppercase;
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
 }
 
-/*.gallery{*/
-/*  background-color: #646cff;*/
-/*}*/
+.btn:hover {
+    background: var(--fg);
+    border-color: var(--fg);
+    color: var(--bg);
+}
+
+.link-underline {
+    display: inline-block;
+    font-size: var(--nav-size);
+    letter-spacing: var(--nav-track);
+    text-transform: uppercase;
+    padding-bottom: 0.35rem;
+    border-bottom: 1px solid var(--line);
+    transition: border-color 0.3s ease, color 0.3s ease;
+}
+
+.link-underline:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+}
+
+/* --- image grid (shared by Home preview + Portfolio) --- */
+.photo-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--gap);
+}
+
+.photo-card {
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: 3 / 4;
+    margin: 0;
+    background: var(--bg-alt);
+}
+
+.photo-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.9s cubic-bezier(0.2, 0.7, 0.3, 1), filter 0.6s ease;
+}
+
+.photo-card:hover img {
+    transform: scale(1.06);
+    filter: brightness(0.7);
+}
+
+.photo-card__cap {
+    position: absolute;
+    inset-inline: 0;
+    bottom: 0;
+    padding: 1.25rem;
+    font-size: var(--nav-size);
+    letter-spacing: var(--nav-track);
+    text-transform: uppercase;
+    background: linear-gradient(to top, rgba(13, 13, 13, 0.85), transparent);
+    opacity: 0;
+    transform: translateY(0.75rem);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.photo-card:hover .photo-card__cap,
+.photo-card:focus-visible .photo-card__cap {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+@media (max-width: 900px) {
+    .photo-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 560px) {
+    .photo-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+
+    .photo-card img,
+    .photo-card__cap {
+        transition: none;
+    }
+}
