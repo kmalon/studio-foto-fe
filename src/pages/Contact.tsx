@@ -1,7 +1,9 @@
 import { useState, type FormEvent } from 'react'
 import PageShell from '../components/PageShell.tsx'
 import './Contact.css'
-import { EMAIL } from '../data/AngelikaInfo.tsx'
+import { EMAIL, WEB3FORMS_ACCESS_KEY } from '../data/AngelikaInfo.tsx'
+
+type Status = 'idle' | 'sending' | 'success' | 'error'
 
 const Contact = () => {
     const [form, setForm] = useState({ name: '', email: '', date: '', message: '' })
@@ -9,20 +11,32 @@ const Contact = () => {
     const update = (field: keyof typeof form) => (e: { target: { value: string } }) =>
         setForm((prev) => ({ ...prev, [field]: e.target.value }))
 
-    // No backend — hand the message off to the visitor's mail client.
-    const handleSubmit = (e: FormEvent) => {
+    const [status, setStatus] = useState<Status>('idle')
+
+    const handleSubmit = async (e: FormEvent) => {
         e.preventDefault()
-        const subject = `Zapytanie o termin — ${form.name || 'strona www'}`
-        const body = [
-            `Imię: ${form.name}`,
-            `E-mail: ${form.email}`,
-            `Data wydarzenia: ${form.date || 'nie podano'}`,
-            '',
-            form.message,
-        ].join('\n')
-        window.location.href = `mailto:${EMAIL}?subject=${encodeURIComponent(
-            subject,
-        )}&body=${encodeURIComponent(body)}`
+        setStatus('sending')
+        try {
+            const response = await fetch('https://api.web3forms.com/submit', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+                body: JSON.stringify({
+                    access_key: WEB3FORMS_ACCESS_KEY,
+                    subject: `Zapytanie o termin — ${form.name || 'strona www'}`,
+                    from_name: form.name,
+                    name: form.name,
+                    email: form.email,
+                    'data wydarzenia': form.date || 'nie podano',
+                    message: form.message,
+                }),
+            })
+            const data = await response.json()
+            if (!data.success) throw new Error(data.message)
+            setStatus('success')
+            setForm({ name: '', email: '', date: '', message: '' })
+        } catch {
+            setStatus('error')
+        }
     }
 
     return (
@@ -80,6 +94,7 @@ const Contact = () => {
                                 name="date"
                                 value={form.date}
                                 onChange={update('date')}
+                                required
                             />
                         </label>
 
@@ -93,11 +108,17 @@ const Contact = () => {
                             />
                         </label>
 
-                        <button type="submit" className="btn">
-                            Wyślij wiadomość
+                        <button type="submit" className="btn" disabled={status === 'sending'}>
+                            {status === 'sending' ? 'Wysyłanie…' : 'Wyślij wiadomość'}
                         </button>
-                        <p className="form__note">
-                            Formularz otworzy Twój program pocztowy z gotową treścią.
+                        <p className="form__note" role="status" aria-live="polite">
+                            {status === 'success' && 'Dziękuję! Wiadomość została wysłana.'}
+                            {status === 'error' && (
+                                <>
+                                    Nie udało się wysłać wiadomości. Spróbuj ponownie lub napisz na{' '}
+                                    <a href={`mailto:${EMAIL}`}>{EMAIL}</a>.
+                                </>
+                            )}
                         </p>
                     </form>
                 </div>

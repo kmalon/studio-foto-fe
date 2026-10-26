@@ -77,3 +77,8 @@
         grid-template-columns: 1fr;
     }
 }
+
+.form .btn:disabled {
+    opacity: 0.6;
+    cursor: progress;
+}
