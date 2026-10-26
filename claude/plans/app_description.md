@@ -19,11 +19,12 @@ Visual direction: minimal dark wedding-photographer portfolio.
 
 ## Routes (`src/App.tsx`)
 ```
-/           Home       hero + intro + work preview + CTA
+/           Start      fullscreen Slideshow only (Navbar, no footer)
+/home       Home       hero + intro + work preview + CTA
 /portfolio  Portfolio  masonry grid + lightbox
 /about      About      bio + facts + ImageGallery
 /contact    Contact    details + mailto form
-*           -> Home
+*           -> Start
 ```
 `ScrollToTop` in App.tsx resets scroll on navigation (HashRouter doesn't).
 
@@ -36,15 +37,17 @@ src/
   index.css         reset + base type, imports styles/tokens.css
   App.css           .container .section .eyebrow .btn .link-underline .photo-grid .photo-card
   styles/tokens.css design tokens (see below)
-  data/portfolio.ts Photo[] `photos` + `featured` (=photos.slice(0,3))
+  data/portfolio.ts Photo[] `photos` + `featured` (=photos.slice(0,3)) + `slides` (landscape picsum 1920x1200)
   components/
-    Navbar.tsx/.css fixed; transparent -> solid after 40px scroll; burger drawer <900px
+    Navbar.tsx/.css fixed; Logo left, links right; transparent -> solid after 40px scroll; burger drawer <900px
+    Logo.tsx        `assets/logo.png` (black line art, CSS invert + screen blend; `--logo` var + calc() neg. margins crop padding)
+    Slideshow.tsx/.css custom crossfade, auto 5s (`interval` prop), side arrows, ←/→, pauses on hidden tab, caption + counter
     Footer.tsx/.css contact + socials + copyright
     PageShell.tsx   Navbar + <main class=shell-main> + Footer
   pages/
-    Home.tsx/.css       Portfolio.tsx/.css
+    Start.tsx/.css      Home.tsx/.css       Portfolio.tsx/.css
     About.tsx/.css      Contact.tsx/.css
-  assets/         aaa.jpg (BW couple), bbb.jpg (UNUSED, 15 MB), ccc.png (hero, winter aerial)
+  assets/         logo.png (3543² 584 KB), aaa.jpg (BW couple), bbb.jpg (UNUSED, 15 MB), ccc.png (hero, winter aerial)
 public/           empty
 ```
 
@@ -52,7 +55,7 @@ public/           empty
 - `--bg #0d0d0d` `--bg-alt #151515` `--fg #f2f0ed` `--muted #8f8b86` `--line rgba(242,240,237,.14)` `--accent #c9a227`
 - `--font-display` Cormorant Garamond (headings) · `--font-ui` Jost (body/nav)
 - nav/eyebrow/button text: `--nav-size .78rem`, uppercase, `--nav-track .18em`
-- `--maxw 1280px` `--gap` `--section-y` `--pad-x` `--nav-h 4.75rem`
+- `--maxw 1280px` `--gap` `--section-y` `--pad-x` `--nav-h 12.5rem` (sized to logo)
 - Dark-only. Headings fluid via `clamp()`.
 
 ## Content
@@ -64,9 +67,9 @@ Grid images: 2 local assets + picsum.photos URLs.
 - Default exports for components
 - Colocated CSS per component/page; shared utilities in `App.css`
 - BEM-ish class names (`nav__link`, `photo-card__cap`, `is-active`, `is-open`)
-- Pages wrap content in `<PageShell>`
+- Pages wrap content in `<PageShell>` (except Start: Navbar only)
 
 ## Known debt
 - `src/assets/bbb.jpg` = 15 MB, unreferenced — downscale or delete
-- `ccc.png` = 1.5 MB, ships in bundle as hero
+- `ccc.png` = ~15.8 MB, ships in bundle (Home hero + slideshow) — downscale
 - Google Fonts is an external request (system fallbacks in stack)

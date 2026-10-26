@@ -27,10 +27,23 @@
 .nav__brand {
     position: relative;
     z-index: 60;
-    font-family: var(--font-display);
-    font-size: 1.15rem;
-    letter-spacing: 0.3em;
-    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+}
+
+/* Source PNG is a square with wide empty margins — negative margins trim them
+   so the drawing itself fits the nav height. invert + screen: black lines turn
+   light and any white/black backdrop drops out over the photos. */
+.logo {
+    --logo: 15.75rem;
+    width: var(--logo);
+    height: var(--logo);
+    max-width: none;
+    /* empty margins of the source image, as fractions of its size */
+    margin: calc(var(--logo) * -0.113) calc(var(--logo) * -0.217)
+        calc(var(--logo) * -0.165) calc(var(--logo) * -0.252);
+    filter: invert(1);
+    mix-blend-mode: screen;
 }
 
 .nav__list {

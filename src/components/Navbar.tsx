@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react'
 import { NavLink, useLocation } from 'react-router'
+import Logo from './Logo.tsx'
 import './Navbar.css'
 
 const links = [
     { to: '/', label: 'Start' },
+    { to: '/home', label: 'Strona główna' },
     { to: '/portfolio', label: 'Portfolio' },
     { to: '/about', label: 'O mnie' },
     { to: '/contact', label: 'Kontakt' },
@@ -38,7 +40,7 @@ const Navbar = () => {
         <header className={`nav ${scrolled || open ? 'nav--solid' : ''}`}>
             <div className="container nav__inner">
                 <NavLink to="/" className="nav__brand">
-                    Studio Foto
+                    <Logo />
                 </NavLink>
 
                 <button
