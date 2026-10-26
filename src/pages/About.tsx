@@ -16,10 +16,19 @@ const About = () => (
     <PageShell>
         <section className="container page-head">
             <p className="eyebrow">O mnie</p>
-            <h1>Fotograf, nie reżyser</h1>
+            <h1>Zapisuję czułość, o której z biegiem lat łatwo zapomnieć.</h1>
             <p className="lead">
-                Najlepsze zdjęcia powstają wtedy, kiedy nikt o nich nie myśli.
-                Dlatego rzadko o coś proszę — częściej po prostu jestem obok.
+                Cześć,
+               <br />
+               <br />
+                Nazywam się Angelika Malon, pochodzę z Lubelszczyzny, a od niedawna mieszkam w Warszawie. Wierzę, że najlepsze zdjęcia to te, do których wraca się po latach, aby na nowo przeżyć to, co już dawno za nami. Kiedy opadnie pierwszy zachwyt, a codzienność nabierze tempa, zostają kadry przepełnione ciepłem, gestami i spojrzeniami ludzi, którzy są dla Was najważniejsi.
+                <br />
+                <br />
+                Niezależnie od tego, czy spotkamy się w domowym zaciszu, eleganckiej sali, czy na wiejskiej zabawie w remizie – jestem tam w pełni z Wami i dla Was. Zależy mi, abyście czuli się przy mnie swobodnie i bezpiecznie. Jak przy przyjaciółce, której możecie bez przeszkód powierzyć swoje emocje.
+                <br />
+                <br />
+                Mam w sobie ogromną miłość i wrażliwość do prawdziwych chwil – takich, w których jest życie, dokładnie takie, jakim jest.
+
             </p>
         </section>
 
@@ -28,16 +37,21 @@ const About = () => (
                 <div>
                     <h2>Jak pracuję</h2>
                     <p>
-                        Zaczynam wcześnie i zostaję do końca. Dzień ślubny ma swój rytm i nie
-                        warto go przerywać — dlatego nie ustawiam grup na godzinę i nie wyciągam
-                        nikogo z parkietu na sesję. Kadry układają się same, trzeba tylko być
-                        w odpowiednim miejscu.
+                        W zdjęciach szukam prawdy i autentyczności. Zamiast sztywnych póz wolę
+                        luźną atmosferę:
                     </p>
-                    <p>
-                        Fotografuję głównie w naturalnym świetle, w czerni i bieli tam, gdzie
-                        kolor tylko przeszkadza. Materiał oddaję w ciągu sześciu tygodni —
-                        w galerii online, z prawem do druku.
-                    </p>
+                    <ul className="bio__list">
+                        <li>
+                            Na sesjach pomagam i podpowiadam, żebyście nie musieli się martwić, co
+                            zrobić z rękoma.
+                        </li>
+                        <li>
+                            Na reportażach staję się cichym obserwatorem – nie reżyseruję Waszego
+                            dnia i nie przeszkadzam. Najlepsze momenty łapią się same, gdy po prostu
+                            zapominacie o aparacie.
+                        </li>
+                    </ul>
+                    <p>Napisz do mnie – opowiedzmy razem Waszą historię.</p>
                 </div>
 
                 <div>

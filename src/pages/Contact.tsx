@@ -1,8 +1,7 @@
 import { useState, type FormEvent } from 'react'
 import PageShell from '../components/PageShell.tsx'
 import './Contact.css'
-
-const EMAIL = 'kontakt@studiofoto.pl'
+import { EMAIL } from '../data/AngelikaInfo.tsx'
 
 const Contact = () => {
     const [form, setForm] = useState({ name: '', email: '', date: '', message: '' })
@@ -33,7 +32,10 @@ const Contact = () => {
                 <h1>Napisz kilka słów</h1>
                 <p className="lead">
                     Termin, miejsce, klimat jaki sobie wyobrażacie — reszta wyjdzie w rozmowie.
+                    <br />
                     Odpisuję zwykle w ciągu dwóch dni roboczych.
+                    <br />
+                    Opowiedzmy razem Waszą historię.
                 </p>
             </section>
 
@@ -45,19 +47,6 @@ const Contact = () => {
                             <a href={`mailto:${EMAIL}`}>{EMAIL}</a>
                         </dd>
 
-                        <dt>Telefon</dt>
-                        <dd>
-                            <a href="tel:+48600100200">+48 600 100 200</a>
-                        </dd>
-
-                        <dt>Baza</dt>
-                        <dd>
-                            Kraków — pracuję w całej Polsce
-                            <br />i poza jej granicami.
-                        </dd>
-
-                        <dt>Terminy</dt>
-                        <dd>Sezon 2026 — wolne weekendy wiosną i jesienią.</dd>
                     </dl>
 
                     <form className="form" onSubmit={handleSubmit}>
