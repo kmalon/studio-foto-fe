@@ -3,6 +3,15 @@ import 'react-image-gallery/styles/css/image-gallery.css'
 import PageShell from '../components/PageShell.tsx'
 import { photos } from '../data/portfolio.ts'
 import './About.css'
+import aboutColor from '../assets/about/aml_color.jpg'
+import aboutGrey from '../assets/about/aml_grey.jpg'
+
+const aboutItems = [aboutColor, aboutGrey].map((src) => ({
+    original: src,
+    thumbnail: src,
+    originalAlt: 'Angelika Malon',
+    thumbnailAlt: 'Angelika Malon',
+}))
 
 const items = photos.map((photo) => ({
     original: photo.src,
@@ -14,22 +23,33 @@ const items = photos.map((photo) => ({
 
 const About = () => (
     <PageShell>
-        <section className="container page-head">
-            <p className="eyebrow">O mnie</p>
-            <h1>Zapisuję czułość, o której z biegiem lat łatwo zapomnieć.</h1>
-            <p className="lead">
-                Cześć,
-               <br />
-               <br />
-                Nazywam się Angelika Malon, pochodzę z Lubelszczyzny, a od niedawna mieszkam w Warszawie. Wierzę, że najlepsze zdjęcia to te, do których wraca się po latach, aby na nowo przeżyć to, co już dawno za nami. Kiedy opadnie pierwszy zachwyt, a codzienność nabierze tempa, zostają kadry przepełnione ciepłem, gestami i spojrzeniami ludzi, którzy są dla Was najważniejsi.
-                <br />
-                <br />
-                Niezależnie od tego, czy spotkamy się w domowym zaciszu, eleganckiej sali, czy na wiejskiej zabawie w remizie – jestem tam w pełni z Wami i dla Was. Zależy mi, abyście czuli się przy mnie swobodnie i bezpiecznie. Jak przy przyjaciółce, której możecie bez przeszkód powierzyć swoje emocje.
-                <br />
-                <br />
-                Mam w sobie ogromną miłość i wrażliwość do prawdziwych chwil – takich, w których jest życie, dokładnie takie, jakim jest.
+        <section className="container page-head about-intro">
+            <div>
+                <p className="eyebrow">O mnie</p>
+                <h1>Zapisuję czułość, o której z biegiem lat łatwo zapomnieć.</h1>
+                <p className="lead">
+                    Cześć,
+                   <br />
+                   <br />
+                    Nazywam się Angelika Malon, pochodzę z Lubelszczyzny, a od niedawna mieszkam w Warszawie. Wierzę, że najlepsze zdjęcia to te, do których wraca się po latach, aby na nowo przeżyć to, co już dawno za nami. Kiedy opadnie pierwszy zachwyt, a codzienność nabierze tempa, zostają kadry przepełnione ciepłem, gestami i spojrzeniami ludzi, którzy są dla Was najważniejsi.
+                    <br />
+                    <br />
+                    Niezależnie od tego, czy spotkamy się w domowym zaciszu, eleganckiej sali, czy na wiejskiej zabawie w remizie – jestem tam w pełni z Wami i dla Was. Zależy mi, abyście czuli się przy mnie swobodnie i bezpiecznie. Jak przy przyjaciółce, której możecie bez przeszkód powierzyć swoje emocje.
+                    <br />
+                    <br />
+                    Mam w sobie ogromną miłość i wrażliwość do prawdziwych chwil – takich, w których jest życie, dokładnie takie, jakim jest.
 
-            </p>
+                </p>
+            </div>
+
+            <div className="gallery-wrap about-intro__gallery">
+                <ImageGallery
+                    items={aboutItems}
+                    showPlayButton={false}
+                    showThumbnails={false}
+                    lazyLoad
+                />
+            </div>
         </section>
 
         <section className="section">
