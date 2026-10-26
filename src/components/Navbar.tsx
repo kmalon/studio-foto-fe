@@ -39,7 +39,7 @@ const Navbar = () => {
     return (
         <header className={`nav ${scrolled || open ? 'nav--solid' : ''}`}>
             <div className="container nav__inner">
-                <NavLink to="/" className="nav__brand" aria-label="Studio Foto — start">
+                <NavLink to="/" className="nav__brand">
                     <Logo />
                 </NavLink>
 
