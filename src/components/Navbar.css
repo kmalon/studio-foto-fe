@@ -27,10 +27,20 @@
 .nav__brand {
     position: relative;
     z-index: 60;
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
     font-family: var(--font-display);
     font-size: 1.15rem;
     letter-spacing: 0.3em;
     text-transform: uppercase;
+}
+
+.logo__mark {
+    width: 2.1rem;
+    height: 2.1rem;
+    color: var(--accent);
+    flex-shrink: 0;
 }
 
 .nav__list {

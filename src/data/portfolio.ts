@@ -24,3 +24,9 @@ export const photos: Photo[] = [
 
 /** First three entries — used as the Home page work preview. */
 export const featured: Photo[] = photos.slice(0, 3)
+
+/** Start page slideshow — landscape crops so they fill the viewport. */
+export const slides: Photo[] = photos.map((photo) => ({
+    ...photo,
+    src: photo.src.replace(/\/900\/1200$/, '/1920/1200'),
+}))
