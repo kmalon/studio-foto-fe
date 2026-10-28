@@ -22,19 +22,44 @@
     );
 }
 
-.slideshow__img {
+.slideshow__slide {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: opacity 1.2s ease;
+}
+
+.slideshow__slide.is-active {
+    opacity: 1;
+}
+
+.slideshow__img,
+.slideshow__backdrop {
     position: absolute;
     inset: 0;
     width: 100%;
     height: 100%;
     max-width: none;
     object-fit: cover;
-    opacity: 0;
-    transition: opacity 1.2s ease;
 }
 
-.slideshow__img.is-active {
-    opacity: 1;
+.slideshow__backdrop {
+    display: none;
+    /* scaled up so the blur doesn't fade out at the edges */
+    transform: scale(1.15);
+    filter: blur(28px) brightness(0.55);
+}
+
+/* landscape screens: show portrait photos whole, blurred copy fills the sides */
+@media (orientation: landscape) {
+    .slideshow__slide.is-portrait .slideshow__img {
+        object-fit: contain;
+    }
+
+    .slideshow__slide.is-portrait .slideshow__backdrop {
+        display: block;
+    }
 }
 
 .slideshow__arrow {
@@ -94,7 +119,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-    .slideshow__img,
+    .slideshow__slide,
     .slideshow__arrow {
         transition: none;
     }

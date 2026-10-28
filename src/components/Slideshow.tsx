@@ -19,6 +19,8 @@ const Chevron = ({ dir }: { dir: 'left' | 'right' }) => (
 const Slideshow = ({ photos, interval = 5000 }: SlideshowProps) => {
     const [index, setIndex] = useState(0)
     const [paused, setPaused] = useState(false)
+    // srcs detected as portrait once loaded — shown uncropped on landscape screens
+    const [portrait, setPortrait] = useState<Set<string>>(() => new Set())
     const count = photos.length
 
     const go = useCallback((step: number) => setIndex((i) => (i + step + count) % count), [count])
@@ -52,16 +54,32 @@ const Slideshow = ({ photos, interval = 5000 }: SlideshowProps) => {
 
     return (
         <section className="slideshow" aria-roledescription="karuzela" aria-label="Galeria zdjęć">
-            {photos.map((photo, i) => mounted.has(i) && (
-                <img
-                    key={photo.src}
-                    className={`slideshow__img ${i === index ? 'is-active' : ''}`}
-                    src={photo.src}
-                    alt={photo.alt}
-                    aria-hidden={i !== index}
-                    fetchPriority={i === 0 ? 'high' : 'auto'}
-                />
-            ))}
+            {photos.map((photo, i) => {
+                if (!mounted.has(i)) return null
+                const isPortrait = portrait.has(photo.src)
+                return (
+                    <div
+                        key={photo.src}
+                        className={`slideshow__slide ${i === index ? 'is-active' : ''} ${isPortrait ? 'is-portrait' : ''}`}
+                        aria-hidden={i !== index}
+                    >
+                        {/* blurred fill behind an uncropped portrait photo (same URL, served from cache) */}
+                        {isPortrait && <img className="slideshow__backdrop" src={photo.src} alt="" />}
+                        <img
+                            className="slideshow__img"
+                            src={photo.src}
+                            alt={photo.alt}
+                            fetchPriority={i === 0 ? 'high' : 'auto'}
+                            onLoad={(e) => {
+                                const { naturalWidth, naturalHeight } = e.currentTarget
+                                if (naturalHeight > naturalWidth) {
+                                    setPortrait((prev) => new Set(prev).add(photo.src))
+                                }
+                            }}
+                        />
+                    </div>
+                )
+            })}
 
             <button
                 type="button"
