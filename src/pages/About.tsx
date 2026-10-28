@@ -7,7 +7,7 @@ import aboutGrey from '../assets/about/aml_grey.jpg'
 
 const items = photos.map((photo) => ({
     original: photo.src,
-    thumbnail: photo.src,
+    thumbnail: photo.thumb ?? photo.src,
     originalAlt: photo.alt,
     thumbnailAlt: photo.alt,
     description: photo.caption,

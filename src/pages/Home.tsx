@@ -57,8 +57,8 @@ const Home = () => (
 
                 <div className="photo-grid">
                     {featured.map((photo) => (
-                        <figure className="photo-card" key={photo.caption}>
-                            <img src={photo.src} alt={photo.alt} loading="lazy" />
+                        <figure className="photo-card" key={photo.src}>
+                            <img src={photo.thumb ?? photo.src} alt={photo.alt} loading="lazy" />
                             <figcaption className="photo-card__cap">{photo.caption}</figcaption>
                         </figure>
                     ))}

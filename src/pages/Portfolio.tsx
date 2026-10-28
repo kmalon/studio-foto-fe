@@ -33,10 +33,10 @@ const Portfolio = () => {
                             <button
                                 type="button"
                                 className="photo-card"
-                                key={photo.caption}
+                                key={photo.src}
                                 onClick={() => setActive(photo)}
                             >
-                                <img src={photo.src} alt={photo.alt} loading="lazy" />
+                                <img src={photo.thumb ?? photo.src} alt={photo.alt} loading="lazy" />
                                 <span className="photo-card__cap">{photo.caption}</span>
                             </button>
                         ))}
@@ -49,7 +49,7 @@ const Portfolio = () => {
                     className="lightbox"
                     role="dialog"
                     aria-modal="true"
-                    aria-label={active.caption}
+                    aria-label={active.caption || active.alt}
                     onClick={() => setActive(null)}
                 >
                     <button
