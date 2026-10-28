@@ -47,10 +47,12 @@ const Slideshow = ({ photos, interval = 5000 }: SlideshowProps) => {
     }, [go])
 
     const current = photos[index]
+    // mount only current + neighbours: prev keeps the cross-fade, next is preloaded in the background
+    const mounted = new Set([index, (index + 1) % count, (index - 1 + count) % count])
 
     return (
         <section className="slideshow" aria-roledescription="karuzela" aria-label="Galeria zdjęć">
-            {photos.map((photo, i) => (
+            {photos.map((photo, i) => mounted.has(i) && (
                 <img
                     key={photo.src}
                     className={`slideshow__img ${i === index ? 'is-active' : ''}`}

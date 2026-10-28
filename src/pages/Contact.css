@@ -18,6 +18,11 @@
     color: var(--muted);
 }
 
+.contact__lead {
+    display: block;
+    white-space: nowrap;
+}
+
 .contact__details a:hover {
     color: var(--fg);
 }

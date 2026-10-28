@@ -45,7 +45,7 @@ const Contact = () => {
                 <p className="eyebrow">Kontakt</p>
                 <h1>Napisz kilka słów</h1>
                 <p className="lead">
-                    Termin, miejsce, klimat jaki sobie wyobrażacie — reszta wyjdzie w rozmowie.
+                    Termin, miejsce, klimat jaki sobie wyobrażacie - reszta wyjdzie w rozmowie.
                     <br />
                     Odpisuję zwykle w ciągu dwóch dni roboczych.
                     <br />
@@ -56,8 +56,9 @@ const Contact = () => {
             <section className="section">
                 <div className="container contact">
                     <dl className="contact__details">
-                        <dt>E-mail</dt>
+                        <dt>Umówmy się na kawę</dt>
                         <dd>
+                            <span className="contact__lead">Wypełnij formularz lub napisz maila:</span>
                             <a href={`mailto:${EMAIL}`}>{EMAIL}</a>
                         </dd>
 

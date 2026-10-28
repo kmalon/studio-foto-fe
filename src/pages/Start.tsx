@@ -7,7 +7,7 @@ const Start = () => (
     <>
         <Navbar />
         <main className="start">
-            <Slideshow photos={slides} />
+            <Slideshow photos={slides} interval={2000} />
         </main>
     </>
 )

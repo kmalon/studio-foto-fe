@@ -12,8 +12,14 @@
     align-items: center;
 }
 
-.about-intro__gallery {
+.page-head.about-intro {
+    border-bottom: none;
+}
+
+.about-intro__photo {
+    display: block;
     width: 100%;
+    height: auto;
 }
 
 .bio h2 {

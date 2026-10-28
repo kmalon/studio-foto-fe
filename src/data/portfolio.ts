@@ -25,8 +25,15 @@ export const photos: Photo[] = [
 /** First three entries — used as the Home page work preview. */
 export const featured: Photo[] = photos.slice(0, 3)
 
-/** Start page slideshow — landscape crops so they fill the viewport. */
-export const slides: Photo[] = photos.map((photo) => ({
-    ...photo,
-    src: photo.src.replace(/\/900\/1200$/, '/1920/1200'),
+// every jpg dropped into assets/start, ordered by file name
+const startImages = import.meta.glob<string>('../assets/start/*.jpg', {
+    eager: true,
+    import: 'default',
+})
+
+/** Start page slideshow — full-screen photos from assets/start. */
+export const slides: Photo[] = Object.values(startImages).map((src) => ({
+    src,
+    alt: 'Zdjęcie z portfolio studia',
+    caption: '',
 }))
