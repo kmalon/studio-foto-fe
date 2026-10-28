@@ -1,7 +1,6 @@
 import { useEffect } from 'react'
 import { Route, Routes, useLocation } from 'react-router'
 import Start from './pages/Start.tsx'
-import Home from './pages/Home.tsx'
 import Portfolio from './pages/Portfolio.tsx'
 import About from './pages/About.tsx'
 import Contact from './pages/Contact.tsx'
