@@ -61,15 +61,27 @@
 }
 
 /* --- dark overrides for react-image-gallery --- */
+/* fixed frame: every photo gets the same box, so the page doesn't jump between slides */
 .gallery-wrap .image-gallery-slide img {
-    max-height: 70vh;
+    height: 70vh;
+    max-height: none;
     object-fit: contain;
-    background: var(--bg-alt);
+    background: transparent;
 }
 
+.gallery-wrap .image-gallery-content.fullscreen .image-gallery-slide img {
+    height: calc(100vh - 80px);
+}
+
+/* equal square tiles, photos cropped to fill (no letterbox stripes) */
 .gallery-wrap .image-gallery-thumbnail {
     border: 1px solid transparent;
     border-radius: 0;
+}
+
+.gallery-wrap .image-gallery-thumbnail-image {
+    aspect-ratio: 1;
+    object-fit: cover;
 }
 
 .gallery-wrap .image-gallery-thumbnail:hover,
