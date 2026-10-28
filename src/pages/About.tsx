@@ -3,15 +3,7 @@ import 'react-image-gallery/styles/css/image-gallery.css'
 import PageShell from '../components/PageShell.tsx'
 import { photos } from '../data/portfolio.ts'
 import './About.css'
-import aboutColor from '../assets/about/aml_color.jpg'
 import aboutGrey from '../assets/about/aml_grey.jpg'
-
-const aboutItems = [aboutColor, aboutGrey].map((src) => ({
-    original: src,
-    thumbnail: src,
-    originalAlt: 'Angelika Malon',
-    thumbnailAlt: 'Angelika Malon',
-}))
 
 const items = photos.map((photo) => ({
     original: photo.src,
@@ -42,64 +34,7 @@ const About = () => (
                 </p>
             </div>
 
-            <div className="gallery-wrap about-intro__gallery">
-                <ImageGallery
-                    items={aboutItems}
-                    showPlayButton={false}
-                    showThumbnails={false}
-                    lazyLoad
-                />
-            </div>
-        </section>
-
-        <section className="section">
-            <div className="container bio">
-                <div>
-                    <h2>Jak pracuję</h2>
-                    <p>
-                        W zdjęciach szukam prawdy i autentyczności. Zamiast sztywnych póz wolę
-                        luźną atmosferę:
-                    </p>
-                    <ul className="bio__list">
-                        <li>
-                            Na sesjach pomagam i podpowiadam, żebyście nie musieli się martwić, co
-                            zrobić z rękoma.
-                        </li>
-                        <li>
-                            Na reportażach staję się cichym obserwatorem – nie reżyseruję Waszego
-                            dnia i nie przeszkadzam. Najlepsze momenty łapią się same, gdy po prostu
-                            zapominacie o aparacie.
-                        </li>
-                    </ul>
-                    <p>Napisz do mnie – opowiedzmy razem Waszą historię.</p>
-                </div>
-
-                <div>
-                    <h2>W skrócie</h2>
-                    <ul className="facts">
-                        <li>
-                            <span>Doświadczenie</span>
-                            <strong>12 lat, 240+ dni ślubnych</strong>
-                        </li>
-                        <li>
-                            <span>Styl</span>
-                            <strong>Reportaż, światło naturalne</strong>
-                        </li>
-                        <li>
-                            <span>Zasięg</span>
-                            <strong>Kraków, cała Polska, Europa</strong>
-                        </li>
-                        <li>
-                            <span>Czas realizacji</span>
-                            <strong>do 6 tygodni</strong>
-                        </li>
-                        <li>
-                            <span>Materiał</span>
-                            <strong>400–700 zdjęć, galeria online</strong>
-                        </li>
-                    </ul>
-                </div>
-            </div>
+            <img className="about-intro__photo" src={aboutGrey} alt="Angelika Malon" />
         </section>
 
         <section className="section section--alt">

@@ -7,7 +7,7 @@ const Footer = () => (
         <div className="container">
             <div className="footer__top">
                 <div className="footer__col">
-                    <div className="footer__brand">Studio Foto</div>
+                    <div className="footer__brand">Angelika Malon</div>
                     <p>Fotograf emocji. Warszawa i świat.</p>
                 </div>
 
