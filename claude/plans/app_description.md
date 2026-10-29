@@ -43,8 +43,8 @@ src/
   data/gallery.ts   `sessions`/`getSession(slug)` from assets/gallery/<slug>/{full,thumbial,overview.md} via import.meta.glob; thumb = same-name thumbial ?? full; cover = 1st thumbial ?? 1st full
   data/AngelikaInfo.tsx EMAIL + web3forms key
   components/
-    Navbar.tsx/.css fixed; Logo left, links right; transparent -> solid after 40px scroll; burger drawer <900px
-    Logo.tsx        `assets/logo.png` (black line art, CSS invert + screen blend; `--logo` var + calc() neg. margins crop padding)
+    Navbar.tsx/.css fixed; Logo left, links right; transparent -> solid after 40px scroll; burger drawer <900px (full-viewport bg, logo hidden while open via `nav--open`, which drops backdrop-filter)
+    Logo.tsx        `assets/logo.png` (black line art, CSS invert + screen blend; `--logo` token + calc() neg. margins crop padding)
     Slideshow.tsx/.css custom crossfade, auto 5s (`interval` prop), side arrows, ←/→, pauses on hidden tab, caption + counter
     Footer.tsx/.css contact + socials + copyright
     PageShell.tsx   Navbar + <main class=shell-main> + Footer
@@ -63,7 +63,7 @@ public/           empty
 - `--bg #0d0d0d` `--bg-alt #151515` `--fg #f2f0ed` `--muted #8f8b86` `--line rgba(242,240,237,.14)` `--accent #c9a227`
 - `--font-display` Cormorant Garamond (headings) · `--font-ui` Jost (body/nav)
 - nav/eyebrow/button text: `--nav-size .78rem`, uppercase, `--nav-track .18em`
-- `--maxw 1280px` `--gap` `--section-y` `--pad-x` `--nav-h 12.5rem` (sized to logo)
+- `--maxw 1280px` `--gap` `--section-y` `--pad-x` `--logo clamp(9rem,42vw,15.75rem)` (fluid) `--nav-h = --logo*0.794`
 - Dark-only. Headings fluid via `clamp()`.
 
 ## Content
