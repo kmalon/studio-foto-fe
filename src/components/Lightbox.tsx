@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 import type { Photo } from '../data/portfolio.ts'
 import './Lightbox.css'
 
@@ -8,6 +8,31 @@ type LightboxProps = {
 }
 
 const Lightbox = ({ photo, onClose }: LightboxProps) => {
+    const ref = useRef<HTMLDivElement>(null)
+
+    // Pin the overlay to the visual viewport: if the mobile browser ends up
+    // zoomed in, the overlay (and its close button) still covers exactly
+    // what is visible on screen.
+    useEffect(() => {
+        const vv = window.visualViewport
+        const el = ref.current
+        if (!photo || !vv || !el) return
+        const sync = () => {
+            el.style.left = `${vv.offsetLeft}px`
+            el.style.top = `${vv.offsetTop}px`
+            el.style.width = `${vv.width}px`
+            el.style.height = `${vv.height}px`
+            el.style.setProperty('--lightbox-h', `${vv.height}px`)
+        }
+        sync()
+        vv.addEventListener('resize', sync)
+        vv.addEventListener('scroll', sync)
+        return () => {
+            vv.removeEventListener('resize', sync)
+            vv.removeEventListener('scroll', sync)
+        }
+    }, [photo])
+
     useEffect(() => {
         if (!photo) return
         const onKey = (e: KeyboardEvent) => {
@@ -26,6 +51,7 @@ const Lightbox = ({ photo, onClose }: LightboxProps) => {
 
     return (
         <div
+            ref={ref}
             className="lightbox"
             role="dialog"
             aria-modal="true"

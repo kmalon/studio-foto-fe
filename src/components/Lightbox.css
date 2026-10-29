@@ -20,7 +20,7 @@
 .lightbox img {
     width: 100%;
     height: calc(100vh - 8rem);
-    height: calc(100dvh - 8rem);
+    height: calc(var(--lightbox-h, 100dvh) - 8rem);
     max-width: none;
     object-fit: contain;
 }
