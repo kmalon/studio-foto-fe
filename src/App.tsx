@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useLayoutEffect } from 'react'
 import { Route, Routes, useLocation } from 'react-router'
 import Start from './pages/Start.tsx'
 import Portfolio from './pages/Portfolio.tsx'
@@ -8,13 +8,17 @@ import About from './pages/About.tsx'
 import Contact from './pages/Contact.tsx'
 import './App.css'
 
-/** HashRouter keeps the scroll position between routes — reset it on navigation. */
+/**
+ * HashRouter keeps the scroll position between routes — reset it on navigation.
+ * Instant + layout effect: CSS `scroll-behavior: smooth` would animate it and the
+ * route swap changes page height mid-animation, leaving the new page scrolled down.
+ */
 const ScrollToTop = () => {
     const { pathname } = useLocation()
     // Block body on purpose: a concise arrow would return scrollTo's value,
     // which React would then try to call as a cleanup function.
-    useEffect(() => {
-        window.scrollTo(0, 0)
+    useLayoutEffect(() => {
+        window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
     }, [pathname])
     return null
 }

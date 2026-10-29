@@ -1,24 +1,23 @@
 import { useRef } from 'react'
+import { useNavigate } from 'react-router'
 import ImageGallery from 'react-image-gallery'
 import 'react-image-gallery/styles/css/image-gallery.css'
 import PageShell from '../components/PageShell.tsx'
-import { photos } from '../data/portfolio.ts'
+import { sessions } from '../data/gallery.ts'
 import './About.css'
 import aboutGrey from '../assets/about/aml_grey.jpg'
 
-const items = photos.map((photo) => ({
-    // thumb as the main slide, full-size photo only once opened in fullscreen
-    original: photo.thumb ?? photo.src,
-    fullscreen: photo.src,
-    thumbnail: photo.thumb ?? photo.src,
-    originalAlt: photo.alt,
-    thumbnailAlt: photo.alt,
-    description: photo.caption,
+// one cover per session; clicking a slide opens its session
+const items = sessions.map(({ cover }) => ({
+    original: cover,
+    thumbnail: cover,
+    originalAlt: 'Zdjęcie z sesji',
+    thumbnailAlt: 'Zdjęcie z sesji',
 }))
 
 const About = () => {
     const gallery = useRef<ImageGallery>(null)
-    const galleryWrap = useRef<HTMLDivElement>(null)
+    const navigate = useNavigate()
 
     return (
         <PageShell>
@@ -50,21 +49,16 @@ const About = () => {
                         <p className="eyebrow">Galeria</p>
                         <h2>Przekrój ostatnich sesji</h2>
                     </div>
-                    <div className="gallery-wrap" ref={galleryWrap}>
+                    <div className="gallery-wrap">
                         <ImageGallery
                             ref={gallery}
                             items={items}
                             showPlayButton={false}
                             lazyLoad
-                            useBrowserFullscreen={false}
-                            onClick={() => gallery.current?.fullScreen()}
-                            // back from fullscreen: bring the gallery to the middle of the viewport
-                            onScreenChange={(isFullscreen) => {
-                                if (isFullscreen) return
-                                // wait a frame so the gallery is back in its normal layout before measuring
-                                requestAnimationFrame(() =>
-                                    galleryWrap.current?.scrollIntoView({ block: 'center' }),
-                                )
+                            showFullscreenButton={false}
+                            onClick={() => {
+                                const index = gallery.current?.getCurrentIndex() ?? 0
+                                navigate(`/gallery/${sessions[index].slug}`)
                             }}
                         />
                     </div>
