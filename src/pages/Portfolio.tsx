@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import PageShell from '../components/PageShell.tsx'
 import Lightbox from '../components/Lightbox.tsx'
+import PhotoMasonry from '../components/PhotoMasonry.tsx'
 import { photos, type Photo } from '../data/portfolio.ts'
 
 const Portfolio = () => {
@@ -19,19 +20,7 @@ const Portfolio = () => {
 
             <section className="section">
                 <div className="container">
-                    <div className="masonry">
-                        {photos.map((photo) => (
-                            <button
-                                type="button"
-                                className="photo-card"
-                                key={photo.src}
-                                onClick={() => setActive(photo)}
-                            >
-                                <img src={photo.thumb ?? photo.src} alt={photo.alt} loading="lazy" />
-                                <span className="photo-card__cap">{photo.caption}</span>
-                            </button>
-                        ))}
-                    </div>
+                    <PhotoMasonry photos={photos} onSelect={setActive} showCaption />
                 </div>
             </section>
 
