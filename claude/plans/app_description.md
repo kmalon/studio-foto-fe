@@ -21,9 +21,9 @@ Visual direction: minimal dark wedding-photographer portfolio.
 ## Routes (`src/App.tsx`)
 ```
 /           Start      fullscreen Slideshow only (Navbar, no footer)
-/portfolio  Portfolio  masonry grid + Lightbox
+/portfolio  Portfolio  PhotoMasonry + Lightbox
 /gallery    Gallery    session cover cards (.photo-grid), link to session
-/gallery/:slug Session overview.md (ReactMarkdown, raw) + masonry + Lightbox; unknown slug -> /gallery
+/gallery/:slug Session overview.md (ReactMarkdown, raw) + PhotoMasonry + Lightbox; unknown slug -> /gallery
 /about      About      bio + ImageGallery of session covers (1 per session); click slide -> its /gallery/:slug
 /contact    Contact    details + mailto form
 *           -> Start
@@ -37,7 +37,7 @@ src/
   main.tsx          HashRouter + StrictMode
   App.tsx           routes + ScrollToTop
   index.css         reset + base type, imports styles/tokens.css
-  App.css           .container .section .eyebrow .btn .link-underline .photo-grid .photo-card .masonry
+  App.css           .container .section .eyebrow .btn .link-underline .photo-grid .photo-card .masonry .masonry__col
   styles/tokens.css design tokens (see below)
   data/portfolio.ts Photo type; `photos` (assets/portfolio full+thumbs paired by name) + `featured` + `slides` (assets/start)
   data/gallery.ts   `sessions`/`getSession(slug)` from assets/gallery/<slug>/{full,thumbial,overview.md} via import.meta.glob; thumb = same-name thumbial ?? full; cover = 1st thumbial ?? 1st full
@@ -49,6 +49,9 @@ src/
     Footer.tsx/.css contact + socials + copyright
     PageShell.tsx   Navbar + <main class=shell-main> + Footer
     Lightbox.tsx/.css fullscreen photo overlay, Esc/click closes (Portfolio, Session)
+    PhotoMasonry.tsx row-order masonry (photo i -> col i % cols, flex cols); renders batches of cols*3, next batch when current loaded + sentinel near viewport (IntersectionObserver) -> unrendered imgs not fetched
+  hooks/
+    useColumnCount.ts matchMedia cols 3 / 2 (<=900) / 1 (<=560)
   pages/
     Start.tsx/.css  Home.tsx/.css (unrouted)  Portfolio.tsx  Gallery.tsx  Session.tsx/.css
     About.tsx/.css  Contact.tsx/.css

@@ -3,6 +3,7 @@ import { Link, Navigate, useParams } from 'react-router'
 import ReactMarkdown from 'react-markdown'
 import PageShell from '../components/PageShell.tsx'
 import Lightbox from '../components/Lightbox.tsx'
+import PhotoMasonry from '../components/PhotoMasonry.tsx'
 import { getSession } from '../data/gallery.ts'
 import type { Photo } from '../data/portfolio.ts'
 import './Session.css'
@@ -27,18 +28,7 @@ const Session = () => {
 
             <section className="section">
                 <div className="container">
-                    <div className="masonry">
-                        {session.photos.map((photo) => (
-                            <button
-                                type="button"
-                                className="photo-card"
-                                key={photo.src}
-                                onClick={() => setActive(photo)}
-                            >
-                                <img src={photo.thumb ?? photo.src} alt={photo.alt} loading="lazy" />
-                            </button>
-                        ))}
-                    </div>
+                    <PhotoMasonry key={session.slug} photos={session.photos} onSelect={setActive} />
                 </div>
             </section>
 

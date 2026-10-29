@@ -135,16 +135,23 @@
     }
 }
 
-/* --- masonry (Portfolio + gallery sessions) --- */
+/* --- masonry (Portfolio + gallery sessions), row order via PhotoMasonry --- */
 .masonry {
-    columns: 3;
-    column-gap: var(--gap);
+    display: flex;
+    align-items: flex-start;
+    gap: var(--gap);
+}
+
+.masonry__col {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap);
 }
 
 .masonry .photo-card {
-    break-inside: avoid;
     aspect-ratio: auto;
-    margin-bottom: var(--gap);
     display: block;
     width: 100%;
     padding: 0;
@@ -154,18 +161,6 @@
 
 .masonry .photo-card img {
     height: auto;
-}
-
-@media (max-width: 900px) {
-    .masonry {
-        columns: 2;
-    }
-}
-
-@media (max-width: 560px) {
-    .masonry {
-        columns: 1;
-    }
 }
 
 @media (prefers-reduced-motion: reduce) {
