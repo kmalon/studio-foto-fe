@@ -5,8 +5,6 @@ export type Session = {
     slug: string
     /** Gallery page card image: first thumbial, falls back to first full. */
     cover: string
-    /** All thumbial images, sorted by file name. */
-    thumbs: string[]
     /** Raw content of overview.md (rendered as markdown). */
     overview: string
     photos: Photo[]
@@ -63,16 +61,10 @@ export const sessions: Session[] = Object.keys(fullBySession)
         return {
             slug,
             cover: Object.values(thumbs)[0] ?? photos[0].src,
-            thumbs: Object.values(thumbs),
             overview: overviews[`../assets/gallery/${slug}/overview.md`] ?? '',
             photos,
         }
     })
-
-/** Every thumbial image of every session, tagged with its session — About page gallery. */
-export const galleryThumbs = sessions.flatMap(({ slug, thumbs }) =>
-    thumbs.map((src) => ({ src, slug })),
-)
 
 export const getSession = (slug: string | undefined) =>
     sessions.find((session) => session.slug === slug)

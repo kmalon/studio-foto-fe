@@ -24,11 +24,11 @@ Visual direction: minimal dark wedding-photographer portfolio.
 /portfolio  Portfolio  masonry grid + Lightbox
 /gallery    Gallery    session cover cards (.photo-grid), link to session
 /gallery/:slug Session overview.md (ReactMarkdown, raw) + masonry + Lightbox; unknown slug -> /gallery
-/about      About      bio + ImageGallery of all sessions' thumbial imgs (`galleryThumbs`); click slide -> its /gallery/:slug
+/about      About      bio + ImageGallery of session covers (1 per session); click slide -> its /gallery/:slug
 /contact    Contact    details + mailto form
 *           -> Start
 ```
-`ScrollToTop` in App.tsx resets scroll on navigation (HashRouter doesn't).
+`ScrollToTop` in App.tsx resets scroll on navigation (HashRouter doesn't); instant + useLayoutEffect (html has smooth scroll).
 
 ## Structure
 ```

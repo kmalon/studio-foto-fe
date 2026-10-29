@@ -75,3 +75,27 @@ About page gallery should show pictures from `assets/gallery/` (each session's `
 `feature/3-gallery-page` (checkout; tip = master content after PR #11 merge)
 
 No questions
+
+---
+
+## Fix 2 — About gallery: one cover per session + session opens at top
+
+### Issue
+About gallery shows every thumbial img (7 slides) → should show only session covers (1 per session). Click → session page opens not scrolled to top → must start at top.
+
+### Cause (scroll)
+`src/index.css` `html { scroll-behavior: smooth }` → `ScrollToTop` `window.scrollTo(0, 0)` animates; About is long, page height changes mid-animation (route swap, lazy imgs) → scroll ends not at top.
+
+### Changes
+- `src/data/gallery.ts` — remove `galleryThumbs` + `Session.thumbs` (unused after change).
+- `src/pages/About.tsx` — items from `sessions` (`cover` → `original`/`thumbnail`); click → `/gallery/${sessions[index].slug}`.
+- `src/App.tsx` `ScrollToTop` — `useLayoutEffect` + `window.scrollTo({ top: 0, left: 0, behavior: 'instant' })` (bypass CSS smooth; before paint). Applies to all routes (desired).
+- `claude/plans/app_description.md` — About line.
+
+### Verify
+- lint + build; About: 2 slides (krowa, przyroda covers); click from scrolled About → session page at top.
+
+### Branch
+`feature/3-gallery-page`
+
+No questions

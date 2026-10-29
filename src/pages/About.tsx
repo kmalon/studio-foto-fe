@@ -3,14 +3,14 @@ import { useNavigate } from 'react-router'
 import ImageGallery from 'react-image-gallery'
 import 'react-image-gallery/styles/css/image-gallery.css'
 import PageShell from '../components/PageShell.tsx'
-import { galleryThumbs } from '../data/gallery.ts'
+import { sessions } from '../data/gallery.ts'
 import './About.css'
 import aboutGrey from '../assets/about/aml_grey.jpg'
 
-// thumbial images of all sessions; clicking a slide opens its session
-const items = galleryThumbs.map(({ src }) => ({
-    original: src,
-    thumbnail: src,
+// one cover per session; clicking a slide opens its session
+const items = sessions.map(({ cover }) => ({
+    original: cover,
+    thumbnail: cover,
     originalAlt: 'Zdjęcie z sesji',
     thumbnailAlt: 'Zdjęcie z sesji',
 }))
@@ -58,7 +58,7 @@ const About = () => {
                             showFullscreenButton={false}
                             onClick={() => {
                                 const index = gallery.current?.getCurrentIndex() ?? 0
-                                navigate(`/gallery/${galleryThumbs[index].slug}`)
+                                navigate(`/gallery/${sessions[index].slug}`)
                             }}
                         />
                     </div>
