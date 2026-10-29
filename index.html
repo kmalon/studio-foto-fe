@@ -28,6 +28,7 @@
     <script>
       (function () {
         var reported = false
+        var reportCount = 0
 
         function esc(value) {
           return String(value)
@@ -40,6 +41,7 @@
         // it unmounts a crashed tree, which would wipe the message.
         function report(label, detail) {
           reported = true
+          reportCount++
           var box = document.getElementById('debug-error')
           if (!box) {
             box = document.createElement('div')
@@ -104,8 +106,26 @@
                 'The ES module bundle most likely never executed — browser too old ' +
                 'for untranspiled dev output, or the script request failed.'
             )
+            watchLateMount(root, reportCount)
           }
         }, 5000)
+
+        // A cold dev-server load (hundreds of unbundled modules) can take longer
+        // than 5s. If the app mounts later and nothing else was reported, the
+        // "never mounted" warning was a false alarm — remove it.
+        function watchLateMount(root, countAtStall) {
+          if (!window.MutationObserver) return
+          var observer = new MutationObserver(function () {
+            if (root.childElementCount === 0) return
+            observer.disconnect()
+            var box = document.getElementById('debug-error')
+            if (box && reportCount === countAtStall) {
+              box.parentNode.removeChild(box)
+              reported = false
+            }
+          })
+          observer.observe(root, { childList: true })
+        }
       })()
     </script>
   </head>
