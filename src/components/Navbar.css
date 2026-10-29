@@ -35,7 +35,6 @@
    so the drawing itself fits the nav height. invert + screen: black lines turn
    light and any white/black backdrop drops out over the photos. */
 .logo {
-    --logo: 15.75rem;
     width: var(--logo);
     height: var(--logo);
     max-width: none;
@@ -119,9 +118,28 @@
         display: block;
     }
 
+    /* backdrop-filter makes the header the containing block of the fixed
+       drawer, so it would only cover the header height */
+    .nav--open {
+        backdrop-filter: none;
+    }
+
+    .nav__brand {
+        transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+
+    .nav--open .nav__brand {
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+    }
+
     .nav__list {
         position: fixed;
         inset: 0;
+        z-index: 55;
+        height: 100vh;
+        height: 100dvh;
         flex-direction: column;
         align-items: center;
         justify-content: center;
@@ -142,6 +160,7 @@
 
 @media (prefers-reduced-motion: reduce) {
     .nav,
+    .nav__brand,
     .nav__list,
     .nav__burger span {
         transition: none;

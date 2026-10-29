@@ -37,7 +37,7 @@ const Navbar = () => {
     }, [open])
 
     return (
-        <header className={`nav ${scrolled || open ? 'nav--solid' : ''}`}>
+        <header className={`nav ${scrolled || open ? 'nav--solid' : ''} ${open ? 'nav--open' : ''}`}>
             <div className="container nav__inner">
                 <NavLink to="/" className="nav__brand">
                     <Logo />

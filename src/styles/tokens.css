@@ -18,5 +18,6 @@
     --gap: 1.5rem;
     --section-y: clamp(4rem, 9vw, 8rem);
     --pad-x: clamp(1.25rem, 5vw, 4rem);
-    --nav-h: 12.5rem; /* fits the logo drawing (~11.4rem tall) */
+    --logo: clamp(9rem, 42vw, 15.75rem); /* logo image box, scales with viewport */
+    --nav-h: calc(var(--logo) * 0.794); /* fits the logo drawing (~72% of --logo) */
 }
