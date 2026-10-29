@@ -1,19 +1,10 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import PageShell from '../components/PageShell.tsx'
+import Lightbox from '../components/Lightbox.tsx'
 import { photos, type Photo } from '../data/portfolio.ts'
-import './Portfolio.css'
 
 const Portfolio = () => {
     const [active, setActive] = useState<Photo | null>(null)
-
-    useEffect(() => {
-        if (!active) return
-        const onKey = (e: KeyboardEvent) => {
-            if (e.key === 'Escape') setActive(null)
-        }
-        window.addEventListener('keydown', onKey)
-        return () => window.removeEventListener('keydown', onKey)
-    }, [active])
 
     return (
         <PageShell>
@@ -44,30 +35,7 @@ const Portfolio = () => {
                 </div>
             </section>
 
-            {active && (
-                <div
-                    className="lightbox"
-                    role="dialog"
-                    aria-modal="true"
-                    aria-label={active.caption || active.alt}
-                    onClick={() => setActive(null)}
-                >
-                    <button
-                        type="button"
-                        className="lightbox__close"
-                        aria-label="Zamknij podgląd"
-                        onClick={() => setActive(null)}
-                    >
-                        &times;
-                    </button>
-                    <img
-                        src={active.src}
-                        alt={active.alt}
-                        onClick={(e) => e.stopPropagation()}
-                    />
-                    <span className="lightbox__caption">{active.caption}</span>
-                </div>
-            )}
+            <Lightbox photo={active} onClose={() => setActive(null)} />
         </PageShell>
     )
 }
