@@ -6,22 +6,12 @@
     align-items: center;
     justify-content: center;
     padding: clamp(1rem, 4vw, 3rem);
-    overflow: hidden;
     background: rgba(13, 13, 13, 0.96);
-    /* A second tap while a large photo is still loading was read as
-       double-tap-to-zoom, zooming onto the image and hiding the close button */
-    touch-action: manipulation;
 }
 
-/* Fixed box sized against the viewport; the image is scaled inside it with
-   object-fit, so its intrinsic size (large, still-loading files) never
-   affects layout and can't push the close button off-screen. 8rem keeps
-   space above and below for the close button and caption */
 .lightbox img {
-    width: 100%;
-    height: calc(100vh - 8rem);
-    height: calc(var(--lightbox-h, 100dvh) - 8rem);
-    max-width: none;
+    max-width: 100%;
+    max-height: 85vh;
     object-fit: contain;
 }
 
