@@ -5,13 +5,22 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: clamp(1rem, 4vw, 3rem);
+    --lightbox-pad: clamp(1rem, 4vw, 3rem);
+    padding: var(--lightbox-pad);
+    overflow: hidden;
     background: rgba(13, 13, 13, 0.96);
 }
 
+/* Sized against the viewport, not the flex container: on first open the
+   uncached image briefly lays out at its intrinsic size, which widened the
+   mobile layout viewport and pushed the close button off-screen */
 .lightbox img {
-    max-width: 100%;
+    width: auto;
+    height: auto;
+    min-width: 0;
+    max-width: calc(100vw - 2 * var(--lightbox-pad));
     max-height: 85vh;
+    max-height: 85dvh;
     object-fit: contain;
 }
 

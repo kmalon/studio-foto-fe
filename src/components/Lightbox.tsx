@@ -14,7 +14,12 @@ const Lightbox = ({ photo, onClose }: LightboxProps) => {
             if (e.key === 'Escape') onClose()
         }
         window.addEventListener('keydown', onKey)
-        return () => window.removeEventListener('keydown', onKey)
+        const prevOverflow = document.body.style.overflow
+        document.body.style.overflow = 'hidden'
+        return () => {
+            window.removeEventListener('keydown', onKey)
+            document.body.style.overflow = prevOverflow
+        }
     }, [photo, onClose])
 
     if (!photo) return null
