@@ -1,0 +1,30 @@
+.session__back {
+    margin-bottom: clamp(2rem, 4vw, 3rem);
+}
+
+.session__overview {
+    max-width: 68ch;
+}
+
+.session__overview > :first-child {
+    margin-top: 0;
+}
+
+.session__overview > :last-child {
+    margin-bottom: 0;
+}
+
+.session__overview p,
+.session__overview li {
+    font-size: clamp(1rem, 1.4vw, 1.15rem);
+}
+
+.session__overview a {
+    color: var(--accent);
+    border-bottom: 1px solid var(--line);
+}
+
+.session__overview pre {
+    white-space: pre-wrap;
+    font-family: inherit;
+}
