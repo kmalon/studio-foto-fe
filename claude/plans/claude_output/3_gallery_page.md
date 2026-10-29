@@ -46,3 +46,32 @@ Unknown slug → `<Navigate to="/gallery" />`.
 - dev: nav "Galeria" → card for sesja_z_krowa (cover = first full) → session page shows overview text (renders as code block until md indent fixed), 2 imgs, lightbox + Esc work; Portfolio lightbox unchanged; `/#/gallery/xyz` → redirect.
 
 No questions
+
+---
+
+## Fix 1 — About gallery from assets/gallery
+
+### Issue
+About page gallery should show pictures from `assets/gallery/` (each session's `thumbial/`), not portfolio. Thumbnail strip + main slide both = thumbial img. Click on main img → open that session (`/gallery/<slug>`), not fullscreen.
+
+### Decisions (answered)
+- slides = every thumbial img of every session (sessions sorted by folder name, files by name)
+- strip stays below (unchanged layout)
+
+### Changes
+- `src/data/gallery.ts` — `Session` add `thumbs: string[]` (all thumbial urls, sorted). Export `galleryThumbs: { src; slug }[]` = flatMap sessions → thumbs.
+- `src/pages/About.tsx`
+  - items from `galleryThumbs`: `original`/`thumbnail` = thumb src, alt "Zdjęcie z sesji"; drop `fullscreen`/`description`.
+  - `onClick` → `navigate('/gallery/' + galleryThumbs[gallery.current.getCurrentIndex()].slug)` (`useNavigate`).
+  - remove fullscreen logic: `useBrowserFullscreen`, `onScreenChange`, `galleryWrap` ref; `showFullscreenButton={false}`.
+  - drop `photos` import.
+- `src/pages/About.css` — `.gallery-wrap .image-gallery-slide` `cursor: pointer`; remove fullscreen overrides.
+- `claude/plans/app_description.md` — About line update.
+
+### Verify
+- lint + build clean; About: 7 slides (1 krowa + 6 przyroda), click main → right session page.
+
+### Branch
+`feature/3-gallery-page` (checkout; tip = master content after PR #11 merge)
+
+No questions

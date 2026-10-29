@@ -24,7 +24,7 @@ Visual direction: minimal dark wedding-photographer portfolio.
 /portfolio  Portfolio  masonry grid + Lightbox
 /gallery    Gallery    session cover cards (.photo-grid), link to session
 /gallery/:slug Session overview.md (ReactMarkdown, raw) + masonry + Lightbox; unknown slug -> /gallery
-/about      About      bio + facts + ImageGallery
+/about      About      bio + ImageGallery of all sessions' thumbial imgs (`galleryThumbs`); click slide -> its /gallery/:slug
 /contact    Contact    details + mailto form
 *           -> Start
 ```

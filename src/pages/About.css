@@ -69,18 +69,9 @@
     background: transparent;
 }
 
-/* in-page fullscreen overlay, styled like the Portfolio lightbox */
-.gallery-wrap .image-gallery.fullscreen-modal {
-    z-index: 100;
-    background: rgba(13, 13, 13, 0.96);
-}
-
-.gallery-wrap .image-gallery-content.fullscreen {
-    background: transparent;
-}
-
-.gallery-wrap .image-gallery-content.fullscreen .image-gallery-slide img {
-    height: calc(100vh - 80px);
+/* clicking the main slide opens its session */
+.gallery-wrap .image-gallery-slide {
+    cursor: pointer;
 }
 
 /* equal square tiles, photos cropped to fill (no letterbox stripes) */
