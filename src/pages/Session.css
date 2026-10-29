@@ -4,6 +4,8 @@
 
 .session__overview {
     max-width: 68ch;
+    /* long unbroken words would widen the page past the mobile screen */
+    overflow-wrap: anywhere;
 }
 
 .session__overview > :first-child {
