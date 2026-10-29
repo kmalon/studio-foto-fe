@@ -47,8 +47,9 @@ const groupBySession = (images: Record<string, string>) => {
 const fullBySession = groupBySession(fullImages)
 const thumbsBySession = groupBySession(thumbImages)
 
+// newest (highest folder prefix) first; numeric so 10_ sorts above 9_
 export const sessions: Session[] = Object.keys(fullBySession)
-    .sort()
+    .sort((a, b) => b.localeCompare(a, undefined, { numeric: true }))
     .map((slug) => {
         const full = fullBySession[slug]
         const thumbs = thumbsBySession[slug] ?? {}

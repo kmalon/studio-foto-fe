@@ -40,7 +40,7 @@ src/
   App.css           .container .section .eyebrow .btn .link-underline .photo-grid .photo-card .masonry .masonry__col
   styles/tokens.css design tokens (see below)
   data/portfolio.ts Photo type; `photos` (assets/portfolio full+thumbs paired by name) + `featured` + `slides` (assets/start)
-  data/gallery.ts   `sessions`/`getSession(slug)` from assets/gallery/<slug>/{full,thumbial,overview.md} via import.meta.glob; thumb = same-name thumbial ?? full; cover = 1st thumbial ?? 1st full
+  data/gallery.ts   `sessions`/`getSession(slug)` from assets/gallery/<slug>/{full,thumbial,overview.md} via import.meta.glob; sessions sorted desc by folder name (numeric-aware); thumb = same-name thumbial ?? full; cover = 1st thumbial ?? 1st full
   data/AngelikaInfo.tsx EMAIL + web3forms key
   components/
     Navbar.tsx/.css fixed; Logo left, links right; transparent -> solid after 40px scroll; burger drawer <900px (full-viewport bg, logo hidden while open via `nav--open`, which drops backdrop-filter)

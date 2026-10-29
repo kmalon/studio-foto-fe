@@ -1,0 +1,2 @@
+As Frontend Developer and React Specialist:
+- change gallery session shown order. Currently, sessions are shown in order as they in the /asset/gallery directory. Reverse it, it should be shown from the back.
