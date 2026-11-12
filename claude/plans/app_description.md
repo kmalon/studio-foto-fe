@@ -39,13 +39,13 @@ src/
   index.css         reset + base type, imports styles/tokens.css
   App.css           .container .section .eyebrow .btn .link-underline .photo-grid .photo-card .masonry .masonry__col
   styles/tokens.css design tokens (see below)
-  data/portfolio.ts Photo type; `photos` (assets/portfolio full+thumbs paired by name) + `featured` + `slides` (assets/start)
+  data/portfolio.ts Photo type (opt. `focus` = object-position); `photos` (assets/portfolio full+thumbs paired by name) + `featured` + `slides` (assets/start; `slideFocus` map file->focus)
   data/gallery.ts   `sessions`/`getSession(slug)` from assets/gallery/<slug>/{full,thumbial,overview.md} via import.meta.glob; sessions sorted desc by folder name (numeric-aware); thumb = same-name thumbial ?? full; cover = 1st thumbial ?? 1st full
   data/AngelikaInfo.tsx EMAIL + web3forms key
   components/
     Navbar.tsx/.css fixed; Logo left, links right; transparent -> solid after 40px scroll; burger drawer <900px (full-viewport bg, logo hidden while open via `nav--open`, which drops backdrop-filter)
     Logo.tsx        `assets/logo.png` (black line art, CSS invert + screen blend; `--logo` token + calc() neg. margins crop padding)
-    Slideshow.tsx/.css custom crossfade, auto 5s (`interval` prop), side arrows, ←/→, pauses on hidden tab, caption + counter
+    Slideshow.tsx/.css custom crossfade, auto 5s (`interval` prop), side arrows, ←/→, pauses on hidden tab, caption + counter; portrait screens: object-position from `--focus` (photo.focus) keeps people in crop
     Footer.tsx/.css contact + socials + copyright
     PageShell.tsx   Navbar + <main class=shell-main> + Footer
     Lightbox.tsx/.css fullscreen photo overlay, Esc/click closes (Portfolio, Session)
@@ -68,7 +68,7 @@ public/           empty
 
 ## Content
 All copy is generated placeholder Polish (fictional "Studio Foto", kontakt@studiofoto.pl).
-Images: own photos in src/assets. New gallery session = new folder in assets/gallery (no code change).
+Images: own photos in src/assets, webp (globs accept jpg/jpeg/png/webp; `convert-images.sh` converts). New gallery session = new folder in assets/gallery (no code change). New start image -> add entry to `slideFocus` if people off-center. macOS junk (`.DS_Store`, `._*`) gitignored.
 
 ## Conventions
 - `.tsx`/`.ts` extension included in imports

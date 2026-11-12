@@ -51,6 +51,13 @@
     filter: blur(28px) brightness(0.55);
 }
 
+/* portrait screens crop landscape photos: per-photo focus keeps the people in frame */
+@media (orientation: portrait) {
+    .slideshow__img {
+        object-position: var(--focus, 50% 50%);
+    }
+}
+
 /* landscape screens: show portrait photos whole, blurred copy fills the sides */
 @media (orientation: landscape) {
     .slideshow__slide.is-portrait .slideshow__img {
