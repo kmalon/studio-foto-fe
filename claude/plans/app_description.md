@@ -49,7 +49,7 @@ src/
     Footer.tsx/.css contact + socials + copyright
     PageShell.tsx   Navbar + <main class=shell-main> + Footer
     Lightbox.tsx/.css fullscreen photo overlay, Esc/click closes (Portfolio, Session)
-    PhotoMasonry.tsx row-order masonry (photo i -> col i % cols, flex cols); renders batches of cols*3, next batch when current loaded + sentinel near viewport (IntersectionObserver) -> unrendered imgs not fetched
+    PhotoMasonry.tsx balanced masonry: batch (cols*3) preloaded via `new Image()` -> h/w ratios -> each photo to shortest col (flex cols); next batch when current measured + sentinel near viewport (IntersectionObserver) -> unrendered imgs not fetched; all shown -> `masonry--flush` crops last card per col so bottoms align
   hooks/
     useColumnCount.ts matchMedia cols 3 / 2 (<=900) / 1 (<=560)
   pages/

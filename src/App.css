@@ -163,6 +163,24 @@
     height: auto;
 }
 
+/* all photos shown: columns stretch, last card per column is cropped to fill */
+.masonry--flush {
+    align-items: stretch;
+}
+
+.masonry--flush .masonry__col > .photo-card:last-child {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.masonry--flush .masonry__col > .photo-card:last-child img {
+    flex: 1 1 auto;
+    min-height: 0;
+    aspect-ratio: auto !important;
+    object-fit: cover;
+}
+
 @media (prefers-reduced-motion: reduce) {
     html {
         scroll-behavior: auto;
