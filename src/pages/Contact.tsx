@@ -95,7 +95,6 @@ const Contact = () => {
                                 name="date"
                                 value={form.date}
                                 onChange={update('date')}
-                                required
                             />
                         </label>
 
