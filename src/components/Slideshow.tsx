@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useState, type CSSProperties } from 'react'
 import type { Photo } from '../data/portfolio.ts'
 import './Slideshow.css'
 
@@ -69,6 +69,7 @@ const Slideshow = ({ photos, interval = 5000 }: SlideshowProps) => {
                             className="slideshow__img"
                             src={photo.src}
                             alt={photo.alt}
+                            style={photo.focus ? ({ '--focus': photo.focus } as CSSProperties) : undefined}
                             fetchPriority={i === 0 ? 'high' : 'auto'}
                             onLoad={(e) => {
                                 const { naturalWidth, naturalHeight } = e.currentTarget
