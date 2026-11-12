@@ -11,21 +11,63 @@ type Props = {
 /** Rows rendered per batch; more are appended while scrolling. */
 const BATCH_ROWS = 3
 
+/** Each photo goes to the shortest column (heights in width units, gaps ignored). */
+const layout = (photos: Photo[], ratios: ReadonlyMap<string, number>, cols: number) => {
+    const columns: Photo[][] = Array.from({ length: cols }, () => [])
+    const heights: number[] = Array(cols).fill(0)
+    for (const photo of photos) {
+        const c = heights.indexOf(Math.min(...heights))
+        columns[c].push(photo)
+        heights[c] += ratios.get(photo.src)!
+    }
+    return columns
+}
+
 /**
- * Masonry laid out in row order (photo i -> column i % cols).
- * Only rendered photos are fetched: next batch is appended once the current
- * one has loaded (real heights known) and the sentinel nears the viewport.
+ * Balanced masonry: photo dimensions are read by preloading (only the shown
+ * batch is fetched), then each photo lands in the shortest column. Next batch is
+ * appended once the current one is measured and the sentinel nears the viewport.
+ * When everything is shown, the last photo of each column is cropped so all
+ * columns end on one line.
  */
 const PhotoMasonry = ({ photos, onSelect, showCaption = false }: Props) => {
     const cols = useColumnCount()
     const batch = cols * BATCH_ROWS
     const [visible, setVisible] = useState(batch)
-    const [loaded, setLoaded] = useState<ReadonlySet<string>>(new Set())
+    // height / width per photo src
+    const [ratios, setRatios] = useState<ReadonlyMap<string, number>>(new Map())
     const sentinel = useRef<HTMLDivElement>(null)
 
     const shown = photos.slice(0, visible)
-    const batchReady = shown.every((photo) => loaded.has(photo.src))
+    const firstUnknown = shown.findIndex((photo) => !ratios.has(photo.src))
+    // only a measured prefix is placed, so earlier photos never reshuffle
+    const placed = firstUnknown === -1 ? shown : shown.slice(0, firstUnknown)
+    const batchReady = firstUnknown === -1
     const hasMore = visible < photos.length
+    const flush = !hasMore && batchReady
+
+    useEffect(() => {
+        const pending = shown.filter((photo) => !ratios.has(photo.src))
+        const images = pending.map((photo) => {
+            const img = new Image()
+            const done = (ratio: number) =>
+                setRatios((prev) =>
+                    prev.has(photo.src) ? prev : new Map(prev).set(photo.src, ratio),
+                )
+            img.onload = () =>
+                done(img.naturalWidth ? img.naturalHeight / img.naturalWidth : 1)
+            img.onerror = () => done(1)
+            img.src = photo.thumb ?? photo.src
+            return img
+        })
+        return () =>
+            images.forEach((img) => {
+                img.onload = null
+                img.onerror = null
+            })
+        // re-run only when the shown set changes; ratios is read for filtering
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [photos, visible])
 
     useEffect(() => {
         const el = sentinel.current
@@ -41,16 +83,11 @@ const PhotoMasonry = ({ photos, onSelect, showCaption = false }: Props) => {
         return () => observer.disconnect()
     }, [batchReady, hasMore, batch])
 
-    const columns: Photo[][] = Array.from({ length: cols }, () => [])
-    shown.forEach((photo, i) => columns[i % cols].push(photo))
-
-    // keyed by src: column changes remount imgs and re-fire onLoad
-    const markLoaded = (src: string) => () =>
-        setLoaded((prev) => (prev.has(src) ? prev : new Set(prev).add(src)))
+    const columns = layout(placed, ratios, cols)
 
     return (
         <>
-            <div className="masonry">
+            <div className={`masonry ${flush ? 'masonry--flush' : ''}`}>
                 {columns.map((column, c) => (
                     <div className="masonry__col" key={c}>
                         {column.map((photo) => (
@@ -64,8 +101,8 @@ const PhotoMasonry = ({ photos, onSelect, showCaption = false }: Props) => {
                                     src={photo.thumb ?? photo.src}
                                     alt={photo.alt}
                                     decoding="async"
-                                    onLoad={markLoaded(photo.src)}
-                                    onError={markLoaded(photo.src)}
+                                    // reserve space before decode -> no jump
+                                    style={{ aspectRatio: 1 / ratios.get(photo.src)! }}
                                 />
                                 {showCaption && (
                                     <span className="photo-card__cap">{photo.caption}</span>
