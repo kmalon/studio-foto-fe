@@ -54,9 +54,5 @@ export default tseslint.config({
 ```
 
 Photos resize:
-- in the gallery/portfolio:
-  - thumbial: mogrify -resize '800x>' -strip -quality 75 -interlace Plane *.jpg
-  - full: mogrify -resize '2048x>' -strip -quality 80 -interlace Plane *.jpg
-- start: 
-  - whole directory: mogrify -resize '2048x>' -strip -quality 75 -interlace Plane *.jpg
+- use script convert-images.sh (directory configuration inside)
 - content / column images: mogrify -resize 1200x -strip -quality 80 -interlace Plane src/assets/about/*.jpg
