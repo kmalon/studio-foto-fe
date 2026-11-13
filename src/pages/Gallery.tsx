@@ -2,6 +2,7 @@ import { Link } from 'react-router'
 import PageShell from '../components/PageShell.tsx'
 import { sessions } from '../data/gallery.ts'
 import usePageMeta from '../hooks/usePageMeta.ts'
+import { sessionPath } from '../routes.ts'
 
 const Gallery = () => {
     usePageMeta({
@@ -25,7 +26,7 @@ const Gallery = () => {
                 <div className="container">
                     <div className="photo-grid">
                         {sessions.map(({ slug, cover, title }) => (
-                            <Link to={`/galeria/${slug}`} className="photo-card" key={slug}>
+                            <Link to={sessionPath(slug)} className="photo-card" key={slug}>
                                 <img src={cover} alt={title} loading="lazy" />
                                 <span className="photo-card__cap">{title}</span>
                             </Link>

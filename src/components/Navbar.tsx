@@ -2,13 +2,14 @@ import { useEffect, useState } from 'react'
 import { NavLink, useLocation } from 'react-router'
 import Logo from './Logo.tsx'
 import './Navbar.css'
+import { ROUTES } from '../routes.ts'
 
 const links = [
-    { to: '/', label: 'Start' },
-    { to: '/portfolio', label: 'Portfolio' },
-    { to: '/galeria', label: 'Galeria' },
-    { to: '/o-mnie', label: 'O mnie' },
-    { to: '/kontakt', label: 'Kontakt' },
+    { to: ROUTES.home, label: 'Start' },
+    { to: ROUTES.portfolio, label: 'Portfolio' },
+    { to: ROUTES.gallery, label: 'Galeria' },
+    { to: ROUTES.about, label: 'O mnie' },
+    { to: ROUTES.contact, label: 'Kontakt' },
 ]
 
 const Navbar = () => {
@@ -39,7 +40,7 @@ const Navbar = () => {
     return (
         <header className={`nav ${scrolled || open ? 'nav--solid' : ''} ${open ? 'nav--open' : ''}`}>
             <div className="container nav__inner">
-                <NavLink to="/" className="nav__brand">
+                <NavLink to={ROUTES.home} className="nav__brand">
                     <Logo />
                 </NavLink>
 
@@ -61,7 +62,7 @@ const Navbar = () => {
                             <li key={to}>
                                 <NavLink
                                     to={to}
-                                    end={to === '/'}
+                                    end={to === ROUTES.home}
                                     className={({ isActive }) =>
                                         `nav__link ${isActive ? 'is-active' : ''}`
                                     }

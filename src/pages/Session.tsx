@@ -9,6 +9,7 @@ import type { Photo } from '../data/portfolio.ts'
 import usePageMeta from '../hooks/usePageMeta.ts'
 import NotFound from './NotFound.tsx'
 import './Session.css'
+import { ROUTES } from '../routes.ts'
 
 const Session = () => {
     const { slug } = useParams()
@@ -29,7 +30,7 @@ const SessionView = ({ session }: { session: SessionData }) => {
     return (
         <PageShell>
             <section className="container page-head">
-                <Link to="/galeria" className="link-underline session__back">
+                <Link to={ROUTES.gallery} className="link-underline session__back">
                     ← Wróć do galerii
                 </Link>
                 <div className="session__overview">

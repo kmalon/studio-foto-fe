@@ -1,4 +1,4 @@
-import type { Photo } from './portfolio.ts'
+import type { ImageSize, Photo } from './portfolio.ts'
 import altText from './altText.ts'
 
 export type Session = {
@@ -25,6 +25,11 @@ const thumbImages = import.meta.glob<string>(
     '../assets/gallery/*/thumbial/*.{jpg,jpeg,png,webp}',
     { eager: true, import: 'default' },
 )
+// intrinsic sizes; thumbial sorts after full, so a thumb's size wins (same ratio anyway)
+const imageSizes = import.meta.glob<ImageSize>(
+    '../assets/gallery/*/{full,thumbial}/*.{jpg,jpeg,png,webp}',
+    { eager: true, query: '?size', import: 'default' },
+)
 const overviews = import.meta.glob<string>('../assets/gallery/*/overview.md', {
     eager: true,
     query: '?raw',
@@ -39,8 +44,8 @@ const parse = (path: string) => {
 }
 
 // folder -> file name -> url, file names sorted
-const groupBySession = (images: Record<string, string>) => {
-    const grouped: Record<string, Record<string, string>> = {}
+const groupBySession = <T>(images: Record<string, T>) => {
+    const grouped: Record<string, Record<string, T>> = {}
     Object.keys(images)
         .sort()
         .forEach((path) => {
@@ -76,6 +81,7 @@ const metaFromOverview = (overview: string, fallback: string) => {
 
 const fullBySession = groupBySession(fullImages)
 const thumbsBySession = groupBySession(thumbImages)
+const sizesBySession = groupBySession(imageSizes)
 
 // newest (highest folder prefix) first; numeric so 10_ sorts above 9_
 export const sessions: Session[] = Object.keys(fullBySession)
@@ -83,12 +89,14 @@ export const sessions: Session[] = Object.keys(fullBySession)
     .map((folder) => {
         const full = fullBySession[folder]
         const thumbs = thumbsBySession[folder] ?? {}
+        const sizes = sizesBySession[folder] ?? {}
         const overview = overviews[`../assets/gallery/${folder}/overview.md`] ?? ''
         const slug = toSlug(folder)
         const { title, description } = metaFromOverview(overview, slug.replace(/-/g, ' '))
         const photos = Object.entries(full).map(([name, src], i) => ({
             src,
             thumb: thumbs[name] ?? src,
+            ...sizes[name],
             alt: altText[`gallery/${folder}/${name}`] ?? `${title} — zdjęcie ${i + 1}`,
             caption: '',
         }))

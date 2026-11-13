@@ -8,8 +8,10 @@ import aboutGrey from '../assets/about/aml_grey.jpg'
 
 type Status = 'idle' | 'sending' | 'success' | 'error'
 
+const EMPTY_FORM = { name: '', email: '', date: '', venue: '', message: '' }
+
 const Contact = () => {
-    const [form, setForm] = useState({ name: '', email: '', date: '', message: '' })
+    const [form, setForm] = useState(EMPTY_FORM)
 
     const update = (field: keyof typeof form) => (e: { target: { value: string } }) =>
         setForm((prev) => ({ ...prev, [field]: e.target.value }))
@@ -36,13 +38,14 @@ const Contact = () => {
                     name: form.name,
                     email: form.email,
                     'data wydarzenia': form.date || 'nie podano',
+                    'miejsce wydarzenia': form.venue || 'nie podano',
                     message: form.message,
                 }),
             })
             const data = await response.json()
             if (!data.success) throw new Error(data.message)
             setStatus('success')
-            setForm({ name: '', email: '', date: '', message: '' })
+            setForm(EMPTY_FORM)
         } catch {
             setStatus('error')
         }
@@ -97,15 +100,27 @@ const Contact = () => {
                             </label>
                         </div>
 
-                        <label className="form__field">
-                            <span>Data wydarzenia</span>
-                            <input
-                                type="date"
-                                name="date"
-                                value={form.date}
-                                onChange={update('date')}
-                            />
-                        </label>
+                        <div className="form__row">
+                            <label className="form__field">
+                                <span>Data wydarzenia (opcjonalnie)</span>
+                                <input
+                                    type="date"
+                                    name="date"
+                                    value={form.date}
+                                    onChange={update('date')}
+                                />
+                            </label>
+                            <label className="form__field">
+                                <span>Miejsce wydarzenia (opcjonalnie)</span>
+                                <input
+                                    type="text"
+                                    name="venue"
+                                    autoComplete="off"
+                                    value={form.venue}
+                                    onChange={update('venue')}
+                                />
+                            </label>
+                        </div>
 
                         <label className="form__field">
                             <span>Wiadomość</span>

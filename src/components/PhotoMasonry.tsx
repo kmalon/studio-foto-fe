@@ -11,67 +11,42 @@ type Props = {
 /** Rows rendered per batch; more are appended while scrolling. */
 const BATCH_ROWS = 3
 
+/** height / width from the build-time size; unknown -> square. */
+const ratio = (photo: Photo) =>
+    photo.width && photo.height ? photo.height / photo.width : 1
+
 /** Each photo goes to the shortest column (heights in width units, gaps ignored). */
-const layout = (photos: Photo[], ratios: ReadonlyMap<string, number>, cols: number) => {
+const layout = (photos: Photo[], cols: number) => {
     const columns: Photo[][] = Array.from({ length: cols }, () => [])
     const heights: number[] = Array(cols).fill(0)
     for (const photo of photos) {
         const c = heights.indexOf(Math.min(...heights))
         columns[c].push(photo)
-        heights[c] += ratios.get(photo.src)!
+        heights[c] += ratio(photo)
     }
     return columns
 }
 
 /**
- * Balanced masonry: photo dimensions are read by preloading (only the shown
- * batch is fetched), then each photo lands in the shortest column. Next batch is
- * appended once the current one is measured and the sentinel nears the viewport.
- * When everything is shown, the last photo of each column is cropped so all
- * columns end on one line.
+ * Balanced masonry: photo sizes are known at build time, so the layout is
+ * deterministic and the first batch is part of the prerendered HTML (crawlable
+ * images, no layout shift). Each photo lands in the shortest column; the next
+ * batch is appended when the sentinel nears the viewport (unrendered photos are
+ * never fetched). When everything is shown, the last photo of each column is
+ * cropped so all columns end on one line.
  */
 const PhotoMasonry = ({ photos, onSelect, showCaption = false }: Props) => {
     const cols = useColumnCount()
     const batch = cols * BATCH_ROWS
     const [visible, setVisible] = useState(batch)
-    // height / width per photo src
-    const [ratios, setRatios] = useState<ReadonlyMap<string, number>>(new Map())
     const sentinel = useRef<HTMLDivElement>(null)
 
     const shown = photos.slice(0, visible)
-    const firstUnknown = shown.findIndex((photo) => !ratios.has(photo.src))
-    // only a measured prefix is placed, so earlier photos never reshuffle
-    const placed = firstUnknown === -1 ? shown : shown.slice(0, firstUnknown)
-    const batchReady = firstUnknown === -1
     const hasMore = visible < photos.length
-    const flush = !hasMore && batchReady
-
-    useEffect(() => {
-        const pending = shown.filter((photo) => !ratios.has(photo.src))
-        const images = pending.map((photo) => {
-            const img = new Image()
-            const done = (ratio: number) =>
-                setRatios((prev) =>
-                    prev.has(photo.src) ? prev : new Map(prev).set(photo.src, ratio),
-                )
-            img.onload = () =>
-                done(img.naturalWidth ? img.naturalHeight / img.naturalWidth : 1)
-            img.onerror = () => done(1)
-            img.src = photo.thumb ?? photo.src
-            return img
-        })
-        return () =>
-            images.forEach((img) => {
-                img.onload = null
-                img.onerror = null
-            })
-        // re-run only when the shown set changes; ratios is read for filtering
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [photos, visible])
 
     useEffect(() => {
         const el = sentinel.current
-        if (!el || !batchReady || !hasMore) return
+        if (!el || !hasMore) return
 
         const observer = new IntersectionObserver(
             ([entry]) => {
@@ -81,34 +56,41 @@ const PhotoMasonry = ({ photos, onSelect, showCaption = false }: Props) => {
         )
         observer.observe(el)
         return () => observer.disconnect()
-    }, [batchReady, hasMore, batch])
+        // re-observe after each batch: a sentinel still in view fires again
+    }, [hasMore, batch, visible])
 
-    const columns = layout(placed, ratios, cols)
+    const columns = layout(shown, cols)
 
     return (
         <>
-            <div className={`masonry ${flush ? 'masonry--flush' : ''}`}>
+            <div className={`masonry ${hasMore ? '' : 'masonry--flush'}`}>
                 {columns.map((column, c) => (
                     <div className="masonry__col" key={c}>
-                        {column.map((photo) => (
-                            <button
-                                type="button"
-                                className="photo-card"
-                                key={photo.src}
-                                onClick={() => onSelect(photo)}
-                            >
-                                <img
-                                    src={photo.thumb ?? photo.src}
-                                    alt={photo.alt}
-                                    decoding="async"
-                                    // reserve space before decode -> no jump
-                                    style={{ aspectRatio: 1 / ratios.get(photo.src)! }}
-                                />
-                                {showCaption && (
-                                    <span className="photo-card__cap">{photo.caption}</span>
-                                )}
-                            </button>
-                        ))}
+                        {column.map((photo) => {
+                            const aboveFold = photos.indexOf(photo) < cols
+                            return (
+                                <button
+                                    type="button"
+                                    className="photo-card"
+                                    key={photo.src}
+                                    onClick={() => onSelect(photo)}
+                                >
+                                    <img
+                                        src={photo.thumb ?? photo.src}
+                                        alt={photo.alt}
+                                        width={photo.width}
+                                        height={photo.height}
+                                        decoding="async"
+                                        loading={aboveFold ? 'eager' : 'lazy'}
+                                        // reserve space before load -> no layout shift
+                                        style={{ aspectRatio: 1 / ratio(photo) }}
+                                    />
+                                    {showCaption && (
+                                        <span className="photo-card__cap">{photo.caption}</span>
+                                    )}
+                                </button>
+                            )
+                        })}
                     </div>
                 ))}
             </div>
