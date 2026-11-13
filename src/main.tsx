@@ -1,45 +1,29 @@
-import { Component, StrictMode, type ErrorInfo, type ReactNode } from 'react'
-import { createRoot } from 'react-dom/client'
+import { StrictMode } from 'react'
+import { createRoot, hydrateRoot } from 'react-dom/client'
 import { BrowserRouter } from 'react-router'
+import '@fontsource/cormorant-garamond/latin-300.css'
+import '@fontsource/cormorant-garamond/latin-ext-300.css'
+import '@fontsource/cormorant-garamond/latin-400.css'
+import '@fontsource/cormorant-garamond/latin-ext-400.css'
+import '@fontsource/jost/latin-200.css'
+import '@fontsource/jost/latin-ext-200.css'
+import '@fontsource/jost/latin-300.css'
+import '@fontsource/jost/latin-ext-300.css'
+import '@fontsource/jost/latin-400.css'
+import '@fontsource/jost/latin-ext-400.css'
 import './index.css'
 import App from './App.tsx'
+import { BASE_PATH } from './seo/site.ts'
 
-/** TEMPORARY — paired with the debug reporter in index.html. Remove both together. */
-declare global {
-    interface Window {
-        __report?: (label: string, detail: string) => void
-    }
-}
-
-type BoundaryProps = { children: ReactNode }
-type BoundaryState = { failed: boolean }
-
-/** TEMPORARY — surfaces render-time crashes on devices with no console. */
-class DebugBoundary extends Component<BoundaryProps, BoundaryState> {
-    state: BoundaryState = { failed: false }
-
-    static getDerivedStateFromError(): BoundaryState {
-        return { failed: true }
-    }
-
-    componentDidCatch(error: Error, info: ErrorInfo) {
-        window.__report?.(
-            'React render error',
-            `${error.message}\n\n${error.stack ?? ''}\n${info.componentStack ?? ''}`,
-        )
-    }
-
-    render() {
-        return this.state.failed ? null : this.props.children
-    }
-}
-
-createRoot(document.getElementById('root')!).render(
+const root = document.getElementById('root')!
+const app = (
     <StrictMode>
-        <DebugBoundary>
-            <BrowserRouter basename={import.meta.env.BASE_URL.replace(/\/$/, '')}>
-                <App />
-            </BrowserRouter>
-        </DebugBoundary>
-    </StrictMode>,
+        <BrowserRouter basename={BASE_PATH}>
+            <App />
+        </BrowserRouter>
+    </StrictMode>
 )
+
+// built pages are prerendered (scripts/prerender.mjs) -> hydrate; dev server serves an empty root
+if (root.firstElementChild) hydrateRoot(root, app)
+else createRoot(root).render(app)

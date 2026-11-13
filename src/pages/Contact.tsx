@@ -1,8 +1,10 @@
 import { useState, type FormEvent } from 'react'
 import PageShell from '../components/PageShell.tsx'
 import usePageMeta from '../hooks/usePageMeta.ts'
+import { BRAND } from '../seo/site.ts'
 import './Contact.css'
 import { EMAIL, WEB3FORMS_ACCESS_KEY } from '../data/AngelikaInfo.tsx'
+import aboutGrey from '../assets/about/aml_grey.jpg'
 
 type Status = 'idle' | 'sending' | 'success' | 'error'
 
@@ -13,7 +15,12 @@ const Contact = () => {
         setForm((prev) => ({ ...prev, [field]: e.target.value }))
 
     const [status, setStatus] = useState<Status>('idle')
-    usePageMeta('Kontakt', 'Kontakt — zapytaj o termin sesji lub reportażu ślubnego.')
+    usePageMeta({
+        title: 'Kontakt – fotograf ślubny Warszawa | Angelika Malon',
+        description:
+            'Zapytaj o wolny termin reportażu ślubnego lub sesji zdjęciowej w Warszawie i całej Polsce. Napisz do Angeliki Malon — odpowiadam w ciągu dwóch dni.',
+        image: aboutGrey,
+    })
 
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault()
@@ -24,7 +31,7 @@ const Contact = () => {
                 headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
                 body: JSON.stringify({
                     access_key: WEB3FORMS_ACCESS_KEY,
-                    subject: `Zapytanie o termin — ${form.name || 'strona www'}`,
+                    subject: `Zapytanie o termin — ${form.name || 'strona www'} | ${BRAND}`,
                     from_name: form.name,
                     name: form.name,
                     email: form.email,

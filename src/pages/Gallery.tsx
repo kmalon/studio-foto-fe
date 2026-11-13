@@ -4,7 +4,12 @@ import { sessions } from '../data/gallery.ts'
 import usePageMeta from '../hooks/usePageMeta.ts'
 
 const Gallery = () => {
-    usePageMeta('Galeria', 'Galeria sesji zdjęciowych — każda sesja to osobna historia.')
+    usePageMeta({
+        title: 'Galeria sesji ślubnych i rodzinnych | Angelika Malon',
+        description:
+            'Galeria pełnych sesji: śluby, plenery w Łazienkach Królewskich, sesje rodzinne i ciążowe. Fotograf ślubny Warszawa — Angelika Malon Fotografia.',
+        image: sessions[0]?.photos[0]?.src,
+    })
 
     return (
         <PageShell>
@@ -19,9 +24,10 @@ const Gallery = () => {
             <section className="section">
                 <div className="container">
                     <div className="photo-grid">
-                        {sessions.map(({ slug, cover }) => (
-                            <Link to={`/gallery/${slug}`} className="photo-card" key={slug}>
-                                <img src={cover} alt={slug} loading="lazy" />
+                        {sessions.map(({ slug, cover, title }) => (
+                            <Link to={`/galeria/${slug}`} className="photo-card" key={slug}>
+                                <img src={cover} alt={title} loading="lazy" />
+                                <span className="photo-card__cap">{title}</span>
                             </Link>
                         ))}
                     </div>

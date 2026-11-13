@@ -3,26 +3,29 @@ import { useNavigate } from 'react-router'
 import ImageGallery from 'react-image-gallery'
 import 'react-image-gallery/styles/css/image-gallery.css'
 import PageShell from '../components/PageShell.tsx'
+import SessionLinks from '../components/SessionLinks.tsx'
 import { sessions } from '../data/gallery.ts'
 import usePageMeta from '../hooks/usePageMeta.ts'
 import './About.css'
 import aboutGrey from '../assets/about/aml_grey.jpg'
 
 // one cover per session; clicking a slide opens its session
-const items = sessions.map(({ cover }) => ({
+const items = sessions.map(({ cover, title }) => ({
     original: cover,
     thumbnail: cover,
-    originalAlt: 'Zdjęcie z sesji',
-    thumbnailAlt: 'Zdjęcie z sesji',
+    originalAlt: title,
+    thumbnailAlt: title,
 }))
 
 const About = () => {
     const gallery = useRef<ImageGallery>(null)
     const navigate = useNavigate()
-    usePageMeta(
-        'O mnie',
-        'Angelika Malon — fotografka z Warszawy. Zapisuję czułość, gesty i prawdziwe chwile.',
-    )
+    usePageMeta({
+        title: 'O mnie – fotograf ślubny z Warszawy | Angelika Malon',
+        description:
+            'Angelika Malon — fotograf ślubny i rodzinny z Warszawy. Reportaż pełen emocji, czułości i prawdziwych chwil. Poznaj mnie i mój sposób pracy.',
+        image: aboutGrey,
+    })
 
     return (
         <PageShell>
@@ -45,7 +48,7 @@ const About = () => {
                     </p>
                 </div>
 
-                <img className="about-intro__photo" src={aboutGrey} alt="Angelika Malon" />
+                <img className="about-intro__photo" src={aboutGrey} alt="Angelika Malon — fotograf ślubny z Warszawy, portret" />
             </section>
 
             <section className="section section--alt">
@@ -63,10 +66,13 @@ const About = () => {
                             showFullscreenButton={false}
                             onClick={() => {
                                 const index = gallery.current?.getCurrentIndex() ?? 0
-                                navigate(`/gallery/${sessions[index].slug}`)
+                                navigate(`/galeria/${sessions[index].slug}`)
                             }}
                         />
                     </div>
+                    <nav className="about-sessions" aria-label="Sesje w galerii">
+                        <SessionLinks />
+                    </nav>
                 </div>
             </section>
         </PageShell>

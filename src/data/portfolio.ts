@@ -1,5 +1,9 @@
+import altText from './altText.ts'
+
 export type Photo = {
     src: string
+    /** Responsive candidates (`<img srcset>`), generated at build time. */
+    srcSet?: string
     /** Smaller version for grids; falls back to `src` when missing. */
     thumb?: string
     alt: string
@@ -27,10 +31,10 @@ const portfolioThumbs = loadImages(
     }),
 )
 
-export const photos: Photo[] = Object.entries(portfolioFull).map(([name, src]) => ({
+export const photos: Photo[] = Object.entries(portfolioFull).map(([name, src], i) => ({
     src,
     thumb: portfolioThumbs[name] ?? src,
-    alt: 'Zdjęcie z portfolio studia',
+    alt: altText[`portfolio/${name}`] ?? `Fotografia ślubna i portretowa — Angelika Malon, zdjęcie ${i + 1}`,
     caption: '',
 }))
 
@@ -41,6 +45,14 @@ export const featured: Photo[] = photos.slice(0, 3)
 const startImages = loadImages(
     import.meta.glob<string>('../assets/start/*.{jpg,jpeg,png,webp}', {
         eager: true,
+        import: 'default',
+    }),
+)
+// same files resized by vite-imagetools (never upscaled) -> srcset string
+const startSrcSets = loadImages(
+    import.meta.glob<string>('../assets/start/*.{jpg,jpeg,png,webp}', {
+        eager: true,
+        query: { w: '640;1024;1600;2048', format: 'webp', quality: '82', as: 'srcset' },
         import: 'default',
     }),
 )
@@ -66,9 +78,10 @@ const slideFocus: Record<string, string> = {
 }
 
 /** Start page slideshow — full-screen photos from assets/start. */
-export const slides: Photo[] = Object.entries(startImages).map(([name, src]) => ({
+export const slides: Photo[] = Object.entries(startImages).map(([name, src], i) => ({
     src,
-    alt: 'Zdjęcie z portfolio studia',
+    srcSet: startSrcSets[name],
+    alt: altText[`start/${name}`] ?? `Fotograf ślubny Warszawa — Angelika Malon, zdjęcie ${i + 1}`,
     caption: '',
     focus: slideFocus[name],
 }))

@@ -64,13 +64,26 @@ const Slideshow = ({ photos, interval = 5000 }: SlideshowProps) => {
                         aria-hidden={i !== index}
                     >
                         {/* blurred fill behind an uncropped portrait photo (same URL, served from cache) */}
-                        {isPortrait && <img className="slideshow__backdrop" src={photo.src} alt="" />}
+                        {isPortrait && (
+                            <img
+                                className="slideshow__backdrop"
+                                src={photo.src}
+                                srcSet={photo.srcSet}
+                                sizes={photo.srcSet ? '100vw' : undefined}
+                                alt=""
+                            />
+                        )}
                         <img
                             className="slideshow__img"
                             src={photo.src}
+                            srcSet={photo.srcSet}
+                            sizes={photo.srcSet ? '100vw' : undefined}
                             alt={photo.alt}
                             style={photo.focus ? ({ '--focus': photo.focus } as CSSProperties) : undefined}
                             fetchPriority={i === 0 ? 'high' : 'auto'}
+                            // neighbours load lazily (they're stacked in view, so still preloaded) —
+                            // keeps React SSR from preloading them alongside the first slide
+                            loading={i === index ? 'eager' : 'lazy'}
                             onLoad={(e) => {
                                 const { naturalWidth, naturalHeight } = e.currentTarget
                                 if (naturalHeight > naturalWidth) {

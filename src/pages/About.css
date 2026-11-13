@@ -117,3 +117,8 @@
         grid-template-columns: 1fr;
     }
 }
+
+.about-sessions {
+    max-width: 980px;
+    margin: clamp(2rem, 4vw, 3rem) auto 0;
+}

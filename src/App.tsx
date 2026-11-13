@@ -31,10 +31,10 @@ function App() {
             <Routes>
                 <Route path="/" element={<Start />} />
                 <Route path="/portfolio" element={<Portfolio />} />
-                <Route path="/gallery" element={<Gallery />} />
-                <Route path="/gallery/:slug" element={<Session />} />
-                <Route path="/about" element={<About />} />
-                <Route path="/contact" element={<Contact />} />
+                <Route path="/galeria" element={<Gallery />} />
+                <Route path="/galeria/:slug" element={<Session />} />
+                <Route path="/o-mnie" element={<About />} />
+                <Route path="/kontakt" element={<Contact />} />
                 <Route path="*" element={<NotFound />} />
             </Routes>
         </>

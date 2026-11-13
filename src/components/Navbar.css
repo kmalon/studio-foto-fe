@@ -31,7 +31,7 @@
     align-items: center;
 }
 
-/* Source PNG is a square with wide empty margins — negative margins trim them
+/* Source SVG is a square with wide empty margins — negative margins trim them
    so the drawing itself fits the nav height. invert + screen: black lines turn
    light and any white/black backdrop drops out over the photos. */
 .logo {
