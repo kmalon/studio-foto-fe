@@ -2,6 +2,7 @@ import { Link } from 'react-router'
 import './Footer.css'
 import { EMAIL } from '../data/AngelikaInfo.tsx'
 import { BRAND, SOCIALS } from '../seo/site.ts'
+import { ROUTES } from '../routes.ts'
 
 const Footer = () => (
     <footer className="footer">
@@ -30,7 +31,7 @@ const Footer = () => (
                         </a>
                     </li>
                     <li>
-                        <Link to="/kontakt">Kontakt</Link>
+                        <Link to={ROUTES.contact}>Kontakt</Link>
                     </li>
                 </ul>
             </div>

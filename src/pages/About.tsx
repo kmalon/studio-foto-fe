@@ -8,6 +8,7 @@ import { sessions } from '../data/gallery.ts'
 import usePageMeta from '../hooks/usePageMeta.ts'
 import './About.css'
 import aboutGrey from '../assets/about/aml_grey.jpg'
+import { sessionPath } from '../routes.ts'
 
 // one cover per session; clicking a slide opens its session
 const items = sessions.map(({ cover, title }) => ({
@@ -66,7 +67,7 @@ const About = () => {
                             showFullscreenButton={false}
                             onClick={() => {
                                 const index = gallery.current?.getCurrentIndex() ?? 0
-                                navigate(`/galeria/${sessions[index].slug}`)
+                                navigate(sessionPath(sessions[index].slug))
                             }}
                         />
                     </div>

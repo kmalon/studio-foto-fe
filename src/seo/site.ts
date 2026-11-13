@@ -8,6 +8,8 @@ export const PERSON = 'Angelika Malon'
 export const SITE_ORIGIN = 'https://kmalon.github.io'
 export const BASE_PATH = import.meta.env.BASE_URL.replace(/\/$/, '')
 export const SITE_URL = `${SITE_ORIGIN}${BASE_PATH}`
+/** Router basename WITH trailing slash, so `<Link to="/">` renders `/studio-foto-fe/` (canonical), not a 301-ing `/studio-foto-fe`. */
+export const ROUTER_BASENAME = `${BASE_PATH}/`
 
 export const SOCIALS = {
     instagram: 'https://www.instagram.com/angelika.malon',

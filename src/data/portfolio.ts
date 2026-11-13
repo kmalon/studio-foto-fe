@@ -10,7 +10,18 @@ export type Photo = {
     caption: string
     /** CSS object-position used when the photo is cropped on portrait screens. */
     focus?: string
+    /** Intrinsic size of `thumb` (build time, `?size` import) — masonry layout without measuring. */
+    width?: number
+    height?: number
 }
+
+export type ImageSize = { width: number; height: number }
+
+/** File name -> intrinsic size, from a `?size` glob (vite.config.ts `imageSize` plugin). */
+export const loadSizes = (sizes: Record<string, ImageSize>) =>
+    Object.fromEntries(
+        Object.entries(sizes).map(([path, size]) => [path.split('/').pop()!, size]),
+    )
 
 const loadImages = (images: Record<string, string>) =>
     Object.fromEntries(
@@ -31,9 +42,18 @@ const portfolioThumbs = loadImages(
     }),
 )
 
+const portfolioSizes = loadSizes(
+    import.meta.glob<ImageSize>('../assets/portfolio/{full,thumbs}/*.{jpg,jpeg,png,webp}', {
+        eager: true,
+        query: '?size',
+        import: 'default',
+    }),
+)
+
 export const photos: Photo[] = Object.entries(portfolioFull).map(([name, src], i) => ({
     src,
     thumb: portfolioThumbs[name] ?? src,
+    ...portfolioSizes[name],
     alt: altText[`portfolio/${name}`] ?? `Fotografia ślubna i portretowa — Angelika Malon, zdjęcie ${i + 1}`,
     caption: '',
 }))

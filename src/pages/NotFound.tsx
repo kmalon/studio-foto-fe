@@ -3,6 +3,7 @@ import PageShell from '../components/PageShell.tsx'
 import usePageMeta from '../hooks/usePageMeta.ts'
 import { BRAND } from '../seo/site.ts'
 import './NotFound.css'
+import { ROUTES } from '../routes.ts'
 
 const NotFound = () => {
     usePageMeta({
@@ -20,8 +21,8 @@ const NotFound = () => {
                     Strona, której szukasz, nie istnieje lub została przeniesiona.
                 </p>
                 <div className="not-found__actions">
-                    <Link to="/" className="btn">Strona główna</Link>
-                    <Link to="/galeria" className="btn">Galeria</Link>
+                    <Link to={ROUTES.home} className="btn">Strona główna</Link>
+                    <Link to={ROUTES.gallery} className="btn">Galeria</Link>
                 </div>
             </section>
         </PageShell>

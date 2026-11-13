@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { Link } from 'react-router'
 import Navbar from '../components/Navbar.tsx'
 import Footer from '../components/Footer.tsx'
@@ -6,8 +7,34 @@ import SessionLinks from '../components/SessionLinks.tsx'
 import { slides } from '../data/portfolio.ts'
 import usePageMeta from '../hooks/usePageMeta.ts'
 import './Start.css'
+import { ROUTES } from '../routes.ts'
+
+/**
+ * Freeze the slideshow height in px. Mobile browsers change the viewport height
+ * while the URL bar hides on scroll; a viewport-relative height would resize the
+ * slides and `object-fit: cover` would visibly rescale the photo. Recomputed only
+ * when the width changes (rotation, desktop resize), height-only resizes are ignored.
+ */
+const useStableStartHeight = () => {
+    useEffect(() => {
+        const root = document.documentElement
+        let width = 0
+        const update = () => {
+            if (window.innerWidth === width) return
+            width = window.innerWidth
+            root.style.setProperty('--start-h', `${window.innerHeight}px`)
+        }
+        update()
+        window.addEventListener('resize', update)
+        return () => {
+            window.removeEventListener('resize', update)
+            root.style.removeProperty('--start-h')
+        }
+    }, [])
+}
 
 const Start = () => {
+    useStableStartHeight()
     usePageMeta({
         title: 'Fotograf ślubny Warszawa | Angelika Malon',
         description:
@@ -52,9 +79,9 @@ const Start = () => {
                         </div>
 
                         <div className="home-intro__actions">
-                            <Link to="/portfolio" className="btn">Portfolio</Link>
-                            <Link to="/galeria" className="btn">Galeria</Link>
-                            <Link to="/kontakt" className="btn">Kontakt</Link>
+                            <Link to={ROUTES.portfolio} className="btn">Portfolio</Link>
+                            <Link to={ROUTES.gallery} className="btn">Galeria</Link>
+                            <Link to={ROUTES.contact} className="btn">Kontakt</Link>
                         </div>
 
                         <nav className="home-intro__sessions" aria-label="Sesje w galerii">

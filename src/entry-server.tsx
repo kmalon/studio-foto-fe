@@ -4,7 +4,7 @@ import { renderToString } from 'react-dom/server'
 import { StaticRouter } from 'react-router'
 import App from './App.tsx'
 import { HeadContext, headHtml, type HeadCollector } from './seo/head.ts'
-import { BASE_PATH, SITE_URL, absUrl, pageUrl, structuredData } from './seo/site.ts'
+import { BASE_PATH, ROUTER_BASENAME, SITE_URL, absUrl, pageUrl, structuredData } from './seo/site.ts'
 import { DEFAULT_IMAGE } from './hooks/usePageMeta.ts'
 import { photos, slides } from './data/portfolio.ts'
 import { sessions } from './data/gallery.ts'
@@ -18,7 +18,7 @@ export const render = (path: string) => {
     const html = renderToString(
         <StrictMode>
             <HeadContext.Provider value={collector}>
-                <StaticRouter basename={BASE_PATH} location={`${BASE_PATH}${path}`}>
+                <StaticRouter basename={ROUTER_BASENAME} location={`${BASE_PATH}${path}`}>
                     <App />
                 </StaticRouter>
             </HeadContext.Provider>

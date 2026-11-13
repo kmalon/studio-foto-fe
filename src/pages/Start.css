@@ -1,6 +1,8 @@
 .start {
     height: 100vh;
     height: 100svh;
+    /* frozen px height (Start.tsx): mobile URL bar show/hide must not resize -> rescale the slides */
+    height: var(--start-h, 100svh);
     overflow: hidden;
 }
 

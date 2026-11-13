@@ -13,12 +13,12 @@ import '@fontsource/jost/latin-400.css'
 import '@fontsource/jost/latin-ext-400.css'
 import './index.css'
 import App from './App.tsx'
-import { BASE_PATH } from './seo/site.ts'
+import { ROUTER_BASENAME } from './seo/site.ts'
 
 const root = document.getElementById('root')!
 const app = (
     <StrictMode>
-        <BrowserRouter basename={BASE_PATH}>
+        <BrowserRouter basename={ROUTER_BASENAME}>
             <App />
         </BrowserRouter>
     </StrictMode>
