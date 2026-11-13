@@ -8,6 +8,7 @@ export const ROUTES = {
     gallery: '/galeria/',
     about: '/o-mnie/',
     contact: '/kontakt/',
+    privacy: '/polityka-prywatnosci/',
 } as const
 
 export const sessionPath = (slug: string) => `/galeria/${slug}/`

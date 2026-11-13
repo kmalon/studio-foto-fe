@@ -5,6 +5,8 @@ import { BRAND } from '../seo/site.ts'
 import './Contact.css'
 import { EMAIL, WEB3FORMS_ACCESS_KEY } from '../data/AngelikaInfo.tsx'
 import aboutGrey from '../assets/about/aml_grey.jpg'
+import { Link } from 'react-router'
+import { ROUTES } from '../routes.ts'
 
 type Status = 'idle' | 'sending' | 'success' | 'error'
 
@@ -143,6 +145,11 @@ const Contact = () => {
                                     <a href={`mailto:${EMAIL}`}>{EMAIL}</a>.
                                 </>
                             )}
+                        </p>
+                        <p className="form__privacy">
+                            Wysyłając wiadomość, przekazujesz mi swoje dane wyłącznie w celu odpowiedzi
+                            na zapytanie. Szczegóły w{' '}
+                            <Link to={ROUTES.privacy}>polityce prywatności</Link>.
                         </p>
                     </form>
                 </div>

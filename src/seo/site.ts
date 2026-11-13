@@ -59,3 +59,6 @@ export const structuredData = (image: string) => ({
         },
     ],
 })
+
+/** GA4 Measurement ID (`.env` VITE_GA_ID). Empty -> no analytics, no cookie banner. */
+export const GA_ID = (import.meta.env.VITE_GA_ID ?? '').trim()

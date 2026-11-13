@@ -1,0 +1,50 @@
+.legal {
+    max-width: 72ch;
+    color: var(--muted);
+}
+
+.legal h2 {
+    font-size: clamp(1.35rem, 2.2vw, 1.75rem);
+    color: var(--fg);
+    margin: 2.75rem 0 1rem;
+}
+
+.legal h2:first-child {
+    margin-top: 0;
+}
+
+.legal a {
+    color: var(--fg);
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+}
+
+.legal a:hover {
+    color: var(--accent);
+}
+
+.legal ul {
+    padding-left: 1.25rem;
+}
+
+.legal li + li {
+    margin-top: 0.5rem;
+}
+
+.legal code {
+    color: var(--fg);
+    font-size: 0.9em;
+}
+
+.legal__btn {
+    margin-top: 0.5rem;
+    background: none;
+    color: var(--fg);
+    cursor: pointer;
+    font-family: inherit;
+}
+
+.legal__updated {
+    margin-top: 3rem;
+    font-size: 0.8rem;
+}

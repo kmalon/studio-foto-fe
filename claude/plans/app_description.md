@@ -28,12 +28,20 @@ Visual direction: minimal dark wedding-photographer portfolio.
 /galeria    Gallery    session cover cards (.photo-grid, caption = title), link to session
 /galeria/:slug Session overview.md (ReactMarkdown, raw) + PhotoMasonry + Lightbox; unknown slug -> NotFound
 /o-mnie     About      bio + ImageGallery of session covers; click slide -> its session; + SessionLinks
-/kontakt    Contact    details + web3forms form
+/kontakt    Contact    details + web3forms form (+ privacy note link)
+/polityka-prywatnosci Privacy  RODO policy (admin, form/web3forms, cookies+GA4 section only if GA_ID, rights, copyright section); "Zmień ustawienia cookies" btn
 *           NotFound   404 page (PageShell, links home/galeria, noindex)
 Old /about /contact /gallery /gallery/<folder> -> static meta-refresh stubs (build only).
 Internal links: ALWAYS via `src/routes.ts` (`ROUTES.*`, `sessionPath(slug)`), trailing slash (GH Pages 301s slash-less).
 ```
+App.tsx also renders `<Analytics/>` (after Routes: page_view per nav) + `<CookieConsent/>`.
 `ScrollToTop` in App.tsx resets scroll on navigation (non-data BrowserRouter doesn't); instant + useLayoutEffect (html has smooth scroll).
+
+## Analytics / consent
+- GA4 ID = `.env` `VITE_GA_ID` (-> `GA_ID` in seo/site.ts). Empty (current) -> no GA, no banner, no footer cookie btn, policy says no cookies.
+- `src/analytics/ga.ts`: opt-in; gtag.js injected only after accept (Consent Mode v2, ad_* denied, send_page_view false); choice in localStorage `cookie-consent`; external store (subscribe/getConsent/setConsent/openBanner/isBannerOpen); reject -> consent denied + delete `_ga*` cookies.
+- `hooks/useConsent.ts` useSyncExternalStore (server snapshot null/false -> banner never prerendered).
+- `components/CookieConsent.tsx/.css` fixed bottom bar, Odrzuć/Akceptuję equal. Footer bottom: "Polityka prywatności" link + "Ustawienia cookies" (reopen).
 
 ## Structure
 ```
@@ -57,7 +65,7 @@ src/
     Logo.tsx        `public/logo.svg` (potrace of old PNG, 34 KB; black line art, CSS invert + screen blend; `--logo` token + calc() neg. margins crop padding)
     SessionLinks.tsx crawlable <Link> list of sessions (Home, About)
     Slideshow.tsx/.css custom crossfade, auto 5s (`interval` prop), side arrows, ←/→, pauses on hidden tab, caption + counter; srcSet sizes=100vw, 1st slide fetchPriority high, neighbours loading=lazy; portrait screens: object-position from `--focus` (photo.focus) keeps people in crop
-    Footer.tsx/.css BRAND + contact + socials (SOCIALS) + copyright
+    Footer.tsx/.css BRAND + contact + socials (SOCIALS) + copyright + legal links
     PageShell.tsx   Navbar + <main class=shell-main> + Footer
     Lightbox.tsx/.css fullscreen photo overlay, Esc/click closes (Portfolio, Session)
     PhotoMasonry.tsx balanced masonry: ratios from Photo width/height (build time) -> deterministic layout, 1st batch (cols*3, SSR cols=3) in prerendered HTML; each photo to shortest col (flex cols); img width/height + aspect-ratio (no CLS), 1st row eager rest lazy; next batch when sentinel near viewport (IntersectionObserver); all shown -> `masonry--flush` crops last card per col so bottoms align
@@ -66,6 +74,7 @@ src/
     usePageMeta.ts  ({title (full), description, image?, noindex?}) -> SSR: writes HeadContext; client: applyHead. Every page MUST call it (prerender throws otherwise). DEFAULT_IMAGE = 1st slide
   pages/
     Start.tsx/.css  (`useStableStartHeight`: `--start-h` px = innerHeight, updated only on width change -> mobile URL bar doesn't rescale slides)
+    Privacy.tsx/.css legal page (.legal prose)
     Contact.tsx     web3forms: name, email, date (opt.), venue "Miejsce wydarzenia" (opt.), message
     Portfolio.tsx  Gallery.tsx  Session.tsx/.css  NotFound.tsx/.css
     About.tsx/.css  Contact.tsx/.css
