@@ -1,6 +1,6 @@
 import { Component, StrictMode, type ErrorInfo, type ReactNode } from 'react'
 import { createRoot } from 'react-dom/client'
-import { HashRouter } from 'react-router'
+import { BrowserRouter } from 'react-router'
 import './index.css'
 import App from './App.tsx'
 
@@ -37,9 +37,9 @@ class DebugBoundary extends Component<BoundaryProps, BoundaryState> {
 createRoot(document.getElementById('root')!).render(
     <StrictMode>
         <DebugBoundary>
-            <HashRouter>
+            <BrowserRouter basename={import.meta.env.BASE_URL.replace(/\/$/, '')}>
                 <App />
-            </HashRouter>
+            </BrowserRouter>
         </DebugBoundary>
     </StrictMode>,
 )

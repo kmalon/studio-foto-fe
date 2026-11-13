@@ -1,5 +1,6 @@
 import { useState, type FormEvent } from 'react'
 import PageShell from '../components/PageShell.tsx'
+import usePageMeta from '../hooks/usePageMeta.ts'
 import './Contact.css'
 import { EMAIL, WEB3FORMS_ACCESS_KEY } from '../data/AngelikaInfo.tsx'
 
@@ -12,6 +13,7 @@ const Contact = () => {
         setForm((prev) => ({ ...prev, [field]: e.target.value }))
 
     const [status, setStatus] = useState<Status>('idle')
+    usePageMeta('Kontakt', 'Kontakt — zapytaj o termin sesji lub reportażu ślubnego.')
 
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault()

@@ -4,6 +4,7 @@ import ImageGallery from 'react-image-gallery'
 import 'react-image-gallery/styles/css/image-gallery.css'
 import PageShell from '../components/PageShell.tsx'
 import { sessions } from '../data/gallery.ts'
+import usePageMeta from '../hooks/usePageMeta.ts'
 import './About.css'
 import aboutGrey from '../assets/about/aml_grey.jpg'
 
@@ -18,6 +19,10 @@ const items = sessions.map(({ cover }) => ({
 const About = () => {
     const gallery = useRef<ImageGallery>(null)
     const navigate = useNavigate()
+    usePageMeta(
+        'O mnie',
+        'Angelika Malon — fotografka z Warszawy. Zapisuję czułość, gesty i prawdziwe chwile.',
+    )
 
     return (
         <PageShell>

@@ -6,10 +6,11 @@ import Gallery from './pages/Gallery.tsx'
 import Session from './pages/Session.tsx'
 import About from './pages/About.tsx'
 import Contact from './pages/Contact.tsx'
+import NotFound from './pages/NotFound.tsx'
 import './App.css'
 
 /**
- * HashRouter keeps the scroll position between routes — reset it on navigation.
+ * BrowserRouter (non-data router) keeps the scroll position between routes — reset it on navigation.
  * Instant + layout effect: CSS `scroll-behavior: smooth` would animate it and the
  * route swap changes page height mid-animation, leaving the new page scrolled down.
  */
@@ -34,7 +35,7 @@ function App() {
                 <Route path="/gallery/:slug" element={<Session />} />
                 <Route path="/about" element={<About />} />
                 <Route path="/contact" element={<Contact />} />
-                <Route path="*" element={<Start />} />
+                <Route path="*" element={<NotFound />} />
             </Routes>
         </>
     )

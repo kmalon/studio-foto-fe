@@ -6,7 +6,7 @@ Visual direction: minimal dark wedding-photographer portfolio.
 
 ## Stack
 - React 19 + TypeScript, Vite 6
-- react-router 7 (`HashRouter` — required for GH Pages)
+- react-router 7 (`BrowserRouter`, basename = `BASE_URL` sans trailing `/`)
 - `react-image-gallery` (About page gallery)
 - `react-markdown` (gallery session overview)
 - Plain CSS + custom properties (no framework)
@@ -14,6 +14,7 @@ Visual direction: minimal dark wedding-photographer portfolio.
 
 ## Deploy
 - GitHub Pages via `gh-pages -d dist` (`npm run deploy`)
+- `build` runs `scripts/spa-routes.mjs` after vite: copies dist/index.html -> dist/<route>/index.html (portfolio, gallery, about, contact, gallery/<slug> per assets folder) + dist/404.html. Known routes HTTP 200, unknown HTTP 404 -> app renders NotFound. New route => add to script.
 - `vite.config.ts` base: `/studio-foto-fe/`
 - homepage: https://kmalon.github.io/studio-foto-fe
 - workflow: `.github/workflows/jekyll-gh-pages.yml`
@@ -23,18 +24,18 @@ Visual direction: minimal dark wedding-photographer portfolio.
 /           Start      fullscreen Slideshow only (Navbar, no footer)
 /portfolio  Portfolio  PhotoMasonry + Lightbox
 /gallery    Gallery    session cover cards (.photo-grid), link to session
-/gallery/:slug Session overview.md (ReactMarkdown, raw) + PhotoMasonry + Lightbox; unknown slug -> /gallery
+/gallery/:slug Session overview.md (ReactMarkdown, raw) + PhotoMasonry + Lightbox; unknown slug -> NotFound
 /about      About      bio + ImageGallery of session covers (1 per session); click slide -> its /gallery/:slug
 /contact    Contact    details + mailto form
-*           -> Start
+*           NotFound   404 page (PageShell, links home/gallery, meta robots noindex)
 ```
-`ScrollToTop` in App.tsx resets scroll on navigation (HashRouter doesn't); instant + useLayoutEffect (html has smooth scroll).
+`ScrollToTop` in App.tsx resets scroll on navigation (non-data BrowserRouter doesn't); instant + useLayoutEffect (html has smooth scroll).
 
 ## Structure
 ```
 index.html          lang=pl, meta, Google Fonts, inline SVG favicon
 src/
-  main.tsx          HashRouter + StrictMode
+  main.tsx          BrowserRouter + StrictMode
   App.tsx           routes + ScrollToTop
   index.css         reset + base type, imports styles/tokens.css
   App.css           .container .section .eyebrow .btn .link-underline .photo-grid .photo-card .masonry .masonry__col
@@ -52,11 +53,13 @@ src/
     PhotoMasonry.tsx balanced masonry: batch (cols*3) preloaded via `new Image()` -> h/w ratios -> each photo to shortest col (flex cols); next batch when current measured + sentinel near viewport (IntersectionObserver) -> unrendered imgs not fetched; all shown -> `masonry--flush` crops last card per col so bottoms align
   hooks/
     useColumnCount.ts matchMedia cols 3 / 2 (<=900) / 1 (<=560)
+    usePageMeta.ts  (title, desc?) -> document.title `<title> — Studio Foto` + updates index.html meta description; every page calls it (Session: 1st/2nd overview line)
   pages/
-    Start.tsx/.css  Home.tsx/.css (unrouted)  Portfolio.tsx  Gallery.tsx  Session.tsx/.css
+    Start.tsx/.css  Portfolio.tsx  Gallery.tsx  Session.tsx/.css  NotFound.tsx/.css
     About.tsx/.css  Contact.tsx/.css
   assets/         logo.png, start/ (slides), portfolio/{full,thumbs}, about/, gallery/<session>/{full,thumbial,overview.md}
-public/           empty
+scripts/spa-routes.mjs post-build route HTML copies (see Deploy)
+public/           none
 ```
 
 ## Design tokens (`src/styles/tokens.css`)
@@ -78,5 +81,4 @@ Images: own photos in src/assets, webp (globs accept jpg/jpeg/png/webp; `convert
 - Pages wrap content in `<PageShell>` (except Start: Navbar only)
 
 ## Known debt
-- Home page unrouted (no `/home`)
 - Google Fonts is an external request (system fallbacks in stack)
