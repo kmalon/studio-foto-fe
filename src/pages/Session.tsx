@@ -17,27 +17,19 @@ const Session = () => {
     return session ? <SessionView key={session.slug} session={session} /> : <NotFound />
 }
 
-/** First overview lines (markdown markers + trailing dot stripped) -> title, description. */
-const metaFromOverview = (overview: string, fallback: string) => {
-    const lines = overview
-        .split('\n')
-        .map((line) => line.replace(/^[#>*\s-]+/, '').trim())
-        .filter(Boolean)
-    return {
-        title: lines[0]?.replace(/\.$/, '') || fallback,
-        description: lines[1],
-    }
-}
-
 const SessionView = ({ session }: { session: SessionData }) => {
     const [active, setActive] = useState<Photo | null>(null)
-    const { title, description } = metaFromOverview(session.overview, session.slug)
-    usePageMeta(title, description)
+    const { title, description } = session
+    usePageMeta({
+        title: `${title} – fotograf Warszawa | Angelika Malon`,
+        description: `${description ? `${description} ` : ''}${title} — ${session.photos.length} zdjęć. Angelika Malon Fotografia, fotograf ślubny i rodzinny z Warszawy.`,
+        image: session.photos[0]?.src,
+    })
 
     return (
         <PageShell>
             <section className="container page-head">
-                <Link to="/gallery" className="link-underline session__back">
+                <Link to="/galeria" className="link-underline session__back">
                     ← Wróć do galerii
                 </Link>
                 <div className="session__overview">

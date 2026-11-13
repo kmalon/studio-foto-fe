@@ -1,0 +1,17 @@
+As Frontend Developer and React Specialist and SEO Specialist:
+- Remove the temporary debug script from index.html and the DebugBoundary from main.tsx.
+- Pre-render every page to static HTML at build time (e.g. vite-react-ssg or React Router prerender), so content, titles and descriptions are in the HTML.
+- Add an <h1> and 100–300 words of text to the home page, plus links to Portfolio, Galeria and Kontakt, and the footer.
+- Brand name “Angelika Malon Fotografia” use it everywhere instead of “Studio Foto”.
+- Rewrite page titles and descriptions around search phrases “Fotograf ślubny Warszawa | Angelika Malon”.
+- Add JSON-LD structured data: ProfessionalService (name, URL, logo, email, area served, Instagram/Facebook) and Person.
+- Write a descriptive, unique alt text for each photo, not the generic text or folder names used now.
+- Add Open Graph and Twitter tags (og:title, og:description, og:image) to every page.
+- Add <link rel="canonical"> to every page.
+- Change URLs to Polish with hyphens: /o-mnie, /kontakt, /galeria/.... Remove the number prefixes and underscores from session slugs.
+- Replace the 572 KB logo PNG with an SVG.
+- Add srcset (responsive sizes) to the slideshow images, and fetchpriority="high" to the first slide.
+- Add Self-host the Google Fonts.
+- Add an image sitemap so Google can find all portfolio photos.
+- Add real <a href> links to session pages from the Home and About pages.
+- Put noindex directly in the static 404.html.
