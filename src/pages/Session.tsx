@@ -1,19 +1,38 @@
 import { useState } from 'react'
-import { Link, Navigate, useParams } from 'react-router'
+import { Link, useParams } from 'react-router'
 import ReactMarkdown from 'react-markdown'
 import PageShell from '../components/PageShell.tsx'
 import Lightbox from '../components/Lightbox.tsx'
 import PhotoMasonry from '../components/PhotoMasonry.tsx'
-import { getSession } from '../data/gallery.ts'
+import { getSession, type Session as SessionData } from '../data/gallery.ts'
 import type { Photo } from '../data/portfolio.ts'
+import usePageMeta from '../hooks/usePageMeta.ts'
+import NotFound from './NotFound.tsx'
 import './Session.css'
 
 const Session = () => {
     const { slug } = useParams()
     const session = getSession(slug)
-    const [active, setActive] = useState<Photo | null>(null)
 
-    if (!session) return <Navigate to="/gallery" replace />
+    return session ? <SessionView key={session.slug} session={session} /> : <NotFound />
+}
+
+/** First overview lines (markdown markers + trailing dot stripped) -> title, description. */
+const metaFromOverview = (overview: string, fallback: string) => {
+    const lines = overview
+        .split('\n')
+        .map((line) => line.replace(/^[#>*\s-]+/, '').trim())
+        .filter(Boolean)
+    return {
+        title: lines[0]?.replace(/\.$/, '') || fallback,
+        description: lines[1],
+    }
+}
+
+const SessionView = ({ session }: { session: SessionData }) => {
+    const [active, setActive] = useState<Photo | null>(null)
+    const { title, description } = metaFromOverview(session.overview, session.slug)
+    usePageMeta(title, description)
 
     return (
         <PageShell>
@@ -28,7 +47,7 @@ const Session = () => {
 
             <section className="section">
                 <div className="container">
-                    <PhotoMasonry key={session.slug} photos={session.photos} onSelect={setActive} />
+                    <PhotoMasonry photos={session.photos} onSelect={setActive} />
                 </div>
             </section>
 
