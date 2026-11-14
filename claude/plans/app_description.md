@@ -18,7 +18,7 @@ Visual direction: minimal dark wedding-photographer portfolio.
 - SSR-safe rule: render output must match server (no window in render; `useColumnCount` = useSyncExternalStore w/ server snapshot 3).
 - `vite.config.ts` base: `/` (site at domain root); custom plugin `imageSize`: `?size` import -> `{width,height}` via sharp metadata (no emitted file)
 - homepage: https://angelikamalon.pl
-- workflow: `.github/workflows/jekyll-gh-pages.yml`
+- workflow: `.github/workflows/deploy.yml` (push master -> npm ci + build -> Pages)
 
 ## Routes (`src/App.tsx`)
 ```
@@ -95,7 +95,7 @@ public/site.webmanifest icons 192/512
 
 ## Content
 Copy Polish; brand "Angelika Malon Fotografia" (BRAND const). Titles pattern "<Page> | fotograf … Warszawa | Łuków | Angelika Malon". Separators: ` | ` between label fragments (titles/alts/meta), plain hyphen ` - ` in prose; no `·`/`–`/`—`. City pair "Warszawa | Łuków" (prose: "z Warszawy i Łukowa", "w Warszawie, Łukowie"); Start h1 city in `.nowrap`; hyphens in headings wrapped in `.h-dash` (Jost; Cormorant `-` is slanted).
-Images: own photos in src/assets, webp (globs accept jpg/jpeg/png/webp; `convert-images.sh` converts). New gallery session = new folder in assets/gallery (auto route/sitemap; add alt entries to altText.ts). New start image -> add entry to `slideFocus` if people off-center. macOS junk (`.DS_Store`, `._*`) gitignored.
+Images: own photos in src/assets, webp, named `NN-opis-z-alt.webp` (NN zero-padded = display order, rest = slug of alt text; thumbs/thumbial same name) (globs accept jpg/jpeg/png/webp; `convert-images.sh` converts). New gallery session = new folder in assets/gallery (auto route/sitemap; add alt entries to altText.ts). New start image -> add entry to `slideFocus` if people off-center. macOS junk (`.DS_Store`, `._*`) gitignored.
 
 ## Conventions
 - `.tsx`/`.ts` extension included in imports
