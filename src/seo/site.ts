@@ -16,7 +16,7 @@ export const SOCIALS = {
     facebook: 'https://www.facebook.com/Malonaangelika',
 }
 
-export const AREA_SERVED = ['Warszawa', 'województwo mazowieckie', 'Polska']
+export const AREA_SERVED = ['Warszawa', 'Łuków', 'województwo mazowieckie', 'województwo lubelskie', 'Polska']
 
 /** Logo served from public/ — stable (unhashed) URL for JSON-LD. */
 export const LOGO_PATH = `${BASE_PATH}/logo.svg`
@@ -36,7 +36,7 @@ export const structuredData = (image: string) => ({
             '@id': `${SITE_URL}/#business`,
             name: BRAND,
             description:
-                'Fotograf ślubny Warszawa | Łuków - reportaż ślubny, sesje narzeczeńskie, rodzinne, ciążowe i portretowe.',
+                'Fotograf ślubny Warszawa | Łuków | reportaż ślubny, sesje narzeczeńskie, rodzinne, ciążowe i portretowe.',
             url: `${SITE_URL}/`,
             logo: absUrl(LOGO_PATH),
             image: absUrl(image),

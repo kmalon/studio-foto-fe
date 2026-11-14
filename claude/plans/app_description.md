@@ -1,7 +1,7 @@
 # App Description
 
 ## What
-Photographer portfolio site, brand "Angelika Malon Fotografia" (SPA, prerendered). Polish content. Static, no backend. SEO target: "Fotograf ślubny Warszawa | Angelika Malon".
+Photographer portfolio site, brand "Angelika Malon Fotografia" (SPA, prerendered). Polish content. Static, no backend. SEO target: "Fotograf ślubny Warszawa | Łuków | Angelika Malon" (areas: Warszawa + Łuków everywhere).
 Visual direction: minimal dark wedding-photographer portfolio.
 
 ## Stack
@@ -54,7 +54,7 @@ src/
   App.tsx           routes + ScrollToTop
   routes.ts         ROUTES (trailing-slash link targets) + sessionPath
   index.css         reset + base type, imports styles/tokens.css
-  App.css           .container .section .eyebrow .btn .link-underline .photo-grid .photo-card .masonry .masonry__col
+  App.css           .container .section .eyebrow .btn .link-underline .nowrap .h-dash .photo-grid .photo-card .masonry .masonry__col
   styles/tokens.css design tokens (see below)
   data/portfolio.ts Photo type (opt. `focus` = object-position, `srcSet`, `width`/`height` = build-time size via `?size` glob, `loadSizes`); `photos` (assets/portfolio full+thumbs paired by name) + `featured` + `slides` (assets/start; srcSet via imagetools glob query 640/1024/1600/2048; `slideFocus` map file->focus)
   data/gallery.ts   `sessions`/`getSession(slug)` from assets/gallery/<folder>/{full,thumbial,overview.md}; slug = `toSlug(folder)` (drop `N_` prefix, `_`->`-`, PL diacritics stripped); title/description = overview lines 1/2; sorted desc by folder (numeric-aware); thumb = same-name thumbial ?? full; sizes from `?size` glob (thumbial wins); cover = 1st thumbial ?? 1st full
@@ -94,7 +94,7 @@ public/site.webmanifest icons 192/512
 - Dark-only. Headings fluid via `clamp()`.
 
 ## Content
-Copy Polish; brand "Angelika Malon Fotografia" (BRAND const). Titles pattern "<Page> – … | Angelika Malon".
+Copy Polish; brand "Angelika Malon Fotografia" (BRAND const). Titles pattern "<Page> | fotograf … Warszawa | Łuków | Angelika Malon". Separators: ` | ` between label fragments (titles/alts/meta), plain hyphen ` - ` in prose; no `·`/`–`/`—`. City pair "Warszawa | Łuków" (prose: "z Warszawy i Łukowa", "w Warszawie, Łukowie"); Start h1 city in `.nowrap`; hyphens in headings wrapped in `.h-dash` (Jost; Cormorant `-` is slanted).
 Images: own photos in src/assets, webp (globs accept jpg/jpeg/png/webp; `convert-images.sh` converts). New gallery session = new folder in assets/gallery (auto route/sitemap; add alt entries to altText.ts). New start image -> add entry to `slideFocus` if people off-center. macOS junk (`.DS_Store`, `._*`) gitignored.
 
 ## Conventions

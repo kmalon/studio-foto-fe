@@ -41,7 +41,7 @@ export const pages: Page[] = [
     { path: '/portfolio', images: photos },
     { path: '/galeria', images: sessions.map((s) => ({ src: s.photos[0].src, alt: s.title })) },
     ...sessions.map((s) => ({ path: `/galeria/${s.slug}`, images: s.photos })),
-    { path: '/o-mnie', images: [{ src: aboutGrey, alt: 'Angelika Malon - fotograf ślubny z Warszawy' }] },
+    { path: '/o-mnie', images: [{ src: aboutGrey, alt: 'Angelika Malon | fotograf ślubny z Warszawy i Łukowa' }] },
     { path: '/kontakt', images: [] },
     { path: '/polityka-prywatnosci', images: [] },
 ]

@@ -54,7 +54,7 @@ export const photos: Photo[] = Object.entries(portfolioFull).map(([name, src], i
     src,
     thumb: portfolioThumbs[name] ?? src,
     ...portfolioSizes[name],
-    alt: altText[`portfolio/${name}`] ?? `Fotografia ślubna i portretowa - Angelika Malon, zdjęcie ${i + 1}`,
+    alt: altText[`portfolio/${name}`] ?? `Fotografia ślubna i portretowa | Angelika Malon, zdjęcie ${i + 1}`,
     caption: '',
 }))
 
@@ -101,7 +101,7 @@ const slideFocus: Record<string, string> = {
 export const slides: Photo[] = Object.entries(startImages).map(([name, src], i) => ({
     src,
     srcSet: startSrcSets[name],
-    alt: altText[`start/${name}`] ?? `Fotograf ślubny Warszawa | Łuków - Angelika Malon, zdjęcie ${i + 1}`,
+    alt: altText[`start/${name}`] ?? `Fotograf ślubny Warszawa | Łuków | Angelika Malon, zdjęcie ${i + 1}`,
     caption: '',
     focus: slideFocus[name],
 }))

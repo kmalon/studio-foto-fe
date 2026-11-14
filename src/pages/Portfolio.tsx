@@ -8,9 +8,9 @@ import usePageMeta from '../hooks/usePageMeta.ts'
 const Portfolio = () => {
     const [active, setActive] = useState<Photo | null>(null)
     usePageMeta({
-        title: 'Portfolio – fotografia ślubna Warszawa | Angelika Malon',
+        title: 'Portfolio | fotografia ślubna Warszawa | Łuków | Angelika Malon',
         description:
-            'Portfolio fotografa ślubnego z Warszawy: reportaże ślubne, plenery, sesje narzeczeńskie, rodzinne i portretowe. Zobacz wybrane kadry Angeliki Malon.',
+            'Portfolio fotografa ślubnego z Warszawy i Łukowa: reportaże ślubne, plenery, sesje narzeczeńskie, rodzinne i portretowe. Zobacz wybrane kadry Angeliki Malon.',
         image: photos[0]?.src,
     })
 
