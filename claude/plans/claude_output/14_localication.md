@@ -31,3 +31,20 @@ No questions
 
 ## Branch
 feature/14_localization_lukow_separators
+
+---
+
+# 14 fix: dot -> pipe, en dash -> hyphen
+
+## Issue
+After plan 14 user wants `·` separators -> `|`, and en dash `–` -> shorter plain hyphen `-`.
+
+## Changes
+- All user-facing ` · ` -> ` | ` (titles, meta desc, alts, footer, JSON-LD desc, Start h1 `.nowrap` span `Warszawa | Łuków`, contact email subject, index.html).
+- All user-facing ` – ` -> ` - ` (Start, Contact, Portfolio, Privacy, About prose incl. pre-existing About ones).
+- Code comments untouched.
+- `claude/plans/app_description.md`: separators rule -> `|` + ` - `.
+- Also included user edits: About `<br />`, gallery overview typo "nad wodą".
+
+## Verification
+- `grep -rn " · \| – " src index.html` -> none; `npm run build` ok; dist h1/title checked.

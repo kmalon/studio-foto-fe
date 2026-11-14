@@ -1,3 +1,3 @@
             Sesja rodzinno-brzuszkowa.
             
-Sesja rodzinno-brzuszkowa na wodą!
+Sesja rodzinno-brzuszkowa nad wodą!

@@ -1,7 +1,7 @@
 # App Description
 
 ## What
-Photographer portfolio site, brand "Angelika Malon Fotografia" (SPA, prerendered). Polish content. Static, no backend. SEO target: "Fotograf ślubny Warszawa · Łuków | Angelika Malon" (areas: Warszawa + Łuków everywhere).
+Photographer portfolio site, brand "Angelika Malon Fotografia" (SPA, prerendered). Polish content. Static, no backend. SEO target: "Fotograf ślubny Warszawa | Łuków | Angelika Malon" (areas: Warszawa + Łuków everywhere).
 Visual direction: minimal dark wedding-photographer portfolio.
 
 ## Stack
@@ -94,7 +94,7 @@ public/site.webmanifest icons 192/512
 - Dark-only. Headings fluid via `clamp()`.
 
 ## Content
-Copy Polish; brand "Angelika Malon Fotografia" (BRAND const). Titles pattern "<Page> · fotograf … Warszawa · Łuków | Angelika Malon". Separators: `·` between label fragments (titles/alts/meta), en dash `–` in prose; no ` - `/`—`. City pair "Warszawa · Łuków" (prose: "z Warszawy i Łukowa", "w Warszawie, Łukowie"); Start h1 city in `.nowrap`.
+Copy Polish; brand "Angelika Malon Fotografia" (BRAND const). Titles pattern "<Page> | fotograf … Warszawa | Łuków | Angelika Malon". Separators: ` | ` between label fragments (titles/alts/meta), plain hyphen ` - ` in prose; no `·`/`–`/`—`. City pair "Warszawa | Łuków" (prose: "z Warszawy i Łukowa", "w Warszawie, Łukowie"); Start h1 city in `.nowrap`.
 Images: own photos in src/assets, webp (globs accept jpg/jpeg/png/webp; `convert-images.sh` converts). New gallery session = new folder in assets/gallery (auto route/sitemap; add alt entries to altText.ts). New start image -> add entry to `slideFocus` if people off-center. macOS junk (`.DS_Store`, `._*`) gitignored.
 
 ## Conventions

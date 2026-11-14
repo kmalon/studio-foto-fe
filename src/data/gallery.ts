@@ -97,7 +97,7 @@ export const sessions: Session[] = Object.keys(fullBySession)
             src,
             thumb: thumbs[name] ?? src,
             ...sizes[name],
-            alt: altText[`gallery/${folder}/${name}`] ?? `${title} · zdjęcie ${i + 1}`,
+            alt: altText[`gallery/${folder}/${name}`] ?? `${title} | zdjęcie ${i + 1}`,
             caption: '',
         }))
         return {

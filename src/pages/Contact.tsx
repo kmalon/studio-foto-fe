@@ -20,9 +20,9 @@ const Contact = () => {
 
     const [status, setStatus] = useState<Status>('idle')
     usePageMeta({
-        title: 'Kontakt · fotograf ślubny Warszawa · Łuków | Angelika Malon',
+        title: 'Kontakt | fotograf ślubny Warszawa | Łuków | Angelika Malon',
         description:
-            'Zapytaj o wolny termin reportażu ślubnego lub sesji zdjęciowej w Warszawie, Łukowie i całej Polsce. Napisz do Angeliki Malon – odpowiadam w ciągu dwóch dni.',
+            'Zapytaj o wolny termin reportażu ślubnego lub sesji zdjęciowej w Warszawie, Łukowie i całej Polsce. Napisz do Angeliki Malon - odpowiadam w ciągu dwóch dni.',
         image: aboutGrey,
     })
 
@@ -35,7 +35,7 @@ const Contact = () => {
                 headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
                 body: JSON.stringify({
                     access_key: WEB3FORMS_ACCESS_KEY,
-                    subject: `Zapytanie o termin · ${form.name || 'strona www'} | ${BRAND}`,
+                    subject: `Zapytanie o termin | ${form.name || 'strona www'} | ${BRAND}`,
                     from_name: form.name,
                     name: form.name,
                     email: form.email,
@@ -59,7 +59,7 @@ const Contact = () => {
                 <p className="eyebrow">Kontakt</p>
                 <h1>Napisz kilka słów</h1>
                 <p className="lead">
-                    Termin, miejsce, klimat jaki sobie wyobrażacie – reszta wyjdzie w rozmowie.
+                    Termin, miejsce, klimat jaki sobie wyobrażacie - reszta wyjdzie w rozmowie.
                     <br />
                     Odpisuję zwykle w ciągu dwóch dni roboczych.
                     <br />

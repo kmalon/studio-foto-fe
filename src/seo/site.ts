@@ -36,7 +36,7 @@ export const structuredData = (image: string) => ({
             '@id': `${SITE_URL}/#business`,
             name: BRAND,
             description:
-                'Fotograf ślubny Warszawa · Łuków · reportaż ślubny, sesje narzeczeńskie, rodzinne, ciążowe i portretowe.',
+                'Fotograf ślubny Warszawa | Łuków | reportaż ślubny, sesje narzeczeńskie, rodzinne, ciążowe i portretowe.',
             url: `${SITE_URL}/`,
             logo: absUrl(LOGO_PATH),
             image: absUrl(image),
