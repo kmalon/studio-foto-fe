@@ -48,3 +48,18 @@ After plan 14 user wants `·` separators -> `|`, and en dash `–` -> shorter pl
 
 ## Verification
 - `grep -rn " · \| – " src index.html` -> none; `npm run build` ok; dist h1/title checked.
+
+---
+
+# 14 fix 2: askew dash in Start h1
+
+## Issue
+Dash in Start page title (h1) looks askew. Cause: Cormorant Garamond (h1 font) draws `-` as slanted stroke.
+
+## Changes
+- `src/pages/Start.tsx` h1: hyphen wrapped `<span className="h-dash">-</span>` (text/SEO unchanged).
+- `src/App.css`: `.h-dash { font-family: var(--font-ui); font-weight: 200; }` — straight Jost hyphen, reusable in headings.
+- `claude/plans/app_description.md`: `.h-dash` util noted.
+
+## Verification
+- `npm run build` ok; dist h1 has span. Visual check in browser pending (no headless browser in env).

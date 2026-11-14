@@ -81,6 +81,12 @@
     white-space: nowrap;
 }
 
+/* Cormorant Garamond draws "-" as a slanted stroke; render heading dashes in the straight UI font */
+.h-dash {
+    font-family: var(--font-ui);
+    font-weight: 200;
+}
+
 /* --- image grid (shared by Home preview + Portfolio) --- */
 .photo-grid {
     display: grid;

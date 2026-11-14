@@ -53,7 +53,7 @@ const Start = () => {
                 <section className="section home-intro">
                     <div className="container home-intro__inner">
                         <p className="eyebrow">Angelika Malon Fotografia</p>
-                        <h1>Fotograf ślubny <span className="nowrap">Warszawa | Łuków</span> - reportaż pełen prawdziwych emocji</h1>
+                        <h1>Fotograf ślubny <span className="nowrap">Warszawa | Łuków</span> <span className="h-dash">-</span> reportaż pełen prawdziwych emocji</h1>
                         <div className="home-intro__text">
                             <p>
                                 Nazywam się Angelika Malon i jestem fotografem ślubnym z Warszawy i Łukowa.
