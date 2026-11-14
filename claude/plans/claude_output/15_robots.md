@@ -23,3 +23,37 @@ No questions
 
 ## Branch
 feature/15_robots_sitemap_verify
+
+---
+
+# Fix 15.1 — descriptive image file names
+
+
+## Issue (user: "change images names according to what is on it, but not change the order of the photo")
+Image file names are camera/number names (`5F9A5279 2.webp`, `0O4A7466.webp`, `01.webp`). They show up in public URLs and the image sitemap, so they carry no SEO value. Rename each file to describe what is in the photo, keeping the current photo order.
+
+## Facts
+- Order = plain filename sort (portfolio/start: glob order; gallery: `.sort()`). Confirmed against the current sitemap.
+- `altText.ts`: 266 entries = all 266 photos (start 14, portfolio 177, gallery 19+56). The alt texts describe each photo (written in plan 10 after viewing the photos) -> use them as the name source.
+- Pairs: portfolio full<->thumbs and gallery full<->thumbial are matched by identical file name; all pairs complete.
+- Name refs: `altText.ts` keys, `portfolio.ts` `slideFocus` keys. Nothing else (old plan docs only).
+
+## Steps
+1. One-off node script (scratchpad): per dir (start, portfolio/full, gallery/<folder>/full), in current sort order -> `NN-<slug>.webp`.
+   - NN = zero-padded index (start 2 digits, portfolio 3, gallery 2) -> sort order unchanged.
+   - slug = alt text: lowercase, PL diacritics -> ascii (same map as `toSlug`), non-alnum -> `-`, cut at word boundary ≤ 60 chars.
+   - `git mv` the full file + its thumbs/thumbial twin to the same new name.
+2. Rewrite `altText.ts` keys + `slideFocus` keys via the same old->new map.
+3. Leave `about/aml_grey.jpg`, gallery folder names (slug/URL), and alt text values unchanged.
+4. app_description Content: new images named `NN-opis.webp` (prefix = order, desc from alt).
+
+## Verification
+- `npm run lint`, `npm run build` ok.
+- Per page, the alt sequence in the new sitemap/prerendered HTML matches the old one (order kept). No generic fallback alts (every key maps to a file). Thumbs paired (photo-count check).
+- No spaces or diacritics in `dist/assets` names.
+
+## Unresolved questions
+No questions
+
+## Branch
+feature/15_robots_sitemap_verify
