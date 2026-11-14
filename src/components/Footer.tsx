@@ -11,7 +11,7 @@ const Footer = () => (
             <div className="footer__top">
                 <div className="footer__col">
                     <div className="footer__brand">{BRAND}</div>
-                    <p>Fotograf ślubny i rodzinny. Warszawa i cała Polska.</p>
+                    <p>Fotograf ślubny i rodzinny. Warszawa · Łuków i cała Polska.</p>
                 </div>
 
                 <div className="footer__col">

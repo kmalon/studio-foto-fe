@@ -42,13 +42,13 @@ const Privacy = () => {
                         Wysyłając wiadomość przez <Link to={ROUTES.contact}>formularz kontaktowy</Link>{' '}
                         lub e-mailem, przekazujesz mi imię, adres e-mail, treść wiadomości oraz
                         opcjonalnie datę i miejsce wydarzenia. Używam ich wyłącznie, aby odpowiedzieć
-                        na zapytanie i przygotować ofertę (art. 6 ust. 1 lit. b RODO - działania przed
-                        zawarciem umowy; art. 6 ust. 1 lit. f RODO - prowadzenie korespondencji).
+                        na zapytanie i przygotować ofertę (art. 6 ust. 1 lit. b RODO – działania przed
+                        zawarciem umowy; art. 6 ust. 1 lit. f RODO – prowadzenie korespondencji).
                     </p>
                     <p>
                         Wiadomości z formularza są przesyłane przez usługę Web3Forms na moją skrzynkę
                         Gmail (Google). Dane przechowuję przez czas korespondencji, a jeśli nie dojdzie
-                        do współpracy - nie dłużej niż 12 miesięcy od ostatniej wiadomości. Podanie
+                        do współpracy – nie dłużej niż 12 miesięcy od ostatniej wiadomości. Podanie
                         danych jest dobrowolne, ale bez adresu e-mail nie mogę odpowiedzieć.
                     </p>
 
@@ -62,7 +62,7 @@ const Privacy = () => {
                             </p>
                             <ul>
                                 <li>
-                                    <code>_ga</code>, <code>_ga_*</code> - Google Analytics, statystyki
+                                    <code>_ga</code>, <code>_ga_*</code> – Google Analytics, statystyki
                                     odwiedzin; ważność do 2 lat.
                                 </li>
                                 <li>
@@ -107,7 +107,7 @@ const Privacy = () => {
                         Wszystkie zdjęcia i teksty na tej stronie są utworami w rozumieniu ustawy o
                         prawie autorskim i prawach pokrewnych. Autorką i właścicielką praw jest {PERSON}.
                         Kopiowanie, pobieranie, publikowanie, modyfikowanie lub wykorzystywanie zdjęć -
-                        w całości lub we fragmentach, także w mediach społecznościowych - bez mojej
+                        w całości lub we fragmentach, także w mediach społecznościowych – bez mojej
                         pisemnej zgody jest zabronione. Wszystkie prawa zastrzeżone.
                     </p>
                     <p>

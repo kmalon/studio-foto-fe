@@ -22,8 +22,8 @@ const SessionView = ({ session }: { session: SessionData }) => {
     const [active, setActive] = useState<Photo | null>(null)
     const { title, description } = session
     usePageMeta({
-        title: `${title} – fotograf Warszawa | Angelika Malon`,
-        description: `${description ? `${description} ` : ''}${title} - ${session.photos.length} zdjęć. Angelika Malon Fotografia, fotograf ślubny i rodzinny z Warszawy.`,
+        title: `${title} · fotograf Warszawa · Łuków | Angelika Malon`,
+        description: `${description ? `${description} ` : ''}${title} · ${session.photos.length} zdjęć. Angelika Malon Fotografia, fotograf ślubny i rodzinny z Warszawy i Łukowa.`,
         image: session.photos[0]?.src,
     })
 

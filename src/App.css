@@ -76,6 +76,11 @@
     color: var(--accent);
 }
 
+/* keep a phrase (e.g. city pair in headings) on one line */
+.nowrap {
+    white-space: nowrap;
+}
+
 /* --- image grid (shared by Home preview + Portfolio) --- */
 .photo-grid {
     display: grid;
