@@ -22,9 +22,9 @@ const About = () => {
     const gallery = useRef<ImageGallery>(null)
     const navigate = useNavigate()
     usePageMeta({
-        title: 'O mnie – fotograf ślubny z Warszawy | Angelika Malon',
+        title: 'O mnie - fotograf ślubny z Warszawy | Angelika Malon',
         description:
-            'Angelika Malon — fotograf ślubny i rodzinny z Warszawy. Reportaż pełen emocji, czułości i prawdziwych chwil. Poznaj mnie i mój sposób pracy.',
+            'Angelika Malon - fotograf ślubny i rodzinny z Warszawy. Reportaż pełen emocji, czułości i prawdziwych chwil. Poznaj mnie i mój sposób pracy.',
         image: aboutGrey,
     })
 
@@ -49,7 +49,7 @@ const About = () => {
                     </p>
                 </div>
 
-                <img className="about-intro__photo" src={aboutGrey} alt="Angelika Malon — fotograf ślubny z Warszawy, portret" />
+                <img className="about-intro__photo" src={aboutGrey} alt="Angelika Malon - fotograf ślubny z Warszawy, portret" />
             </section>
 
             <section className="section section--alt">

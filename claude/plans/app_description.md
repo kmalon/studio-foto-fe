@@ -6,18 +6,18 @@ Visual direction: minimal dark wedding-photographer portfolio.
 
 ## Stack
 - React 19 + TypeScript, Vite 6
-- react-router 7 (`BrowserRouter`, basename = `ROUTER_BASENAME` = `BASE_URL` WITH trailing `/`, so home href = canonical `/studio-foto-fe/`)
+- react-router 7 (`BrowserRouter`, basename = `ROUTER_BASENAME` = `BASE_URL` WITH trailing `/` = `/`)
 - `react-image-gallery` (About page gallery)
 - `react-markdown` (gallery session overview)
 - `vite-imagetools@9` (vite 6 compat; slideshow srcset) · `@fontsource/{cormorant-garamond,jost}` self-hosted fonts (latin+latin-ext, imported in main.tsx)
 - Plain CSS + custom properties (no framework)
 
 ## Deploy
-- GitHub Pages via `gh-pages -d dist` (`npm run deploy`)
+- GitHub Pages, custom domain `angelikamalon.pl` (apex, `public/CNAME`; DNS + repo Pages setting manual; GH 301s old kmalon.github.io/studio-foto-fe/*). Also `gh-pages -d dist` (`npm run deploy`)
 - `build` = tsc + vite build + `vite build --ssr src/entry-server.tsx --outDir dist-ssr` + `scripts/prerender.mjs`: renders each page in `entry-server.tsx` `pages` -> dist/<route>/index.html (full markup + head tags + JSON-LD, React preload hints moved to head), dist/404.html (noindex), redirect stubs for old EN URLs (`redirects`), sitemap.xml (image entries), robots.txt; deletes dist-ssr. index.html markers `<!--head-->…<!--/head-->` + `<!--app-->`. Client `hydrateRoot` if root has element, else `createRoot` (dev). New route => add to `pages` in entry-server.tsx.
 - SSR-safe rule: render output must match server (no window in render; `useColumnCount` = useSyncExternalStore w/ server snapshot 3).
-- `vite.config.ts` base: `/studio-foto-fe/`; custom plugin `imageSize`: `?size` import -> `{width,height}` via sharp metadata (no emitted file)
-- homepage: https://kmalon.github.io/studio-foto-fe
+- `vite.config.ts` base: `/` (site at domain root); custom plugin `imageSize`: `?size` import -> `{width,height}` via sharp metadata (no emitted file)
+- homepage: https://angelikamalon.pl
 - workflow: `.github/workflows/jekyll-gh-pages.yml`
 
 ## Routes (`src/App.tsx`)
@@ -49,7 +49,7 @@ index.html          lang=pl, favicon.ico/svg + apple-touch-icon + site.webmanife
 src/
   main.tsx          fonts + BrowserRouter + StrictMode; hydrate/createRoot
   entry-server.tsx  SSR render(path) -> {html, head}; `pages` (route + sitemap images), `redirects`
-  seo/site.ts       BRAND, PERSON, ROUTER_BASENAME, SITE_URL (https://kmalon.github.io/studio-foto-fe), SOCIALS, AREA_SERVED, LOGO_PATH, pageUrl/absUrl, structuredData (ProfessionalService + Person @graph)
+  seo/site.ts       BRAND, PERSON, ROUTER_BASENAME, SITE_ORIGIN/SITE_URL (https://angelikamalon.pl), SOCIALS, AREA_SERVED, LOGO_PATH, pageUrl/absUrl, structuredData (ProfessionalService + Person @graph)
   seo/head.ts       PageMeta type, HeadContext (SSR collector), headTags (description, robots, canonical w/ trailing slash, og:*, twitter:*), headHtml (prerender), applyHead (client upsert)
   App.tsx           routes + ScrollToTop
   routes.ts         ROUTES (trailing-slash link targets) + sessionPath
@@ -81,6 +81,7 @@ src/
   assets/         start/ (slides), portfolio/{full,thumbs}, about/, gallery/<folder>/{full,thumbial,overview.md}
 scripts/prerender.mjs post-build static pages, 404, redirects, sitemap, robots (see Deploy)
 scripts/make-icons.mjs one-off: public/favicon.svg (gold Cormorant "A" path on #0d0d0d) -> favicon.ico (48/32/16), apple-touch-icon.png 180, icon-192/512.png; rerun + commit after svg edit
+public/CNAME      custom domain for GH Pages
 public/logo.svg   logo (stable URL, used in JSON-LD)
 public/site.webmanifest icons 192/512
 ```
