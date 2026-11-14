@@ -5,10 +5,10 @@ export const BRAND = 'Angelika Malon Fotografia'
 export const PERSON = 'Angelika Malon'
 
 /** Public origin + app base path (vite `base`) — absolute URLs for canonical/OG/sitemap. */
-export const SITE_ORIGIN = 'https://kmalon.github.io'
+export const SITE_ORIGIN = 'https://angelikamalon.pl'
 export const BASE_PATH = import.meta.env.BASE_URL.replace(/\/$/, '')
 export const SITE_URL = `${SITE_ORIGIN}${BASE_PATH}`
-/** Router basename WITH trailing slash, so `<Link to="/">` renders `/studio-foto-fe/` (canonical), not a 301-ing `/studio-foto-fe`. */
+/** Router basename WITH trailing slash, so `<Link to="/">` renders `${BASE_PATH}/` (canonical) — with base `/` this is just `/`. */
 export const ROUTER_BASENAME = `${BASE_PATH}/`
 
 export const SOCIALS = {
@@ -24,7 +24,7 @@ export const LOGO_PATH = `${BASE_PATH}/logo.svg`
 /** Route path ('/kontakt') -> canonical absolute URL with trailing slash (GH Pages serves dir/index.html). */
 export const pageUrl = (path: string) => `${SITE_URL}${path.replace(/\/?$/, '/')}`
 
-/** Asset URL ('/studio-foto-fe/assets/x.webp' or absolute) -> absolute URL. */
+/** Asset URL ('/assets/x.webp' or absolute) -> absolute URL. */
 export const absUrl = (url: string) => (/^https?:/.test(url) ? url : `${SITE_ORIGIN}${url}`)
 
 /** schema.org graph: ProfessionalService + Person, same on every page. */
@@ -36,7 +36,7 @@ export const structuredData = (image: string) => ({
             '@id': `${SITE_URL}/#business`,
             name: BRAND,
             description:
-                'Fotograf ślubny Warszawa — reportaż ślubny, sesje narzeczeńskie, rodzinne, ciążowe i portretowe.',
+                'Fotograf ślubny Warszawa | Łuków - reportaż ślubny, sesje narzeczeńskie, rodzinne, ciążowe i portretowe.',
             url: `${SITE_URL}/`,
             logo: absUrl(LOGO_PATH),
             image: absUrl(image),

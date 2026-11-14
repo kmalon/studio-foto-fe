@@ -8,7 +8,7 @@ const Gallery = () => {
     usePageMeta({
         title: 'Galeria sesji ślubnych i rodzinnych | Angelika Malon',
         description:
-            'Galeria pełnych sesji: śluby, plenery w Łazienkach Królewskich, sesje rodzinne i ciążowe. Fotograf ślubny Warszawa — Angelika Malon Fotografia.',
+            'Galeria pełnych sesji: śluby, plenery w Łazienkach Królewskich, sesje rodzinne i ciążowe. Fotograf ślubny Warszawa - Angelika Malon Fotografia.',
         image: sessions[0]?.photos[0]?.src,
     })
 

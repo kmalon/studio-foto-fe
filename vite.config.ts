@@ -24,7 +24,7 @@ const imageSize = (): Plugin => ({
 
 // https://vite.dev/config/
 export default defineConfig({
-  base: '/studio-foto-fe/',
+  base: '/',
   plugins: [imageSize(), react(), imagetools()],
   ssr: {
     // CSS-importing / CJS packages must be bundled into the SSR build
