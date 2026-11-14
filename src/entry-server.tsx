@@ -43,6 +43,7 @@ export const pages: Page[] = [
     ...sessions.map((s) => ({ path: `/galeria/${s.slug}`, images: s.photos })),
     { path: '/o-mnie', images: [{ src: aboutGrey, alt: 'Angelika Malon — fotograf ślubny z Warszawy' }] },
     { path: '/kontakt', images: [] },
+    { path: '/polityka-prywatnosci', images: [] },
 ]
 
 /** Old English URLs -> new Polish ones (static redirect stubs). */

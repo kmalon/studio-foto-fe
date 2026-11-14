@@ -1,7 +1,8 @@
 import { Link } from 'react-router'
 import './Footer.css'
 import { EMAIL } from '../data/AngelikaInfo.tsx'
-import { BRAND, SOCIALS } from '../seo/site.ts'
+import { BRAND, GA_ID, SOCIALS } from '../seo/site.ts'
+import { openBanner } from '../analytics/ga.ts'
 import { ROUTES } from '../routes.ts'
 
 const Footer = () => (
@@ -37,7 +38,15 @@ const Footer = () => (
             </div>
 
             <div className="footer__bottom">
-                © {new Date().getFullYear()} {BRAND}. Wszystkie prawa zastrzeżone.
+                <span>© {new Date().getFullYear()} {BRAND}. Wszystkie prawa zastrzeżone.</span>
+                <span className="footer__legal">
+                    <Link to={ROUTES.privacy}>Polityka prywatności</Link>
+                    {GA_ID && (
+                        <button type="button" onClick={openBanner}>
+                            Ustawienia cookies
+                        </button>
+                    )}
+                </span>
             </div>
         </div>
     </footer>

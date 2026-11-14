@@ -7,6 +7,9 @@ import Session from './pages/Session.tsx'
 import About from './pages/About.tsx'
 import Contact from './pages/Contact.tsx'
 import NotFound from './pages/NotFound.tsx'
+import Privacy from './pages/Privacy.tsx'
+import Analytics from './components/Analytics.tsx'
+import CookieConsent from './components/CookieConsent.tsx'
 import './App.css'
 
 /**
@@ -35,8 +38,11 @@ function App() {
                 <Route path="/galeria/:slug" element={<Session />} />
                 <Route path="/o-mnie" element={<About />} />
                 <Route path="/kontakt" element={<Contact />} />
+                <Route path="/polityka-prywatnosci" element={<Privacy />} />
                 <Route path="*" element={<NotFound />} />
             </Routes>
+            <Analytics />
+            <CookieConsent />
         </>
     )
 }

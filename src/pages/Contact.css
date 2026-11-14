@@ -76,6 +76,21 @@
     font-size: 0.8rem;
 }
 
+.form__privacy {
+    margin-top: 0.5rem;
+    font-size: 0.75rem;
+    color: var(--muted);
+}
+
+.form__privacy a {
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+}
+
+.form__privacy a:hover {
+    color: var(--fg);
+}
+
 @media (max-width: 900px) {
     .contact,
     .form__row {
