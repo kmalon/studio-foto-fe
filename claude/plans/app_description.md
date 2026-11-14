@@ -18,7 +18,7 @@ Visual direction: minimal dark wedding-photographer portfolio.
 - SSR-safe rule: render output must match server (no window in render; `useColumnCount` = useSyncExternalStore w/ server snapshot 3).
 - `vite.config.ts` base: `/` (site at domain root); custom plugin `imageSize`: `?size` import -> `{width,height}` via sharp metadata (no emitted file)
 - homepage: https://angelikamalon.pl
-- workflow: `.github/workflows/jekyll-gh-pages.yml`
+- workflow: `.github/workflows/deploy.yml` (push master -> npm ci + build -> Pages)
 
 ## Routes (`src/App.tsx`)
 ```
