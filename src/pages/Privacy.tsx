@@ -47,7 +47,7 @@ const Privacy = () => {
                     </p>
                     <p>
                         Wiadomości z formularza są przesyłane przez usługę Web3Forms na moją skrzynkę
-                        Gmail (Google). Dane przechowuję przez czas korespondencji, a jeśli nie dojdzie
+                        e-mail. Dane przechowuję przez czas korespondencji, a jeśli nie dojdzie
                         do współpracy - nie dłużej niż 12 miesięcy od ostatniej wiadomości. Podanie
                         danych jest dobrowolne, ale bez adresu e-mail nie mogę odpowiedzieć.
                     </p>
