@@ -38,7 +38,7 @@ App.tsx also renders `<Analytics/>` (after Routes: page_view per nav) + `<Cookie
 `ScrollToTop` in App.tsx resets scroll on navigation (non-data BrowserRouter doesn't); instant + useLayoutEffect (html has smooth scroll).
 
 ## Analytics / consent
-- GA4 ID = `.env` `VITE_GA_ID` (-> `GA_ID` in seo/site.ts). Empty (current) -> no GA, no banner, no footer cookie btn, policy says no cookies.
+- `.env` (tracked, used by CI build): `VITE_GA_ID`, `VITE_WEB3FORMS_KEY`. GA4 ID = `VITE_GA_ID` (-> `GA_ID` in seo/site.ts; set). Empty -> no GA, no banner, no footer cookie btn, policy says no cookies.
 - `src/analytics/ga.ts`: opt-in; gtag.js injected only after accept (Consent Mode v2, ad_* denied, send_page_view false); choice in localStorage `cookie-consent`; external store (subscribe/getConsent/setConsent/openBanner/isBannerOpen); reject -> consent denied + delete `_ga*` cookies.
 - `hooks/useConsent.ts` useSyncExternalStore (server snapshot null/false -> banner never prerendered).
 - `components/CookieConsent.tsx/.css` fixed bottom bar, Odrzuć/Akceptuję equal. Footer bottom: "Polityka prywatności" link + "Ustawienia cookies" (reopen).
@@ -59,7 +59,7 @@ src/
   data/portfolio.ts Photo type (opt. `focus` = object-position, `srcSet`, `width`/`height` = build-time size via `?size` glob, `loadSizes`); `photos` (assets/portfolio full+thumbs paired by name) + `featured` + `slides` (assets/start; srcSet via imagetools glob query 640/1024/1600/2048; `slideFocus` map file->focus)
   data/gallery.ts   `sessions`/`getSession(slug)` from assets/gallery/<folder>/{full,thumbial,overview.md}; slug = `toSlug(folder)` (drop `N_` prefix, `_`->`-`, PL diacritics stripped); title/description = overview lines 1/2; sorted desc by folder (numeric-aware); thumb = same-name thumbial ?? full; sizes from `?size` glob (thumbial wins); cover = 1st thumbial ?? 1st full
   data/altText.ts   unique PL alt per photo, key "<dir>/<file>" (start/…, portfolio/…, gallery/<folder>/…); missing -> generic fallback. New photo => add entry
-  data/AngelikaInfo.tsx EMAIL + web3forms key
+  data/AngelikaInfo.tsx EMAIL (kontakt@angelikamalon.pl, content -> stays in code) + WEB3FORMS_ACCESS_KEY from `.env` `VITE_WEB3FORMS_KEY`
   components/
     Navbar.tsx/.css fixed; Logo left, links right; transparent -> solid after 40px scroll; burger drawer <900px (full-viewport bg, logo hidden while open via `nav--open`, which drops backdrop-filter)
     Logo.tsx        `public/logo.svg` (potrace of old PNG, 34 KB; black line art, CSS invert + screen blend; `--logo` token + calc() neg. margins crop padding)

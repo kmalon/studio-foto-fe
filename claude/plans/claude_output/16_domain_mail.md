@@ -19,3 +19,25 @@ Switch public contact email from gmail to `kontakt@angelikamalon.pl` (brand/SEO 
 No questions
 
 Branch: feature/16_domain_mail
+
+---
+
+# Fix 16: config from AngelikaInfo.tsx -> .env (where relevant)
+
+## Issue
+`src/data/AngelikaInfo.tsx` mixes content (EMAIL) + service config (WEB3FORMS_ACCESS_KEY). Move config to `.env` (pattern of `VITE_GA_ID`); keep content in code.
+
+## Decision
+- `EMAIL` -> STAYS. It's site content (footer, contact, privacy, JSON-LD), same in every build, not an integration setting. Keeping it in code keeps it typed and next to other content.
+- `WEB3FORMS_ACCESS_KEY` -> `.env` `VITE_WEB3FORMS_KEY`. It's an integration setting (could change per account or be swapped for a test key). Note: the key ends up in the client bundle anyway (Web3Forms keys are public by design), so this is about keeping config in one place, not hiding a secret. `.env` is tracked in git -> CI build gets it with no workflow change.
+
+## Changes
+1. `.env`: add commented `VITE_WEB3FORMS_KEY=5d4f4c6c-…` (current value).
+2. `src/vite-env.d.ts`: `readonly VITE_WEB3FORMS_KEY?: string` + doc.
+3. `src/data/AngelikaInfo.tsx`: `export const WEB3FORMS_ACCESS_KEY = (import.meta.env.VITE_WEB3FORMS_KEY ?? '').trim()` (same trim pattern as GA_ID in `seo/site.ts`); Contact.tsx import unchanged.
+4. app_description: Structure line `AngelikaInfo.tsx EMAIL + web3forms key` -> `EMAIL; WEB3FORMS_ACCESS_KEY from .env VITE_WEB3FORMS_KEY`; Analytics/env note lists both vars.
+
+## Verify
+- `npm run build` OK; `grep -r 5d4f4c6c dist/assets` -> key present in bundle (env injected); not in src.
+
+No questions
