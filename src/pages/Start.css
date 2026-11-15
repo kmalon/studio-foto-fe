@@ -1,9 +1,16 @@
 .start {
+    /* small viewport (all browser bars shown): never hidden under the bars and
+       static while they show/hide on scroll -> slides don't rescale */
     height: 100vh;
     height: 100svh;
-    /* frozen px height (Start.tsx): mobile URL bar show/hide must not resize -> rescale the slides */
-    height: var(--start-h, 100svh);
     overflow: hidden;
+}
+
+/* old browsers without svh: frozen px height from Start.tsx */
+@supports not (height: 100svh) {
+    .start {
+        height: var(--start-h, 100vh);
+    }
 }
 
 /* --- intro text below the fullscreen slideshow (h1 + copy for SEO) --- */
