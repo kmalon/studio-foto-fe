@@ -16,6 +16,15 @@
     margin-bottom: 0;
 }
 
+.session__overview h1 {
+    margin-bottom: clamp(1.25rem, 2.5vw, 2rem);
+}
+
+.session__overview h2,
+.session__overview h3 {
+    margin: 1.5em 0 0.5em;
+}
+
 .session__overview p,
 .session__overview li {
     font-size: clamp(1rem, 1.4vw, 1.15rem);

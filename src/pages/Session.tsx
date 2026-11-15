@@ -1,6 +1,6 @@
-import { useState } from 'react'
+import { Children, useState, type ReactNode } from 'react'
 import { Link, useParams } from 'react-router'
-import ReactMarkdown from 'react-markdown'
+import ReactMarkdown, { type Components } from 'react-markdown'
 import PageShell from '../components/PageShell.tsx'
 import Lightbox from '../components/Lightbox.tsx'
 import PhotoMasonry from '../components/PhotoMasonry.tsx'
@@ -10,6 +10,22 @@ import usePageMeta from '../hooks/usePageMeta.ts'
 import NotFound from './NotFound.tsx'
 import './Session.css'
 import { ROUTES } from '../routes.ts'
+
+/** Hyphens in headings -> `.h-dash` (Cormorant's `-` is slanted). */
+const dashed = (children: ReactNode) =>
+    Children.map(children, (child) =>
+        typeof child === 'string'
+            ? child.split('-').flatMap((part, i) =>
+                  i ? [<span key={i} className="h-dash">-</span>, part] : [part],
+              )
+            : child,
+    )
+
+const headings: Components = {
+    h1: ({ children }) => <h1>{dashed(children)}</h1>,
+    h2: ({ children }) => <h2>{dashed(children)}</h2>,
+    h3: ({ children }) => <h3>{dashed(children)}</h3>,
+}
 
 const Session = () => {
     const { slug } = useParams()
@@ -34,7 +50,7 @@ const SessionView = ({ session }: { session: SessionData }) => {
                     ← Wróć do galerii
                 </Link>
                 <div className="session__overview">
-                    <ReactMarkdown>{session.overview}</ReactMarkdown>
+                    <ReactMarkdown components={headings}>{session.overview}</ReactMarkdown>
                 </div>
             </section>
 

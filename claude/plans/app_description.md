@@ -26,7 +26,7 @@ Visual direction: minimal dark wedding-photographer portfolio.
 /           (cont.)    below slideshow: h1 + ~200 words intro, btn links Portfolio/Galeria/Kontakt, SessionLinks, Footer
 /portfolio  Portfolio  PhotoMasonry + Lightbox
 /galeria    Gallery    session cover cards (.photo-grid, caption = title), link to session
-/galeria/:slug Session overview.md (ReactMarkdown, raw) + PhotoMasonry + Lightbox; unknown slug -> NotFound
+/galeria/:slug Session overview.md (ReactMarkdown, whole file shown; `# ` line 1 = h1, headings hyphens -> .h-dash) + PhotoMasonry + Lightbox; unknown slug -> NotFound
 /o-mnie     About      bio + ImageGallery of session covers; click slide -> its session; + SessionLinks
 /kontakt    Contact    details + web3forms form (+ privacy note link)
 /polityka-prywatnosci Privacy  RODO policy (admin, form/web3forms, cookies+GA4 section only if GA_ID, rights, copyright section); "Zmień ustawienia cookies" btn
@@ -95,7 +95,7 @@ public/site.webmanifest icons 192/512
 
 ## Content
 Copy Polish; brand "Angelika Malon Fotografia" (BRAND const). Titles pattern "<Page> | fotograf … Warszawa | Łuków | Angelika Malon". Separators: ` | ` between label fragments (titles/alts/meta), plain hyphen ` - ` in prose; no `·`/`–`/`—`. City pair "Warszawa | Łuków" (prose: "z Warszawy i Łukowa", "w Warszawie, Łukowie"); Start h1 city in `.nowrap`; hyphens in headings wrapped in `.h-dash` (Jost; Cormorant `-` is slanted).
-Images: own photos in src/assets, webp, named `NN-opis-z-alt.webp` (NN zero-padded = display order, rest = slug of alt text; thumbs/thumbial same name) (globs accept jpg/jpeg/png/webp; `convert-images.sh` converts). New gallery session = new folder in assets/gallery (auto route/sitemap; add alt entries to altText.ts). New start image -> add entry to `slideFocus` if people off-center. macOS junk (`.DS_Store`, `._*`) gitignored.
+Images: own photos in src/assets, webp, named `NN-opis-z-alt.webp` (NN zero-padded = display order, rest = slug of alt text; thumbs/thumbial same name) (globs accept jpg/jpeg/png/webp; `convert-images.sh` converts). overview.md: line 1 `# Title` (no leading spaces, else code block), line 2 = intro + meta desc; all visible. Full how-to in README. New gallery session = new folder in assets/gallery (auto route/sitemap; add alt entries to altText.ts). New start image -> add entry to `slideFocus` if people off-center. macOS junk (`.DS_Store`, `._*`) gitignored.
 
 ## Conventions
 - `.tsx`/`.ts` extension included in imports

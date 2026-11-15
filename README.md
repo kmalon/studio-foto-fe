@@ -67,7 +67,7 @@ A session is one folder in `src/assets/gallery`:
 src/assets/gallery/<N>_<session_name>/
   full/         full-size photos (lightbox)
   thumbial/     thumbnails (grid), SAME file names as in full/
-  overview.md   line 1 = title, line 2 = meta description, rest = markdown text
+  overview.md   session text shown above the photos (markdown), see below
 ```
 
 ### 1. Pick or create the session folder
@@ -81,12 +81,26 @@ src/assets/gallery/<N>_<session_name>/
   - `overview.md` example:
 
     ```md
-    Sesja ślubna.
+    # Sesja ślubna
 
     Para młoda w Łukowie - plener w parku miejskim.
 
     Optional longer description (markdown).
     ```
+
+    The **whole file is displayed** on the session page. The first two non-empty lines are
+    also read for SEO (`metaFromOverview` in `src/data/gallery.ts`):
+
+    | Line | Shown on page as | Also used for |
+    | --- | --- | --- |
+    | 1 `# Title` | page heading (h1) | page `<title>`, Galeria card caption, session links (Start, O mnie) |
+    | 2 | first paragraph | start of the meta description |
+    | rest | markdown text | - |
+
+    - Start line 1 with `# ` and **no leading spaces**: 4+ spaces make markdown render it as a
+      code block instead of a heading. The `#` and a trailing dot are removed from the title.
+    - Keep line 2 one plain sentence (~120-150 characters), it works as both intro text and description.
+    - There is no hidden, meta-only line: anything you write is visible.
 
 ### 2. Copy the originals
 
