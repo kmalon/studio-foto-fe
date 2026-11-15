@@ -3,7 +3,7 @@ import PageShell from '../components/PageShell.tsx'
 import usePageMeta from '../hooks/usePageMeta.ts'
 import { BRAND } from '../seo/site.ts'
 import './Contact.css'
-import { EMAIL, WEB3FORMS_ACCESS_KEY } from '../data/AngelikaInfo.tsx'
+import { EMAIL } from '../data/AngelikaInfo.tsx'
 import aboutGrey from '../assets/about/aml_grey.jpg'
 import { Link } from 'react-router'
 import { ROUTES } from '../routes.ts'
@@ -34,7 +34,7 @@ const Contact = () => {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
                 body: JSON.stringify({
-                    access_key: WEB3FORMS_ACCESS_KEY,
+                    access_key: import.meta.env.VITE_WEB3FORMS_KEY,
                     subject: `Zapytanie o termin | ${form.name || 'strona www'} | ${BRAND}`,
                     from_name: form.name,
                     name: form.name,
