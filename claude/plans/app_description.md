@@ -73,7 +73,7 @@ src/
     useColumnCount.ts matchMedia cols 3 / 2 (<=900) / 1 (<=560)
     usePageMeta.ts  ({title (full), description, image?, noindex?}) -> SSR: writes HeadContext; client: applyHead. Every page MUST call it (prerender throws otherwise). DEFAULT_IMAGE = 1st slide
   pages/
-    Start.tsx/.css  (`useStableStartHeight`: `--start-h` px = innerHeight, updated only on width change -> mobile URL bar doesn't rescale slides)
+    Start.tsx/.css  (`.start` height 100svh: small viewport, never under mobile browser bars, static on scroll -> no slide rescale; `useStableStartHeight` `--start-h` px fallback only w/o svh support)
     Privacy.tsx/.css legal page (.legal prose)
     Contact.tsx     web3forms (key = `.env` `VITE_WEB3FORMS_KEY`, read directly here): name, email, date (opt.), venue "Miejsce wydarzenia" (opt.), message
     Portfolio.tsx  Gallery.tsx  Session.tsx/.css  NotFound.tsx/.css

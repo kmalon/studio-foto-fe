@@ -10,13 +10,14 @@ import './Start.css'
 import { ROUTES } from '../routes.ts'
 
 /**
- * Freeze the slideshow height in px. Mobile browsers change the viewport height
- * while the URL bar hides on scroll; a viewport-relative height would resize the
- * slides and `object-fit: cover` would visibly rescale the photo. Recomputed only
- * when the width changes (rotation, desktop resize), height-only resizes are ignored.
+ * Fallback for browsers without `svh` (CSS uses 100svh: static + never under the
+ * browser bars). Freezes the slideshow height in px so the URL bar hiding on scroll
+ * doesn't resize -> rescale the photo. Recomputed only when the width changes
+ * (rotation, desktop resize), height-only resizes are ignored.
  */
 const useStableStartHeight = () => {
     useEffect(() => {
+        if (CSS.supports('height', '100svh')) return
         const root = document.documentElement
         let width = 0
         const update = () => {
