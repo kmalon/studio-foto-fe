@@ -59,7 +59,7 @@ src/
   data/portfolio.ts Photo type (opt. `focus` = object-position, `srcSet`, `width`/`height` = build-time size via `?size` glob, `loadSizes`); `photos` (assets/portfolio full+thumbs paired by name) + `featured` + `slides` (assets/start; srcSet via imagetools glob query 640/1024/1600/2048; `slideFocus` map file->focus)
   data/gallery.ts   `sessions`/`getSession(slug)` from assets/gallery/<folder>/{full,thumbial,overview.md}; slug = `toSlug(folder)` (drop `N_` prefix, `_`->`-`, PL diacritics stripped); title/description = overview lines 1/2; sorted desc by folder (numeric-aware); thumb = same-name thumbial ?? full; sizes from `?size` glob (thumbial wins); cover = 1st thumbial ?? 1st full
   data/altText.ts   unique PL alt per photo, key "<dir>/<file>" (start/…, portfolio/…, gallery/<folder>/…); missing -> generic fallback. New photo => add entry
-  data/AngelikaInfo.tsx EMAIL (kontakt@angelikamalon.pl, content -> stays in code) + WEB3FORMS_ACCESS_KEY from `.env` `VITE_WEB3FORMS_KEY`
+  data/AngelikaInfo.tsx EMAIL only (kontakt@angelikamalon.pl, content -> stays in code)
   components/
     Navbar.tsx/.css fixed; Logo left, links right; transparent -> solid after 40px scroll; burger drawer <900px (full-viewport bg, logo hidden while open via `nav--open`, which drops backdrop-filter)
     Logo.tsx        `public/logo.svg` (potrace of old PNG, 34 KB; black line art, CSS invert + screen blend; `--logo` token + calc() neg. margins crop padding)
@@ -75,7 +75,7 @@ src/
   pages/
     Start.tsx/.css  (`useStableStartHeight`: `--start-h` px = innerHeight, updated only on width change -> mobile URL bar doesn't rescale slides)
     Privacy.tsx/.css legal page (.legal prose)
-    Contact.tsx     web3forms: name, email, date (opt.), venue "Miejsce wydarzenia" (opt.), message
+    Contact.tsx     web3forms (key = `.env` `VITE_WEB3FORMS_KEY`, read directly here): name, email, date (opt.), venue "Miejsce wydarzenia" (opt.), message
     Portfolio.tsx  Gallery.tsx  Session.tsx/.css  NotFound.tsx/.css
     About.tsx/.css  Contact.tsx/.css
   assets/         start/ (slides), portfolio/{full,thumbs}, about/, gallery/<folder>/{full,thumbial,overview.md}

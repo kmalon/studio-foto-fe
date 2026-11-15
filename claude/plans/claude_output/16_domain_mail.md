@@ -41,3 +41,26 @@ Branch: feature/16_domain_mail
 - `npm run build` OK; `grep -r 5d4f4c6c dist/assets` -> key present in bundle (env injected); not in src.
 
 No questions
+
+---
+
+# Fix 16b: drop WEB3FORMS wrapper from AngelikaInfo.tsx
+
+## Issue
+After fix 16, `AngelikaInfo.tsx` only re-exports `import.meta.env.VITE_WEB3FORMS_KEY` (+trim). Remove if `.env` can be used directly, else keep.
+
+## Decision: remove
+- Only 1 consumer (`src/pages/Contact.tsx`) -> wrapper adds an indirection, no reuse.
+- Trim not needed: Vite trims `.env` values; key never empty in a real build.
+- AngelikaInfo.tsx becomes pure content (EMAIL) -> matches its purpose.
+- Type safety kept via `src/vite-env.d.ts` (`VITE_WEB3FORMS_KEY`).
+
+## Changes
+1. `src/data/AngelikaInfo.tsx`: delete WEB3FORMS lines (keep EMAIL).
+2. `src/pages/Contact.tsx`: import only EMAIL; `access_key: import.meta.env.VITE_WEB3FORMS_KEY`.
+3. app_description Structure: `AngelikaInfo.tsx EMAIL …` drop key part; Contact.tsx line note `web3forms key = .env VITE_WEB3FORMS_KEY (read in Contact.tsx)`.
+
+## Verify
+- `npm run build` OK (tsc); `grep -l 5d4f4c6c dist/assets/*.js` -> present; `grep -rn WEB3FORMS src` -> only Contact.tsx + vite-env.d.ts.
+
+No questions
