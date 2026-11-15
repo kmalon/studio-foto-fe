@@ -53,3 +53,13 @@ Fix branch: feature/17b_overview_heading
 
 ## Verify
 - `npm run build`; `dist/galeria/<slug>/index.html` has `<h1>…</h1>` in `.session__overview`; `<title>` unchanged.
+
+---
+
+# Fix 17c: session h1 wraps at hyphen on wide screens
+
+## Issue
+`.session__overview { max-width: 68ch }` (ch in body font -> ~600px) too narrow for h1 (up to 5.5rem) -> "Sesja rodzinno-brzuszkowa" broke after `-`.
+
+## Change
+`src/pages/Session.css`: max-width 68ch moved from wrapper to `.session__overview > :not(h1, h2, h3)`; headings use full container width; wraps only when not enough space (phones).

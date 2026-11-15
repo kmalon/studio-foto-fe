@@ -3,9 +3,14 @@
 }
 
 .session__overview {
-    max-width: 68ch;
     /* long unbroken words would widen the page past the mobile screen */
     overflow-wrap: anywhere;
+}
+
+/* readable line length for text only; headings use the full container width
+   (68ch on the wrapper = ~600px, too narrow for the h1 -> it broke at the hyphen) */
+.session__overview > :not(h1, h2, h3) {
+    max-width: 68ch;
 }
 
 .session__overview > :first-child {
