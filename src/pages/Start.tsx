@@ -57,25 +57,34 @@ const Start = () => {
                         <h1>Fotograf ślubny <span className="nowrap">Warszawa | Łuków</span> <span className="h-dash">-</span> reportaż pełen prawdziwych emocji</h1>
                         <div className="home-intro__text">
                             <p>
-                                Nazywam się Angelika Malon i jestem fotografem ślubnym z Warszawy i Łukowa.
-                                Fotografuję śluby, wesela i plenery w stylu reportażowym - bez
-                                sztywnego pozowania, za to z uważnością na gesty, spojrzenia i
-                                drobne chwile, które łatwo przeoczyć w biegu tego wyjątkowego dnia.
-                                Towarzyszę Wam od przygotowań, przez ceremonię w kościele lub urzędzie,
-                                aż po ostatni taniec na sali weselnej.
+                                Cześć, jestem Angelika.
                             </p>
                             <p>
-                                Poza reportażem ślubnym realizuję sesje narzeczeńskie, plenery
-                                poślubne, sesje rodzinne, ciążowe i portretowe. Pracuję w Warszawie,
-                                Łukowie, na Mazowszu, Lubelszczyźnie i w całej Polsce - chętnie fotografuję w Łazienkach
-                                Królewskich, w pałacowych ogrodach, na łąkach o zachodzie słońca i
-                                wszędzie tam, gdzie czujecie się sobą. Zależy mi, abyście przy mnie
-                                czuli się swobodnie, jak przy dobrej przyjaciółce.
+                                Tworzę naturalne fotografie pełne bliskości - bez stresu i sztywnego pozowania.
                             </p>
                             <p>
-                                Zobacz wybrane kadry w portfolio, obejrzyj pełne sesje w galerii albo
-                                napisz do mnie i zapytaj o wolny termin. Razem opowiemy Waszą historię
-                                - tak, aby po latach wracać do niej z uśmiechem.
+                                Mieszkam w Warszawie, ale sercem i aparatem wciąż regularnie wracam w moje
+                                rodzinne strony - do Łukowa i na całą Lubelszczyznę. Fotografuję tam, gdzie
+                                dzieje się coś dla Was ważnego: od eleganckich warszawskich plenerów, przez
+                                huczne wesela na Mazowszu i Lubelszczyźnie, aż po kameralne uroczystości
+                                w domowym zaciszu.
+                            </p>
+                            <p>
+                                Specjalizuję się w reportażu ślubnym i okolicznościowym. Towarzyszę Wam od
+                                porannych przygotowań, przez ceremonię, aż po ostatni taniec. Poza ślubami
+                                spotkacie mnie na sesjach narzeczeńskich, poślubnych, rodzinnych, ciążowych
+                                i portretowych.
+                            </p>
+                            <p>
+                                Chcę, żeby czas spędzony przed moim obiektywem był dla Was po prostu miłym
+                                spotkaniem - bez pośpiechu i sztucznego uśmiechania się na komendę.
+                            </p>
+                            <p>
+                                Rozgość się. Zobacz wybrane kadry w{' '}
+                                <Link to={ROUTES.portfolio} className="text-link">portfolio</Link>, obejrzyj
+                                pełne reportaże w <Link to={ROUTES.gallery} className="text-link">galerii</Link>{' '}
+                                albo <Link to={ROUTES.contact} className="text-link">napisz do mnie</Link>,
+                                żeby zapytać o wolny termin.
                             </p>
                         </div>
 

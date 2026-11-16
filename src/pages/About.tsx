@@ -33,20 +33,33 @@ const About = () => {
             <section className="container page-head about-intro">
                 <div>
                     <p className="eyebrow">O mnie</p>
-                    <h1>Zapisuję czułość, o której z biegiem lat łatwo zapomnieć.</h1>
+                    <h1>
+                        Zapisuję czułość,{' '}
+                        <span className="about-intro__sub">o której z biegiem lat łatwo zapomnieć.</span>
+                    </h1>
                     <p className="lead">
-                       <br />
-                        Cześć,
-                       <br />
-                       <br />
-                        Nazywam się Angelika Malon, pochodzę z Lubelszczyzny, a od niedawna mieszkam w Warszawie. Wierzę, że najlepsze zdjęcia to te, do których wraca się po latach, aby na nowo przeżyć to, co już dawno za nami. Kiedy opadnie pierwszy zachwyt, a codzienność nabierze tempa, zostają kadry przepełnione ciepłem, gestami i spojrzeniami ludzi, którzy są dla Was najważniejsi.
-                        <br />
-                        <br />
-                        Niezależnie od tego, czy spotkamy się w domowym zaciszu, eleganckiej sali, czy na wiejskiej zabawie w remizie - jestem tam w pełni z Wami i dla Was. Zależy mi, abyście czuli się przy mnie swobodnie i bezpiecznie. Jak przy przyjaciółce, której możecie bez przeszkód powierzyć swoje emocje.
-                        <br />
-                        <br />
-                        Mam w sobie ogromną miłość i wrażliwość do prawdziwych chwil - takich, w których jest życie, dokładnie takie, jakim jest.
-
+                        Cześć! Nazywam się Angelika. Pochodzę z Lubelszczyzny, a od niedawna na nowo
+                        odkrywam piękno Warszawy.
+                    </p>
+                    <p className="lead">
+                        Wierzę, że najlepsze zdjęcia to te, do których wraca się po latach, aby na nowo
+                        poczuć emocje tamtych dni. Kiedy opadnie pierwszy zachwyt, a codzienność nabierze
+                        tempa, zostają kadry pełne ciepła, drobnych gestów i spojrzeń ludzi, którzy są
+                        dla Was najważniejsi.
+                    </p>
+                    <p className="lead">
+                        Niezależnie od tego, czy spotkamy się w domowym zaciszu, eleganckiej sali, czy na
+                        hucznej zabawie w wiejskiej remizie - jestem tam w pełni z Wami i dla Was. Zależy
+                        mi, abyście czuli się przy mnie swobodnie i bezpiecznie. Jak przy dobrej
+                        przyjaciółce, przy której nie trzeba niczego udawać.
+                    </p>
+                    <p className="lead">
+                        Mam w sobie ogromną wrażliwość na prawdziwe chwile - takie, w których widać po
+                        prostu Wasze życie, bez upiększania i reżyserii.
+                    </p>
+                    <p className="lead">
+                        Jeśli szukacie fotografa, który zatrzyma dla Was właśnie taki kawałek świata -
+                        napiszcie do mnie i opowiedzcie o swoich planach.
                     </p>
                 </div>
 

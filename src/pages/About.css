@@ -16,6 +16,13 @@
     border-bottom: none;
 }
 
+/* h1 second part: same heading, smaller line */
+.about-intro__sub {
+    display: block;
+    margin-top: 0.35em;
+    font-size: clamp(1.6rem, 3.6vw, 2.75rem);
+}
+
 .about-intro__photo {
     display: block;
     width: 100%;
