@@ -23,7 +23,7 @@ Visual direction: minimal dark wedding-photographer portfolio.
 ## Routes (`src/App.tsx`)
 ```
 /           Start      fullscreen Slideshow (Navbar)
-/           (cont.)    below slideshow: h1 + intro (last para inline .text-link portfolio/galerii/napisz do mnie), btn links Portfolio/Galeria/Kontakt, SessionLinks, Footer
+/           (cont.)    below slideshow: h1 + intro (last para inline .text-link portfolio/galerii/napisz do mnie), SessionLinks, Footer
 /portfolio  Portfolio  PhotoMasonry + Lightbox
 /galeria    Gallery    session cover cards (.photo-grid, caption = title), link to session
 /galeria/:slug Session overview.md (ReactMarkdown, whole file shown; `# ` line 1 = h1, headings hyphens -> .h-dash) + PhotoMasonry + Lightbox; unknown slug -> NotFound
@@ -67,7 +67,8 @@ src/
     Slideshow.tsx/.css custom crossfade, auto 5s (`interval` prop), side arrows, ←/→, pauses on hidden tab, caption + counter; srcSet sizes=100vw, 1st slide fetchPriority high, neighbours loading=lazy; portrait screens: object-position from `--focus` (photo.focus) keeps people in crop
     Footer.tsx/.css BRAND + contact + socials (SOCIALS) + copyright + legal links
     PageShell.tsx   Navbar + <main class=shell-main> + Footer
-    Lightbox.tsx/.css fullscreen photo overlay, Esc/click closes (Portfolio, Session)
+    Lightbox.tsx/.css fullscreen overlay ({photos, index, onIndexChange}); prev/next arrows (wrap), ←/→, swipe, counter, preloads neighbours; Esc/backdrop closes (Portfolio, Session)
+    Chevron.tsx     arrow svg (Slideshow, Lightbox)
     PhotoMasonry.tsx balanced masonry: ratios from Photo width/height (build time) -> deterministic layout, 1st batch (cols*3, SSR cols=3) in prerendered HTML; each photo to shortest col (flex cols); img width/height + aspect-ratio (no CLS), 1st row eager rest lazy; next batch when sentinel near viewport (IntersectionObserver); all shown -> `masonry--flush` crops last card per col so bottoms align
   hooks/
     useColumnCount.ts matchMedia cols 3 / 2 (<=900) / 1 (<=560)

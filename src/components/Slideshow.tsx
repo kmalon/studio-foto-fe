@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState, type CSSProperties } from 'react'
 import type { Photo } from '../data/portfolio.ts'
+import Chevron from './Chevron.tsx'
 import './Slideshow.css'
 
 type SlideshowProps = {
@@ -9,12 +10,6 @@ type SlideshowProps = {
 }
 
 const pad = (n: number) => String(n).padStart(2, '0')
-
-const Chevron = ({ dir }: { dir: 'left' | 'right' }) => (
-    <svg viewBox="0 0 24 48" aria-hidden="true">
-        <path d={dir === 'left' ? 'M20 2 4 24l16 22' : 'M4 2l16 22L4 46'} />
-    </svg>
-)
 
 const Slideshow = ({ photos, interval = 5000 }: SlideshowProps) => {
     const [index, setIndex] = useState(0)

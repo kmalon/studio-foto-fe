@@ -1,12 +1,13 @@
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 import PageShell from '../components/PageShell.tsx'
 import Lightbox from '../components/Lightbox.tsx'
 import PhotoMasonry from '../components/PhotoMasonry.tsx'
-import { photos, type Photo } from '../data/portfolio.ts'
+import { photos } from '../data/portfolio.ts'
 import usePageMeta from '../hooks/usePageMeta.ts'
 
 const Portfolio = () => {
-    const [active, setActive] = useState<Photo | null>(null)
+    const [active, setActive] = useState<number | null>(null)
+    const close = useCallback(() => setActive(null), [])
     usePageMeta({
         title: 'Portfolio | fotografia ślubna Warszawa | Łuków | Angelika Malon',
         description:
@@ -27,11 +28,16 @@ const Portfolio = () => {
 
             <section className="section">
                 <div className="container">
-                    <PhotoMasonry photos={photos} onSelect={setActive} showCaption />
+                    <PhotoMasonry photos={photos} onSelect={(p) => setActive(photos.indexOf(p))} showCaption />
                 </div>
             </section>
 
-            <Lightbox photo={active} onClose={() => setActive(null)} />
+            <Lightbox
+                photos={photos}
+                index={active}
+                onClose={close}
+                onIndexChange={setActive}
+            />
         </PageShell>
     )
 }

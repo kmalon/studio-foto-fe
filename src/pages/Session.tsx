@@ -1,11 +1,10 @@
-import { Children, useState, type ReactNode } from 'react'
+import { Children, useCallback, useState, type ReactNode } from 'react'
 import { Link, useParams } from 'react-router'
 import ReactMarkdown, { type Components } from 'react-markdown'
 import PageShell from '../components/PageShell.tsx'
 import Lightbox from '../components/Lightbox.tsx'
 import PhotoMasonry from '../components/PhotoMasonry.tsx'
 import { getSession, type Session as SessionData } from '../data/gallery.ts'
-import type { Photo } from '../data/portfolio.ts'
 import usePageMeta from '../hooks/usePageMeta.ts'
 import NotFound from './NotFound.tsx'
 import './Session.css'
@@ -35,7 +34,8 @@ const Session = () => {
 }
 
 const SessionView = ({ session }: { session: SessionData }) => {
-    const [active, setActive] = useState<Photo | null>(null)
+    const [active, setActive] = useState<number | null>(null)
+    const close = useCallback(() => setActive(null), [])
     const { title, description } = session
     usePageMeta({
         title: `${title} | fotograf Warszawa | Łuków | Angelika Malon`,
@@ -56,11 +56,16 @@ const SessionView = ({ session }: { session: SessionData }) => {
 
             <section className="section">
                 <div className="container">
-                    <PhotoMasonry photos={session.photos} onSelect={setActive} />
+                    <PhotoMasonry photos={session.photos} onSelect={(p) => setActive(session.photos.indexOf(p))} />
                 </div>
             </section>
 
-            <Lightbox photo={active} onClose={() => setActive(null)} />
+            <Lightbox
+                photos={session.photos}
+                index={active}
+                onClose={close}
+                onIndexChange={setActive}
+            />
         </PageShell>
     )
 }
