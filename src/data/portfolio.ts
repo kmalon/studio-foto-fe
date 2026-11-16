@@ -92,7 +92,7 @@ const slideFocus: Record<string, string> = {
     '09-drewniany-wiatrak-w-skansenie-i-para-w-promieniach.webp': '55% 50%',
     '10-para-mloda-siedzi-na-bialej-lawce-w-palacowym-ogrodzie.webp': '53% 50%',
     '11-czarno-biale-zdjecie-para-mloda-trzyma-sie-za-rece-ich.webp': '10% 50%',
-    '12-para-mloda-dotyka-sie-czolami-w-domu-przed-slubem.webp': '40% 50%',
+    '12-para-mloda-dotyka-sie-czolami-w-domu-przed-slubem.webp': '37% 50%',
     '13-czarno-biale-zdjecie-pan-mlody-obejmuje-panne-mloda.webp': '22% 50%',
     '14-para-mloda-caluje-sie-miedzy-kolumnami-na-pierwszym-planie.webp': '0% 50%',
 }
