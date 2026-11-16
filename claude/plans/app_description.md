@@ -23,11 +23,11 @@ Visual direction: minimal dark wedding-photographer portfolio.
 ## Routes (`src/App.tsx`)
 ```
 /           Start      fullscreen Slideshow (Navbar)
-/           (cont.)    below slideshow: h1 + ~200 words intro, btn links Portfolio/Galeria/Kontakt, SessionLinks, Footer
+/           (cont.)    below slideshow: h1 + intro (last para inline .text-link portfolio/galerii/napisz do mnie), btn links Portfolio/Galeria/Kontakt, SessionLinks, Footer
 /portfolio  Portfolio  PhotoMasonry + Lightbox
 /galeria    Gallery    session cover cards (.photo-grid, caption = title), link to session
 /galeria/:slug Session overview.md (ReactMarkdown, whole file shown; `# ` line 1 = h1, headings hyphens -> .h-dash) + PhotoMasonry + Lightbox; unknown slug -> NotFound
-/o-mnie     About      bio + ImageGallery of session covers; click slide -> its session; + SessionLinks
+/o-mnie     About      h1 big part + smaller `.about-intro__sub` span, bio paras + ImageGallery of session covers; click slide -> its session; + SessionLinks
 /kontakt    Contact    details + web3forms form (+ privacy note link)
 /polityka-prywatnosci Privacy  RODO policy (admin, form/web3forms, cookies+GA4 section only if GA_ID, rights, copyright section); "Zmień ustawienia cookies" btn
 *           NotFound   404 page (PageShell, links home/galeria, noindex)
@@ -54,7 +54,7 @@ src/
   App.tsx           routes + ScrollToTop
   routes.ts         ROUTES (trailing-slash link targets) + sessionPath
   index.css         reset + base type, imports styles/tokens.css
-  App.css           .container .section .eyebrow .btn .link-underline .nowrap .h-dash .photo-grid .photo-card .masonry .masonry__col
+  App.css           .container .section .eyebrow .btn .link-underline .text-link (inline prose link) .nowrap .h-dash .photo-grid .photo-card .masonry .masonry__col
   styles/tokens.css design tokens (see below)
   data/portfolio.ts Photo type (opt. `focus` = object-position, `srcSet`, `width`/`height` = build-time size via `?size` glob, `loadSizes`); `photos` (assets/portfolio full+thumbs paired by name) + `featured` + `slides` (assets/start; srcSet via imagetools glob query 640/1024/1600/2048; `slideFocus` map file->focus)
   data/gallery.ts   `sessions`/`getSession(slug)` from assets/gallery/<folder>/{full,thumbial,overview.md}; slug = `toSlug(folder)` (drop `N_` prefix, `_`->`-`, PL diacritics stripped); title/description = overview lines 1/2; sorted desc by folder (numeric-aware); thumb = same-name thumbial ?? full; sizes from `?size` glob (thumbial wins); cover = 1st thumbial ?? 1st full
