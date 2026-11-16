@@ -37,30 +37,32 @@ const About = () => {
                         Zapisuję czułość,{' '}
                         <span className="about-intro__sub">o której z biegiem lat łatwo zapomnieć.</span>
                     </h1>
-                    <p className="lead">
-                        Cześć! Nazywam się Angelika. Pochodzę z Lubelszczyzny, a od niedawna na nowo
-                        odkrywam piękno Warszawy.
-                    </p>
-                    <p className="lead">
-                        Wierzę, że najlepsze zdjęcia to te, do których wraca się po latach, aby na nowo
-                        poczuć emocje tamtych dni. Kiedy opadnie pierwszy zachwyt, a codzienność nabierze
-                        tempa, zostają kadry pełne ciepła, drobnych gestów i spojrzeń ludzi, którzy są
-                        dla Was najważniejsi.
-                    </p>
-                    <p className="lead">
-                        Niezależnie od tego, czy spotkamy się w domowym zaciszu, eleganckiej sali, czy na
-                        hucznej zabawie w wiejskiej remizie - jestem tam w pełni z Wami i dla Was. Zależy
-                        mi, abyście czuli się przy mnie swobodnie i bezpiecznie. Jak przy dobrej
-                        przyjaciółce, przy której nie trzeba niczego udawać.
-                    </p>
-                    <p className="lead">
-                        Mam w sobie ogromną wrażliwość na prawdziwe chwile - takie, w których widać po
-                        prostu Wasze życie, bez upiększania i reżyserii.
-                    </p>
-                    <p className="lead">
-                        Jeśli szukacie fotografa, który zatrzyma dla Was właśnie taki kawałek świata -
-                        napiszcie do mnie i opowiedzcie o swoich planach.
-                    </p>
+                    <div className="lead about-intro__text">
+                        <p>
+                            Cześć! Nazywam się Angelika. Pochodzę z Lubelszczyzny, a od niedawna na nowo
+                            odkrywam piękno Warszawy.
+                        </p>
+                        <p>
+                            Wierzę, że najlepsze zdjęcia to te, do których wraca się po latach, aby na nowo
+                            poczuć emocje tamtych dni. Kiedy opadnie pierwszy zachwyt, a codzienność nabierze
+                            tempa, zostają kadry pełne ciepła, drobnych gestów i spojrzeń ludzi, którzy są
+                            dla Was najważniejsi.
+                        </p>
+                        <p>
+                            Niezależnie od tego, czy spotkamy się w domowym zaciszu, eleganckiej sali, czy na
+                            hucznej zabawie w wiejskiej remizie - jestem tam w pełni z Wami i dla Was. Zależy
+                            mi, abyście czuli się przy mnie swobodnie i bezpiecznie. Jak przy dobrej
+                            przyjaciółce, przy której nie trzeba niczego udawać.
+                        </p>
+                        <p>
+                            Mam w sobie ogromną wrażliwość na prawdziwe chwile - takie, w których widać po
+                            prostu Wasze życie, bez upiększania i reżyserii.
+                        </p>
+                        <p>
+                            Jeśli szukacie fotografa, który zatrzyma dla Was właśnie taki kawałek świata -
+                            napiszcie do mnie i opowiedzcie o swoich planach.
+                        </p>
+                    </div>
                 </div>
 
                 <img className="about-intro__photo" src={aboutGrey} alt="Angelika Malon | fotograf ślubny z Warszawy i Łukowa, portret" />
