@@ -134,3 +134,8 @@
 .about-intro__text {
     margin-top: clamp(1.5rem, 3vw, 2.5rem);
 }
+
+/* gallery header: let the title use the full width so it fits on one line */
+.section-head.about-gallery__head {
+    max-width: none;
+}

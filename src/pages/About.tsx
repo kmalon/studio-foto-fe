@@ -70,9 +70,9 @@ const About = () => {
 
             <section className="section section--alt">
                 <div className="container">
-                    <div className="section-head">
+                    <div className="section-head about-gallery__head">
                         <p className="eyebrow">Galeria</p>
-                        <h2>Przekrój ostatnich sesji</h2>
+                        <h2>Wybrane sesje i reportaże</h2>
                     </div>
                     <div className="gallery-wrap">
                         <ImageGallery
