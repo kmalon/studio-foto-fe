@@ -129,3 +129,8 @@
     max-width: 980px;
     margin: clamp(2rem, 4vw, 3rem) auto 0;
 }
+
+/* gap between h1 and intro paragraphs */
+.about-intro__text {
+    margin-top: clamp(1.5rem, 3vw, 2.5rem);
+}
