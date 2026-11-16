@@ -31,7 +31,7 @@ Visual direction: minimal dark wedding-photographer portfolio.
 /kontakt    Contact    details + web3forms form (+ privacy note link)
 /polityka-prywatnosci Privacy  RODO policy (admin, form/web3forms, cookies+GA4 section only if GA_ID, rights, copyright section); "Zmień ustawienia cookies" btn
 *           NotFound   404 page (PageShell, links home/galeria, noindex)
-Old /about /contact /gallery /gallery/<folder> -> static meta-refresh stubs (build only).
+Old /about /contact /gallery /gallery/<folder> -> static meta-refresh stubs (build only). Folder renumbered => add legacy `/gallery/<old_folder>` entry to `redirects` (done for old 1_/2_ sessions, now 3_/4_).
 Internal links: ALWAYS via `src/routes.ts` (`ROUTES.*`, `sessionPath(slug)`), trailing slash (GH Pages 301s slash-less).
 ```
 App.tsx also renders `<Analytics/>` (after Routes: page_view per nav) + `<CookieConsent/>`.
@@ -95,7 +95,7 @@ public/site.webmanifest icons 192/512
 
 ## Content
 Copy Polish; brand "Angelika Malon Fotografia" (BRAND const). Titles pattern "<Page> | fotograf … Warszawa | Łuków | Angelika Malon". Separators: ` | ` between label fragments (titles/alts/meta), plain hyphen ` - ` in prose; no `·`/`–`/`—`. City pair "Warszawa | Łuków" (prose: "z Warszawy i Łukowa", "w Warszawie, Łukowie"); Start h1 city in `.nowrap`; hyphens in headings wrapped in `.h-dash` (Jost; Cormorant `-` is slanted).
-Images: own photos in src/assets, webp, named `NN-opis-z-alt.webp` (NN zero-padded = display order, rest = slug of alt text; thumbs/thumbial same name) (globs accept jpg/jpeg/png/webp; `convert-images.sh` converts). overview.md: line 1 `# Title` (no leading spaces, else code block), line 2 = intro + meta desc; all visible. Full how-to in README. New gallery session = new folder in assets/gallery (auto route/sitemap; add alt entries to altText.ts). New start image -> add entry to `slideFocus` if people off-center. macOS junk (`.DS_Store`, `._*`) gitignored.
+Images: own photos in src/assets, webp, named `NN-opis-z-alt.webp` (NN zero-padded = display order, rest = slug of alt text; thumbs/thumbial same name) (globs accept jpg/jpeg/png/webp; `convert-images.sh` converts). overview.md: line 1 `# Title` (no leading spaces, else code block), line 2 = intro + meta desc; all visible. Full how-to in README. Sessions (desc order shown): 4_ ślubna Łazienki, 3_ rodzinno-brzuszkowa, 2_ Paula Smyk (artystka, Łuków), 1_ Julia (kobieca, miejska+studio). New gallery session = new folder in assets/gallery (auto route/sitemap; add alt entries to altText.ts). New start image -> add entry to `slideFocus` if people off-center. macOS junk (`.DS_Store`, `._*`) gitignored.
 
 ## Conventions
 - `.tsx`/`.ts` extension included in imports

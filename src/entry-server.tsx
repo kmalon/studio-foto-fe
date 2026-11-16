@@ -52,6 +52,9 @@ export const redirects: Record<string, string> = {
     '/contact': '/kontakt',
     '/gallery': '/galeria',
     ...Object.fromEntries(sessions.map((s) => [`/gallery/${s.folder}`, `/galeria/${s.slug}`])),
+    // folders renumbered after old EN URLs were indexed
+    '/gallery/1_sesja_rodzinno_brzuszkowa': '/galeria/sesja-rodzinno-brzuszkowa',
+    '/gallery/2_sesja_slubna_lazienki_krolewskie': '/galeria/sesja-slubna-lazienki-krolewskie',
 }
 
 export { absUrl, pageUrl }
