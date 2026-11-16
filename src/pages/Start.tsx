@@ -88,12 +88,6 @@ const Start = () => {
                             </p>
                         </div>
 
-                        <div className="home-intro__actions">
-                            <Link to={ROUTES.portfolio} className="btn">Portfolio</Link>
-                            <Link to={ROUTES.gallery} className="btn">Galeria</Link>
-                            <Link to={ROUTES.contact} className="btn">Kontakt</Link>
-                        </div>
-
                         <nav className="home-intro__sessions" aria-label="Sesje w galerii">
                             <h2>Ostatnie sesje</h2>
                             <SessionLinks />
