@@ -16,9 +16,9 @@ const Gallery = () => {
         <PageShell>
             <section className="container page-head">
                 <p className="eyebrow">Galeria</p>
-                <h1>Sesje</h1>
+                <h1>Za każdym zdjęciem kryje się osobna historia.</h1>
                 <p className="lead">
-                    Każda sesja to osobna historia. Wybierz zdjęcie, żeby zobaczyć całą sesję.
+                    Zobacz wybrane sesje i reportaże – kliknij dowolną okładkę, by zanurzyć się w pełnej galerii kadrów.
                 </p>
             </section>
 
