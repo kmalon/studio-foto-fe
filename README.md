@@ -78,8 +78,11 @@ ASSETS_SOURCE=external npm run dev      # or: ASSETS_SOURCE=external npm run bui
 
 (Or set `ASSETS_SOURCE=external` in `.env` locally, but do not commit it unless CI provides the dir.)
 
-CI/CD: fetch the external assets into `ASSETS_DIR` before `npm run build` and set `ASSETS_SOURCE=external`
-(env var in the workflow or in `.env`). The tracked `.env` keeps `internal`, so CI builds from `src/assets` by default.
+CI/CD (`.github/workflows/deploy.yml`): before the build, the workflow reads `ASSETS_SOURCE` / `ASSETS_DIR`
+from the tracked `.env`. If `external`, it fetches the `assets/` folder of
+[amalonart/studio_foto_assets](https://github.com/amalonart/studio_foto_assets/tree/main/assets) (branch `main`,
+set by `ASSETS_REPO` / `ASSETS_REF` at the top of the workflow) into `ASSETS_DIR` (default `src/assets_external/`).
+The tracked `.env` keeps `internal`; to deploy external assets, set `ASSETS_SOURCE=external` in `.env` and commit.
 
 When using external assets, add/edit photos, `overview.md`, `altText.ts` and `slideFocus.ts` in the external dir;
 the paths in the sections below (`src/assets/...`) are then relative to that dir.

@@ -1,0 +1,2 @@
+As Frontend/React Engineer and DEV ops Specialist:
+- Add to deploy workflow stage before building project, that will fetch assets, if in .env ASSETS_SOURCE is as external, from https://github.com/amalonart/studio_foto_assets/tree/main/assets and put it into /src/assets_external/
