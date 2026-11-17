@@ -77,7 +77,7 @@ const Start = () => {
                             </p>
                             <p>
                                 Chcę, żeby czas spędzony przed moim obiektywem był dla Was po prostu miłym
-                                spotkaniem - bez pośpiechu i sztucznego uśmiechania.
+                                spotkaniem - bez pośpiechu i sztucznego uśmiechania się.
                             </p>
                             <p>
                                 Rozgość się. Zobacz wybrane kadry w{' '}
