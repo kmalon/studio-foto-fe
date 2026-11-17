@@ -55,19 +55,34 @@ export default tseslint.config({
 
 # External assets
 
-Assets (photos, `overview.md` files, `altText.ts`, `slideFocus.ts`) can come from a local folder outside the repo.
-Configured in `.env` (build-time only, not bundled; process env vars override `.env`):
+Assets (photos, `overview.md` files, `altText.ts`, `slideFocus.ts`) can come from a separate local folder
+instead of `src/assets`. Configured in `.env` (build-time only, not bundled; process env vars override `.env`):
 
 ```
-ASSETS_SOURCE=internal          # internal = src/assets, external = ASSETS_DIR
-ASSETS_DIR=../assets_external   # relative to project root or absolute
+ASSETS_SOURCE=internal               # internal = src/assets, external = ASSETS_DIR
+ASSETS_DIR=./src/assets_external     # relative to project root or absolute
 ```
 
 - External dir must have the same layout as `src/assets`: `start/`, `portfolio/{full,thumbs}/`,
   `about/`, `gallery/<N>_<name>/{full,thumbial,overview.md}`, `altText.ts`, `slideFocus.ts`.
+- It can live anywhere (inside the repo or next to it). The default `src/assets_external/` is gitignored.
 - Code imports assets via the `@assets` alias (`vite.config.ts`), which points to the chosen dir.
-- CI/CD: fetch the external assets into `ASSETS_DIR` before `npm run build`
-  (e.g. `ASSETS_SOURCE=external npm run build`). Missing dir -> build fails with a clear error.
+- Missing dir with `ASSETS_SOURCE=external` -> build fails with a clear error.
+
+Local test:
+
+```
+cp -r src/assets src/assets_external
+ASSETS_SOURCE=external npm run dev      # or: ASSETS_SOURCE=external npm run build
+```
+
+(Or set `ASSETS_SOURCE=external` in `.env` locally, but do not commit it unless CI provides the dir.)
+
+CI/CD: fetch the external assets into `ASSETS_DIR` before `npm run build` and set `ASSETS_SOURCE=external`
+(env var in the workflow or in `.env`). The tracked `.env` keeps `internal`, so CI builds from `src/assets` by default.
+
+When using external assets, add/edit photos, `overview.md`, `altText.ts` and `slideFocus.ts` in the external dir;
+the paths in the sections below (`src/assets/...`) are then relative to that dir.
 
 # Content: adding photos
 

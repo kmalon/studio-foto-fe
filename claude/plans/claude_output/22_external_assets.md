@@ -48,3 +48,16 @@ feature/22_external_assets
 
 ## Verify
 `npx tsc -b` ok; `ASSETS_SOURCE=internal npm run build` -> dist identical to previous build except JS hash.
+
+---
+
+# 22 fix: README update
+
+## Issue
+README "External assets" outdated vs actual setup: example `ASSETS_DIR=../assets_external` (now `./src/assets_external`), said "outside the repo", no gitignore note, no local test how-to. Local `src/assets_external/` (88 MB copy) untracked -> would be committed.
+
+## Fix
+1. `.gitignore`: `/src/assets_external/`.
+2. README "External assets" rewritten: example = tracked `.env` (internal, `./src/assets_external`), dir anywhere (default gitignored), local test (`cp -r src/assets src/assets_external` + `ASSETS_SOURCE=external npm run dev|build`), CI (fetch into ASSETS_DIR + set external; tracked .env keeps internal), content edits go to external dir when used.
+3. app_description: default ext dir gitignored, tracked .env internal.
+4. `.env` local change (external) NOT committed (user decision).
