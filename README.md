@@ -53,9 +53,77 @@ export default tseslint.config({
 })
 ```
 
+# External assets
+
+Assets (photos, `overview.md` files, `altText.ts`, `slideFocus.ts`) can come from a separate local folder
+instead of `src/assets`. Configured in `.env` (build-time only, not bundled; process env vars override `.env`):
+
+```
+ASSETS_SOURCE=internal               # internal = src/assets, external = ASSETS_DIR
+ASSETS_DIR=./src/assets_external     # relative to project root or absolute
+```
+
+- External dir must have the same layout as `src/assets`: `start/`, `portfolio/{full,thumbs}/`,
+  `about/`, `gallery/<N>_<name>/{full,thumbial,overview.md}`, `altText.ts`, `slideFocus.ts`.
+- It can live anywhere (inside the repo or next to it). The default `src/assets_external/` is gitignored.
+- Code imports assets via the `@assets` alias (`vite.config.ts`), which points to the chosen dir.
+- Missing dir with `ASSETS_SOURCE=external` -> build fails with a clear error.
+
+Local test:
+
+```
+cp -r src/assets src/assets_external
+ASSETS_SOURCE=external npm run dev      # or: ASSETS_SOURCE=external npm run build
+```
+
+(Or set `ASSETS_SOURCE=external` in `.env` locally, but do not commit it unless CI provides the dir.)
+
+CI/CD (`.github/workflows/deploy.yml`): before the build, the workflow reads `ASSETS_SOURCE` / `ASSETS_DIR`
+from the tracked `.env`. If `external`, it fetches the `assets/` folder of
+[amalonart/studio_foto_assets](https://github.com/amalonart/studio_foto_assets/tree/main/assets) (branch `main`,
+set by `ASSETS_REPO` / `ASSETS_REF` at the top of the workflow) into `ASSETS_DIR` (default `src/assets_external/`).
+The tracked `.env` keeps `internal`; to deploy external assets, set `ASSETS_SOURCE=external` in `.env` and commit.
+
+Auto rebuild after assets change: the deploy workflow also listens for `repository_dispatch`
+(`assets-updated`). Such a run builds and deploys only when the tracked `.env` has `ASSETS_SOURCE=external`;
+with `internal` both the `build` and `deploy` jobs are skipped (each has its own guard). Push to `master` and manual runs always build.
+
+Setup on the assets repo side (one-time):
+
+1. Fine-grained personal access token (owner of `studio-foto-fe`): repository access only `studio-foto-fe`,
+   permission **Contents: Read and write** (needed for the dispatch API). Save it in the assets repo as
+   Actions secret `SITE_DISPATCH_TOKEN`.
+2. Assets repo workflow `.github/workflows/notify-site.yml`:
+
+```yaml
+name: Rebuild site
+on:
+  push:
+    branches: [main]
+    paths: ['assets/**']
+  workflow_dispatch:
+jobs:
+  dispatch:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          curl -fsS -X POST \
+            -H "Accept: application/vnd.github+json" \
+            -H "Authorization: Bearer ${{ secrets.SITE_DISPATCH_TOKEN }}" \
+            https://api.github.com/repos/kmalon/studio-foto-fe/dispatches \
+            -d '{"event_type":"assets-updated"}'
+```
+
+Test: "Run workflow" on *Rebuild site* in the assets repo -> new *Deploy to GitHub Pages* run (event
+`repository_dispatch`) here. 403/404 from curl = token lacks access to `studio-foto-fe`.
+
+When using external assets, add/edit photos, `overview.md`, `altText.ts` and `slideFocus.ts` in the external dir;
+the paths in the sections below (`src/assets/...`) are then relative to that dir.
+
 # Content: adding photos
 
-All photos live in `src/assets`. They are picked up automatically by `import.meta.glob`
+All photos live in the **assets dir** (`src/assets` by default, or an external dir, see
+[External assets](#external-assets); paths below use `src/assets`). They are picked up automatically by `import.meta.glob`
 (jpg/jpeg/png/webp), but the site expects **WebP files with numbered, descriptive names**
 and an **alt text entry** for every photo.
 
@@ -152,7 +220,7 @@ Needs `imagemagick` + `webp` (cwebp, webpmux).
 
 ### 5. Add alt texts
 
-Add one entry per photo to `src/data/altText.ts` (thumbnails share it):
+Add one entry per photo to `src/assets/altText.ts` (thumbnails share it):
 
 ```ts
 'gallery/3_sesja_slubna_lukow/01-para-mloda-idzie-za-reke-przez-park.webp': 'Para młoda idzie za rękę przez park',
@@ -185,7 +253,7 @@ Commit and push to `master` -> GitHub Actions deploys to GitHub Pages.
 ## Other images
 
 - **Start slideshow**: `src/assets/start/NN-description.webp` + alt entry `start/<file>`.
-  If people are off-center, add the file to `slideFocus` in `src/data/portfolio.ts` (object-position for portrait screens).
+  If people are off-center, add the file to `src/assets/slideFocus.ts` (object-position for portrait screens).
 - **Portfolio**: same name in `src/assets/portfolio/full` and `src/assets/portfolio/thumbs`, `NNN-description` (3 digits),
   alt entry `portfolio/<file>`.
 - Run `bash convert-images.sh` for both (directories configured in `DIRS` inside the script).

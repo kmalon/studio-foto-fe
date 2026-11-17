@@ -16,9 +16,9 @@ Visual direction: minimal dark wedding-photographer portfolio.
 - GitHub Pages, custom domain `angelikamalon.pl` (apex, `public/CNAME`; DNS + repo Pages setting manual; GH 301s old kmalon.github.io/studio-foto-fe/*). Also `gh-pages -d dist` (`npm run deploy`)
 - `build` = tsc + vite build + `vite build --ssr src/entry-server.tsx --outDir dist-ssr` + `scripts/prerender.mjs`: renders each page in `entry-server.tsx` `pages` -> dist/<route>/index.html (full markup + head tags + JSON-LD, React preload hints moved to head), dist/404.html (noindex), redirect stubs for old EN URLs (`redirects`), sitemap.xml (image entries), robots.txt; deletes dist-ssr. index.html markers `<!--head-->…<!--/head-->` + `<!--app-->`. Client `hydrateRoot` if root has element, else `createRoot` (dev). New route => add to `pages` in entry-server.tsx.
 - SSR-safe rule: render output must match server (no window in render; `useColumnCount` = useSyncExternalStore w/ server snapshot 3).
-- `vite.config.ts` base: `/` (site at domain root); custom plugin `imageSize`: `?size` import -> `{width,height}` via sharp metadata (no emitted file)
+- `vite.config.ts` base: `/` (site at domain root); alias `@assets` -> assets dir (`.env` `ASSETS_SOURCE=internal` -> src/assets | `external` -> `ASSETS_DIR` e.g. `../assets_external`, CI workflow fetches it before build; default `src/assets_external` gitignored, tracked .env keeps internal; missing -> error; `server.fs.allow` adds it); ALL asset imports/globs via `@assets/…` (gallery parses glob keys from path tail); custom plugin `imageSize`: `?size` import -> `{width,height}` via sharp metadata (no emitted file)
 - homepage: https://angelikamalon.pl
-- workflow: `.github/workflows/deploy.yml` (push master -> npm ci + build -> Pages)
+- workflow: `.github/workflows/deploy.yml` (triggers: push master, manual, `repository_dispatch` `assets-updated` from assets repo (notify-site.yml + `SITE_DISPATCH_TOKEN` PAT there) -> build + deploy (each guarded) only if .env external; jobs config (sparse .env -> source/dir) -> build -> deploy; build: [if .env ASSETS_SOURCE=external: sparse checkout `assets/` of `ASSETS_REPO` amalonart/studio_foto_assets@`ASSETS_REF` main -> ASSETS_DIR] -> npm ci + build -> Pages)
 
 ## Routes (`src/App.tsx`)
 ```
@@ -38,7 +38,7 @@ App.tsx also renders `<Analytics/>` (after Routes: page_view per nav) + `<Cookie
 `ScrollToTop` in App.tsx resets scroll on navigation (non-data BrowserRouter doesn't); instant + useLayoutEffect (html has smooth scroll).
 
 ## Analytics / consent
-- `.env` (tracked, used by CI build): `VITE_GA_ID`, `VITE_WEB3FORMS_KEY`. GA4 ID = `VITE_GA_ID` (-> `GA_ID` in seo/site.ts; set). Empty -> no GA, no banner, no footer cookie btn, policy says no cookies.
+- `.env` (tracked, used by CI build): `VITE_GA_ID`, `VITE_WEB3FORMS_KEY`, `ASSETS_SOURCE`, `ASSETS_DIR` (build-time only). GA4 ID = `VITE_GA_ID` (-> `GA_ID` in seo/site.ts; set). Empty -> no GA, no banner, no footer cookie btn, policy says no cookies.
 - `src/analytics/ga.ts`: opt-in; gtag.js injected only after accept (Consent Mode v2, ad_* denied, send_page_view false); choice in localStorage `cookie-consent`; external store (subscribe/getConsent/setConsent/openBanner/isBannerOpen); reject -> consent denied + delete `_ga*` cookies.
 - `hooks/useConsent.ts` useSyncExternalStore (server snapshot null/false -> banner never prerendered).
 - `components/CookieConsent.tsx/.css` fixed bottom bar, Odrzuć/Akceptuję equal. Footer bottom: "Polityka prywatności" link + "Ustawienia cookies" (reopen).
@@ -56,9 +56,10 @@ src/
   index.css         reset + base type, imports styles/tokens.css
   App.css           .container .section .eyebrow .btn .link-underline .text-link (inline prose link) .nowrap .h-dash .photo-grid .photo-card .masonry .masonry__col
   styles/tokens.css design tokens (see below)
-  data/portfolio.ts Photo type (opt. `focus` = object-position, `srcSet`, `width`/`height` = build-time size via `?size` glob, `loadSizes`); `photos` (assets/portfolio full+thumbs paired by name) + `featured` + `slides` (assets/start; srcSet via imagetools glob query 640/1024/1600/2048; `slideFocus` map file->focus)
+  data/portfolio.ts Photo type (opt. `focus` = object-position, `srcSet`, `width`/`height` = build-time size via `?size` glob, `loadSizes`); `photos` (assets/portfolio full+thumbs paired by name) + `featured` + `slides` (assets/start; srcSet via imagetools glob query 640/1024/1600/2048; focus from `@assets/slideFocus.ts`)
   data/gallery.ts   `sessions`/`getSession(slug)` from assets/gallery/<folder>/{full,thumbial,overview.md}; slug = `toSlug(folder)` (drop `N_` prefix, `_`->`-`, PL diacritics stripped); title/description = overview lines 1/2; sorted desc by folder (numeric-aware); thumb = same-name thumbial ?? full; sizes from `?size` glob (thumbial wins); cover = 1st thumbial ?? 1st full
-  data/altText.ts   unique PL alt per photo, key "<dir>/<file>" (start/…, portfolio/…, gallery/<folder>/…); missing -> generic fallback. New photo => add entry
+  assets/slideFocus.ts start slide file -> object-position (portrait crop), ambient decl in vite-env.d.ts
+  assets/altText.ts unique PL alt (lives in assets dir, import `@assets/altText.ts`, ambient decl in vite-env.d.ts) per photo, key "<dir>/<file>" (start/…, portfolio/…, gallery/<folder>/…); missing -> generic fallback. New photo => add entry
   data/AngelikaInfo.tsx EMAIL only (kontakt@angelikamalon.pl, content -> stays in code)
   components/
     Navbar.tsx/.css fixed; Logo left, links right; transparent -> solid after 40px scroll; burger drawer <900px (full-viewport bg, logo hidden while open via `nav--open`, which drops backdrop-filter)
@@ -79,7 +80,7 @@ src/
     Contact.tsx     web3forms (key = `.env` `VITE_WEB3FORMS_KEY`, read directly here): name, email, date (opt.), venue "Miejsce wydarzenia" (opt.), message
     Portfolio.tsx  Gallery.tsx  Session.tsx/.css  NotFound.tsx/.css
     About.tsx/.css  Contact.tsx/.css
-  assets/         start/ (slides), portfolio/{full,thumbs}, about/, gallery/<folder>/{full,thumbial,overview.md}
+  assets/         (default assets dir) start/ (slides), portfolio/{full,thumbs}, about/, gallery/<folder>/{full,thumbial,overview.md}, altText.ts, slideFocus.ts
 scripts/prerender.mjs post-build static pages, 404, redirects, sitemap, robots (see Deploy)
 scripts/make-icons.mjs one-off: public/favicon.svg (gold Cormorant "A" path on #0d0d0d) -> favicon.ico (48/32/16), apple-touch-icon.png 180, icon-192/512.png; rerun + commit after svg edit
 public/CNAME      custom domain for GH Pages
@@ -96,7 +97,7 @@ public/site.webmanifest icons 192/512
 
 ## Content
 Copy Polish; brand "Angelika Malon Fotografia" (BRAND const). Titles pattern "<Page> | fotograf … Warszawa | Łuków | Angelika Malon". Separators: ` | ` between label fragments (titles/alts/meta), plain hyphen ` - ` in prose; no `·`/`–`/`—`. City pair "Warszawa | Łuków" (prose: "z Warszawy i Łukowa", "w Warszawie, Łukowie"); Start h1 city in `.nowrap`; hyphens in headings wrapped in `.h-dash` (Jost; Cormorant `-` is slanted).
-Images: own photos in src/assets, webp, named `NN-opis-z-alt.webp` (NN zero-padded = display order, rest = slug of alt text; thumbs/thumbial same name) (globs accept jpg/jpeg/png/webp; `convert-images.sh` converts). overview.md: line 1 `# Title` (no leading spaces, else code block), line 2 = intro + meta desc; all visible. Full how-to in README. Sessions (desc order shown): 4_ ślubna Łazienki, 3_ rodzinno-brzuszkowa, 2_ Paula Smyk (artystka, Łuków), 1_ Julia (kobieca, miejska+studio). New gallery session = new folder in assets/gallery (auto route/sitemap; add alt entries to altText.ts). New start image -> add entry to `slideFocus` if people off-center. macOS junk (`.DS_Store`, `._*`) gitignored.
+Images: own photos in src/assets, webp, named `NN-opis-z-alt.webp` (NN zero-padded = display order, rest = slug of alt text; thumbs/thumbial same name) (globs accept jpg/jpeg/png/webp; `convert-images.sh` converts). overview.md: line 1 `# Title` (no leading spaces, else code block), line 2 = intro + meta desc; all visible. Full how-to in README. Sessions (desc order shown): 4_ ślubna Łazienki, 3_ rodzinno-brzuszkowa, 2_ Paula Smyk (artystka, Łuków), 1_ Julia (kobieca, miejska+studio). New gallery session = new folder in assets/gallery (auto route/sitemap; add alt entries to assets altText.ts). New start image -> add entry to assets `slideFocus.ts` if people off-center. macOS junk (`.DS_Store`, `._*`) gitignored.
 
 ## Conventions
 - `.tsx`/`.ts` extension included in imports

@@ -25,3 +25,6 @@ dist-ssr
 
 # macOS junk (AppleDouble)
 ._*
+
+# Local copy of external assets (ASSETS_DIR); CI fetches it
+/src/assets_external/

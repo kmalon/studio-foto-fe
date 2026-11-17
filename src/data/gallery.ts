@@ -1,5 +1,5 @@
 import type { ImageSize, Photo } from './portfolio.ts'
-import altText from './altText.ts'
+import altText from '@assets/altText.ts'
 
 export type Session = {
     /** URL slug: folder name without number prefix, hyphens, no diacritics ('2_sesja_slubna' -> 'sesja-slubna'). */
@@ -17,30 +17,34 @@ export type Session = {
     photos: Photo[]
 }
 
-const fullImages = import.meta.glob<string>('../assets/gallery/*/full/*.{jpg,jpeg,png,webp}', {
+const fullImages = import.meta.glob<string>('@assets/gallery/*/full/*.{jpg,jpeg,png,webp}', {
     eager: true,
     import: 'default',
 })
 const thumbImages = import.meta.glob<string>(
-    '../assets/gallery/*/thumbial/*.{jpg,jpeg,png,webp}',
+    '@assets/gallery/*/thumbial/*.{jpg,jpeg,png,webp}',
     { eager: true, import: 'default' },
 )
 // intrinsic sizes; thumbial sorts after full, so a thumb's size wins (same ratio anyway)
 const imageSizes = import.meta.glob<ImageSize>(
-    '../assets/gallery/*/{full,thumbial}/*.{jpg,jpeg,png,webp}',
+    '@assets/gallery/*/{full,thumbial}/*.{jpg,jpeg,png,webp}',
     { eager: true, query: '?size', import: 'default' },
 )
-const overviews = import.meta.glob<string>('../assets/gallery/*/overview.md', {
-    eager: true,
-    query: '?raw',
-    import: 'default',
-})
+// folder -> overview.md content (path tail, glob key form differs for internal/external dir)
+const overviews = Object.fromEntries(
+    Object.entries(
+        import.meta.glob<string>('@assets/gallery/*/overview.md', {
+            eager: true,
+            query: '?raw',
+            import: 'default',
+        }),
+    ).map(([path, content]) => [path.split('/').slice(-2)[0], content]),
+)
 
-/** '../assets/gallery/<folder>/<sub>/<file>' -> [folder, file] */
+/** '…/gallery/<folder>/<sub>/<file>' -> [folder, file] (from the tail: dir prefix may vary) */
 const parse = (path: string) => {
     const parts = path.split('/')
-    const i = parts.indexOf('gallery')
-    return [parts[i + 1], parts[parts.length - 1]] as const
+    return [parts[parts.length - 3], parts[parts.length - 1]] as const
 }
 
 // folder -> file name -> url, file names sorted
@@ -90,7 +94,7 @@ export const sessions: Session[] = Object.keys(fullBySession)
         const full = fullBySession[folder]
         const thumbs = thumbsBySession[folder] ?? {}
         const sizes = sizesBySession[folder] ?? {}
-        const overview = overviews[`../assets/gallery/${folder}/overview.md`] ?? ''
+        const overview = overviews[folder] ?? ''
         const slug = toSlug(folder)
         const { title, description } = metaFromOverview(overview, slug.replace(/-/g, ' '))
         const photos = Object.entries(full).map(([name, src], i) => ({

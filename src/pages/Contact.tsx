@@ -4,7 +4,7 @@ import usePageMeta from '../hooks/usePageMeta.ts'
 import { BRAND } from '../seo/site.ts'
 import './Contact.css'
 import { EMAIL } from '../data/AngelikaInfo.tsx'
-import aboutGrey from '../assets/about/angelika_malon_fotograf_warszawa_lukow.jpg'
+import aboutGrey from '@assets/about/angelika_malon_fotograf_warszawa_lukow.jpg'
 import { Link } from 'react-router'
 import { ROUTES } from '../routes.ts'
 
