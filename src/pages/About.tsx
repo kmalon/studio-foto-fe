@@ -7,7 +7,7 @@ import SessionLinks from '../components/SessionLinks.tsx'
 import { sessions } from '../data/gallery.ts'
 import usePageMeta from '../hooks/usePageMeta.ts'
 import './About.css'
-import aboutGrey from '../assets/about/aml_grey.jpg'
+import aboutGrey from '../assets/about/angelika_malon_fotograf_warszawa_lukow.jpg'
 import { sessionPath } from '../routes.ts'
 
 // one cover per session; clicking a slide opens its session

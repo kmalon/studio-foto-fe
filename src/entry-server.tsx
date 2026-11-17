@@ -8,7 +8,7 @@ import { BASE_PATH, ROUTER_BASENAME, SITE_URL, absUrl, pageUrl, structuredData }
 import { DEFAULT_IMAGE } from './hooks/usePageMeta.ts'
 import { photos, slides } from './data/portfolio.ts'
 import { sessions } from './data/gallery.ts'
-import aboutGrey from './assets/about/aml_grey.jpg'
+import aboutGrey from './assets/about/angelika_malon_fotograf_warszawa_lukow.jpg'
 
 export { SITE_URL }
 
