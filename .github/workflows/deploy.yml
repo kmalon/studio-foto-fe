@@ -2,7 +2,7 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: ["feature/23_external_assets_from_different_repo"]
+    branches: ["master"]
   workflow_dispatch:
   # sent by the assets repo after a merge to main (rebuilds only when .env ASSETS_SOURCE=external)
   repository_dispatch:
