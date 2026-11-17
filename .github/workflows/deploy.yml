@@ -95,7 +95,9 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
-    needs: build
+    needs: [config, build]
+    # assets repo dispatch -> deploy only with external assets; push / manual always deploy
+    if: github.event_name != 'repository_dispatch' || needs.config.outputs.source == 'external'
     steps:
       - name: Deploy to GitHub Pages
         id: deployment

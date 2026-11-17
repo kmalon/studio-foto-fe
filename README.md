@@ -86,7 +86,7 @@ The tracked `.env` keeps `internal`; to deploy external assets, set `ASSETS_SOUR
 
 Auto rebuild after assets change: the deploy workflow also listens for `repository_dispatch`
 (`assets-updated`). Such a run builds and deploys only when the tracked `.env` has `ASSETS_SOURCE=external`;
-with `internal` the build/deploy jobs are skipped. Push to `master` and manual runs always build.
+with `internal` both the `build` and `deploy` jobs are skipped (each has its own guard). Push to `master` and manual runs always build.
 
 Setup on the assets repo side (one-time):
 

@@ -42,3 +42,17 @@ Assets repo merge to main should rebuild site via `repository_dispatch` (`assets
 
 ## Verify
 js-yaml parse: triggers, jobs config/build/deploy, needs/if/outputs ok; config step simulated (internal). Real dispatch test = user.
+
+---
+
+# 23 fix: deploy job guarded explicitly
+
+## Issue
+`deploy` skipped after dispatch+internal only implicitly (its `needs: build` skipped). Want explicit guard: after `repository_dispatch` deploy runs only if source external.
+
+## Fix `.github/workflows/deploy.yml`
+- `deploy`: `needs: [config, build]` + `if: github.event_name != 'repository_dispatch' || needs.config.outputs.source == 'external'` (implicit success() kept -> still requires build success).
+- README + app_description: build and deploy each guarded.
+
+## Verify
+js-yaml parse: deploy needs/if ok.

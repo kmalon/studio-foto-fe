@@ -18,7 +18,7 @@ Visual direction: minimal dark wedding-photographer portfolio.
 - SSR-safe rule: render output must match server (no window in render; `useColumnCount` = useSyncExternalStore w/ server snapshot 3).
 - `vite.config.ts` base: `/` (site at domain root); alias `@assets` -> assets dir (`.env` `ASSETS_SOURCE=internal` -> src/assets | `external` -> `ASSETS_DIR` e.g. `../assets_external`, CI workflow fetches it before build; default `src/assets_external` gitignored, tracked .env keeps internal; missing -> error; `server.fs.allow` adds it); ALL asset imports/globs via `@assets/…` (gallery parses glob keys from path tail); custom plugin `imageSize`: `?size` import -> `{width,height}` via sharp metadata (no emitted file)
 - homepage: https://angelikamalon.pl
-- workflow: `.github/workflows/deploy.yml` (triggers: push master, manual, `repository_dispatch` `assets-updated` from assets repo (notify-site.yml + `SITE_DISPATCH_TOKEN` PAT there) -> builds only if .env external; jobs config (sparse .env -> source/dir) -> build -> deploy; build: [if .env ASSETS_SOURCE=external: sparse checkout `assets/` of `ASSETS_REPO` amalonart/studio_foto_assets@`ASSETS_REF` main -> ASSETS_DIR] -> npm ci + build -> Pages)
+- workflow: `.github/workflows/deploy.yml` (triggers: push master, manual, `repository_dispatch` `assets-updated` from assets repo (notify-site.yml + `SITE_DISPATCH_TOKEN` PAT there) -> build + deploy (each guarded) only if .env external; jobs config (sparse .env -> source/dir) -> build -> deploy; build: [if .env ASSETS_SOURCE=external: sparse checkout `assets/` of `ASSETS_REPO` amalonart/studio_foto_assets@`ASSETS_REF` main -> ASSETS_DIR] -> npm ci + build -> Pages)
 
 ## Routes (`src/App.tsx`)
 ```
