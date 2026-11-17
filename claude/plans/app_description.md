@@ -56,8 +56,9 @@ src/
   index.css         reset + base type, imports styles/tokens.css
   App.css           .container .section .eyebrow .btn .link-underline .text-link (inline prose link) .nowrap .h-dash .photo-grid .photo-card .masonry .masonry__col
   styles/tokens.css design tokens (see below)
-  data/portfolio.ts Photo type (opt. `focus` = object-position, `srcSet`, `width`/`height` = build-time size via `?size` glob, `loadSizes`); `photos` (assets/portfolio full+thumbs paired by name) + `featured` + `slides` (assets/start; srcSet via imagetools glob query 640/1024/1600/2048; `slideFocus` map file->focus)
+  data/portfolio.ts Photo type (opt. `focus` = object-position, `srcSet`, `width`/`height` = build-time size via `?size` glob, `loadSizes`); `photos` (assets/portfolio full+thumbs paired by name) + `featured` + `slides` (assets/start; srcSet via imagetools glob query 640/1024/1600/2048; focus from `@assets/slideFocus.ts`)
   data/gallery.ts   `sessions`/`getSession(slug)` from assets/gallery/<folder>/{full,thumbial,overview.md}; slug = `toSlug(folder)` (drop `N_` prefix, `_`->`-`, PL diacritics stripped); title/description = overview lines 1/2; sorted desc by folder (numeric-aware); thumb = same-name thumbial ?? full; sizes from `?size` glob (thumbial wins); cover = 1st thumbial ?? 1st full
+  assets/slideFocus.ts start slide file -> object-position (portrait crop), ambient decl in vite-env.d.ts
   assets/altText.ts unique PL alt (lives in assets dir, import `@assets/altText.ts`, ambient decl in vite-env.d.ts) per photo, key "<dir>/<file>" (start/…, portfolio/…, gallery/<folder>/…); missing -> generic fallback. New photo => add entry
   data/AngelikaInfo.tsx EMAIL only (kontakt@angelikamalon.pl, content -> stays in code)
   components/
@@ -79,7 +80,7 @@ src/
     Contact.tsx     web3forms (key = `.env` `VITE_WEB3FORMS_KEY`, read directly here): name, email, date (opt.), venue "Miejsce wydarzenia" (opt.), message
     Portfolio.tsx  Gallery.tsx  Session.tsx/.css  NotFound.tsx/.css
     About.tsx/.css  Contact.tsx/.css
-  assets/         (default assets dir) start/ (slides), portfolio/{full,thumbs}, about/, gallery/<folder>/{full,thumbial,overview.md}, altText.ts
+  assets/         (default assets dir) start/ (slides), portfolio/{full,thumbs}, about/, gallery/<folder>/{full,thumbial,overview.md}, altText.ts, slideFocus.ts
 scripts/prerender.mjs post-build static pages, 404, redirects, sitemap, robots (see Deploy)
 scripts/make-icons.mjs one-off: public/favicon.svg (gold Cormorant "A" path on #0d0d0d) -> favicon.ico (48/32/16), apple-touch-icon.png 180, icon-192/512.png; rerun + commit after svg edit
 public/CNAME      custom domain for GH Pages
@@ -96,7 +97,7 @@ public/site.webmanifest icons 192/512
 
 ## Content
 Copy Polish; brand "Angelika Malon Fotografia" (BRAND const). Titles pattern "<Page> | fotograf … Warszawa | Łuków | Angelika Malon". Separators: ` | ` between label fragments (titles/alts/meta), plain hyphen ` - ` in prose; no `·`/`–`/`—`. City pair "Warszawa | Łuków" (prose: "z Warszawy i Łukowa", "w Warszawie, Łukowie"); Start h1 city in `.nowrap`; hyphens in headings wrapped in `.h-dash` (Jost; Cormorant `-` is slanted).
-Images: own photos in src/assets, webp, named `NN-opis-z-alt.webp` (NN zero-padded = display order, rest = slug of alt text; thumbs/thumbial same name) (globs accept jpg/jpeg/png/webp; `convert-images.sh` converts). overview.md: line 1 `# Title` (no leading spaces, else code block), line 2 = intro + meta desc; all visible. Full how-to in README. Sessions (desc order shown): 4_ ślubna Łazienki, 3_ rodzinno-brzuszkowa, 2_ Paula Smyk (artystka, Łuków), 1_ Julia (kobieca, miejska+studio). New gallery session = new folder in assets/gallery (auto route/sitemap; add alt entries to assets altText.ts). New start image -> add entry to `slideFocus` if people off-center. macOS junk (`.DS_Store`, `._*`) gitignored.
+Images: own photos in src/assets, webp, named `NN-opis-z-alt.webp` (NN zero-padded = display order, rest = slug of alt text; thumbs/thumbial same name) (globs accept jpg/jpeg/png/webp; `convert-images.sh` converts). overview.md: line 1 `# Title` (no leading spaces, else code block), line 2 = intro + meta desc; all visible. Full how-to in README. Sessions (desc order shown): 4_ ślubna Łazienki, 3_ rodzinno-brzuszkowa, 2_ Paula Smyk (artystka, Łuków), 1_ Julia (kobieca, miejska+studio). New gallery session = new folder in assets/gallery (auto route/sitemap; add alt entries to assets altText.ts). New start image -> add entry to assets `slideFocus.ts` if people off-center. macOS junk (`.DS_Store`, `._*`) gitignored.
 
 ## Conventions
 - `.tsx`/`.ts` extension included in imports

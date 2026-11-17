@@ -31,3 +31,20 @@ No questions
 
 ## Branch
 feature/22_external_assets
+
+---
+
+# 22 fix: slideFocus -> assets
+
+## Issue
+`slideFocus` (start slide file -> object-position) hardcoded in `src/data/portfolio.ts`; tied to start images -> must live in assets dir (internal/external), like altText.ts.
+
+## Fix
+1. New `src/assets/slideFocus.ts`: default export `Record<string,string>` (map moved as-is; keys = files in start/, missing -> centered).
+2. `src/data/portfolio.ts`: inline map dropped; `import slideFocus from '@assets/slideFocus.ts'`.
+3. `src/vite-env.d.ts`: ambient `declare module '@assets/slideFocus.ts'`.
+4. README (external layout, Start slideshow note) + app_description updated.
+5. `.env` committed with user's values (`ASSETS_SOURCE=external`, `ASSETS_DIR=./src/assets_external`) per user decision; CI must provide that dir.
+
+## Verify
+`npx tsc -b` ok; `ASSETS_SOURCE=internal npm run build` -> dist identical to previous build except JS hash.

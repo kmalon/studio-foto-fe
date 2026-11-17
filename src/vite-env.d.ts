@@ -16,3 +16,9 @@ declare module '@assets/altText.ts' {
     const altText: Record<string, string>
     export default altText
 }
+
+/** Start slide file -> CSS object-position, from the assets dir. */
+declare module '@assets/slideFocus.ts' {
+    const slideFocus: Record<string, string>
+    export default slideFocus
+}

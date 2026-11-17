@@ -55,7 +55,7 @@ export default tseslint.config({
 
 # External assets
 
-Assets (photos, `overview.md` files, `altText.ts`) can come from a local folder outside the repo.
+Assets (photos, `overview.md` files, `altText.ts`, `slideFocus.ts`) can come from a local folder outside the repo.
 Configured in `.env` (build-time only, not bundled; process env vars override `.env`):
 
 ```
@@ -64,7 +64,7 @@ ASSETS_DIR=../assets_external   # relative to project root or absolute
 ```
 
 - External dir must have the same layout as `src/assets`: `start/`, `portfolio/{full,thumbs}/`,
-  `about/`, `gallery/<N>_<name>/{full,thumbial,overview.md}`, `altText.ts`.
+  `about/`, `gallery/<N>_<name>/{full,thumbial,overview.md}`, `altText.ts`, `slideFocus.ts`.
 - Code imports assets via the `@assets` alias (`vite.config.ts`), which points to the chosen dir.
 - CI/CD: fetch the external assets into `ASSETS_DIR` before `npm run build`
   (e.g. `ASSETS_SOURCE=external npm run build`). Missing dir -> build fails with a clear error.
@@ -202,7 +202,7 @@ Commit and push to `master` -> GitHub Actions deploys to GitHub Pages.
 ## Other images
 
 - **Start slideshow**: `src/assets/start/NN-description.webp` + alt entry `start/<file>`.
-  If people are off-center, add the file to `slideFocus` in `src/data/portfolio.ts` (object-position for portrait screens).
+  If people are off-center, add the file to `src/assets/slideFocus.ts` (object-position for portrait screens).
 - **Portfolio**: same name in `src/assets/portfolio/full` and `src/assets/portfolio/thumbs`, `NNN-description` (3 digits),
   alt entry `portfolio/<file>`.
 - Run `bash convert-images.sh` for both (directories configured in `DIRS` inside the script).
