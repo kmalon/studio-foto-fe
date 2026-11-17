@@ -65,7 +65,7 @@ const Start = () => {
                             <p>
                                 Mieszkam w Warszawie, ale sercem i aparatem wciąż regularnie wracam w moje
                                 rodzinne strony - do Łukowa i na całą Lubelszczyznę. Fotografuję tam, gdzie
-                                dzieje się coś dla Was ważnego: od eleganckich warszawskich plenerów, przez
+                                dzieje się dla Was coś ważnego: od eleganckich warszawskich plenerów, przez
                                 huczne wesela na Mazowszu i Lubelszczyźnie, aż po kameralne uroczystości
                                 w domowym zaciszu.
                             </p>
