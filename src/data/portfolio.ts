@@ -1,4 +1,4 @@
-import altText from './altText.ts'
+import altText from '@assets/altText.ts'
 
 export type Photo = {
     src: string
@@ -30,20 +30,20 @@ const loadImages = (images: Record<string, string>) =>
 
 // full + thumbs are paired by file name; ordered by file name
 const portfolioFull = loadImages(
-    import.meta.glob<string>('../assets/portfolio/full/*.{jpg,jpeg,png,webp}', {
+    import.meta.glob<string>('@assets/portfolio/full/*.{jpg,jpeg,png,webp}', {
         eager: true,
         import: 'default',
     }),
 )
 const portfolioThumbs = loadImages(
-    import.meta.glob<string>('../assets/portfolio/thumbs/*.{jpg,jpeg,png,webp}', {
+    import.meta.glob<string>('@assets/portfolio/thumbs/*.{jpg,jpeg,png,webp}', {
         eager: true,
         import: 'default',
     }),
 )
 
 const portfolioSizes = loadSizes(
-    import.meta.glob<ImageSize>('../assets/portfolio/{full,thumbs}/*.{jpg,jpeg,png,webp}', {
+    import.meta.glob<ImageSize>('@assets/portfolio/{full,thumbs}/*.{jpg,jpeg,png,webp}', {
         eager: true,
         query: '?size',
         import: 'default',
@@ -63,14 +63,14 @@ export const featured: Photo[] = photos.slice(0, 3)
 
 // every image dropped into assets/start, ordered by file name
 const startImages = loadImages(
-    import.meta.glob<string>('../assets/start/*.{jpg,jpeg,png,webp}', {
+    import.meta.glob<string>('@assets/start/*.{jpg,jpeg,png,webp}', {
         eager: true,
         import: 'default',
     }),
 )
 // same files resized by vite-imagetools (never upscaled) -> srcset string
 const startSrcSets = loadImages(
-    import.meta.glob<string>('../assets/start/*.{jpg,jpeg,png,webp}', {
+    import.meta.glob<string>('@assets/start/*.{jpg,jpeg,png,webp}', {
         eager: true,
         query: { w: '640;1024;1600;2048', format: 'webp', quality: '82', as: 'srcset' },
         import: 'default',

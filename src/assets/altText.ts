@@ -1,5 +1,5 @@
 /**
- * Descriptive alt text per photo, keyed by "<dir>/<file>" relative to src/assets
+ * Descriptive alt text per photo, keyed by "<dir>/<file>" relative to the assets dir (src/assets or external ASSETS_DIR)
  * (start/…, portfolio/…, gallery/<folder>/…). Thumbs share their full photo's text.
  * New photo without an entry falls back to a generic, context-based text.
  */

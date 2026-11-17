@@ -53,9 +53,26 @@ export default tseslint.config({
 })
 ```
 
+# External assets
+
+Assets (photos, `overview.md` files, `altText.ts`) can come from a local folder outside the repo.
+Configured in `.env` (build-time only, not bundled; process env vars override `.env`):
+
+```
+ASSETS_SOURCE=internal          # internal = src/assets, external = ASSETS_DIR
+ASSETS_DIR=../assets_external   # relative to project root or absolute
+```
+
+- External dir must have the same layout as `src/assets`: `start/`, `portfolio/{full,thumbs}/`,
+  `about/`, `gallery/<N>_<name>/{full,thumbial,overview.md}`, `altText.ts`.
+- Code imports assets via the `@assets` alias (`vite.config.ts`), which points to the chosen dir.
+- CI/CD: fetch the external assets into `ASSETS_DIR` before `npm run build`
+  (e.g. `ASSETS_SOURCE=external npm run build`). Missing dir -> build fails with a clear error.
+
 # Content: adding photos
 
-All photos live in `src/assets`. They are picked up automatically by `import.meta.glob`
+All photos live in the **assets dir** (`src/assets` by default, or an external dir, see
+[External assets](#external-assets); paths below use `src/assets`). They are picked up automatically by `import.meta.glob`
 (jpg/jpeg/png/webp), but the site expects **WebP files with numbered, descriptive names**
 and an **alt text entry** for every photo.
 
@@ -152,7 +169,7 @@ Needs `imagemagick` + `webp` (cwebp, webpmux).
 
 ### 5. Add alt texts
 
-Add one entry per photo to `src/data/altText.ts` (thumbnails share it):
+Add one entry per photo to `src/assets/altText.ts` (thumbnails share it):
 
 ```ts
 'gallery/3_sesja_slubna_lukow/01-para-mloda-idzie-za-reke-przez-park.webp': 'Para młoda idzie za rękę przez park',

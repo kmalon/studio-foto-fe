@@ -10,3 +10,9 @@ interface ImportMetaEnv {
 interface ImportMeta {
     readonly env: ImportMetaEnv
 }
+
+/** Alt texts from the assets dir (`@assets` alias = src/assets or external ASSETS_DIR, see vite.config.ts). */
+declare module '@assets/altText.ts' {
+    const altText: Record<string, string>
+    export default altText
+}
