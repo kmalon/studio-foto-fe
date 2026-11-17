@@ -4,6 +4,9 @@ on:
   push:
     branches: ["master"]
   workflow_dispatch:
+  # sent by the assets repo after a merge to main (rebuilds only when .env ASSETS_SOURCE=external)
+  repository_dispatch:
+    types: [assets-updated]
 
 permissions:
   contents: read
@@ -20,16 +23,19 @@ env:
   ASSETS_REF: main
 
 jobs:
-  build:
+  # reads ASSETS_SOURCE / ASSETS_DIR from the tracked .env
+  config:
     runs-on: ubuntu-latest
+    outputs:
+      source: ${{ steps.assets.outputs.source }}
+      dir: ${{ steps.assets.outputs.dir }}
     steps:
-      - name: Checkout
+      - name: Checkout .env
         uses: actions/checkout@v4
-      - name: Setup Node
-        uses: actions/setup-node@v4
         with:
-          node-version: 22
-          cache: npm
+          sparse-checkout: .env
+          sparse-checkout-cone-mode: false
+          fetch-depth: 1
       - name: Read assets config
         id: assets
         run: |
@@ -39,8 +45,22 @@ jobs:
           echo "source=$SOURCE" >> "$GITHUB_OUTPUT"
           echo "dir=$DIR" >> "$GITHUB_OUTPUT"
           echo "Assets source: $SOURCE (external dir: $DIR)"
+
+  build:
+    needs: config
+    # assets repo dispatch -> rebuild only with external assets; push / manual always build
+    if: github.event_name != 'repository_dispatch' || needs.config.outputs.source == 'external'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
       - name: Checkout external assets
-        if: steps.assets.outputs.source == 'external'
+        if: needs.config.outputs.source == 'external'
         uses: actions/checkout@v4
         with:
           repository: ${{ env.ASSETS_REPO }}
@@ -49,9 +69,9 @@ jobs:
           sparse-checkout: assets
           fetch-depth: 1
       - name: Place external assets
-        if: steps.assets.outputs.source == 'external'
+        if: needs.config.outputs.source == 'external'
         env:
-          DIR: ${{ steps.assets.outputs.dir }}
+          DIR: ${{ needs.config.outputs.dir }}
         run: |
           rm -rf "$DIR"
           mkdir -p "$(dirname "$DIR")"

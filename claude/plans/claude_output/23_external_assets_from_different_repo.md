@@ -25,3 +25,20 @@ No questions
 
 ## Branch
 feature/23_external_assets_from_different_repo
+
+---
+
+# 23 fix: repository_dispatch trigger (external only)
+
+## Issue
+Assets repo merge to main should rebuild site via `repository_dispatch` (`assets-updated`), but only when tracked `.env` `ASSETS_SOURCE=external`; internal -> dispatch run skips build/deploy.
+
+## Fix `.github/workflows/deploy.yml`
+1. `on:` + `repository_dispatch: types: [assets-updated]`.
+2. New job `config`: sparse checkout `.env` only; "Read assets config" step moved here; outputs `source`, `dir`.
+3. `build`: `needs: config`; `if: github.event_name != 'repository_dispatch' || needs.config.outputs.source == 'external'`; external steps use `needs.config.outputs.*`.
+4. `deploy` needs build -> skipped with it. push/manual always build.
+5. README: dispatch rule + assets repo setup (PAT `SITE_DISPATCH_TOKEN` Contents RW on studio-foto-fe, notify-site.yml snippet, test). app_description workflow line.
+
+## Verify
+js-yaml parse: triggers, jobs config/build/deploy, needs/if/outputs ok; config step simulated (internal). Real dispatch test = user.

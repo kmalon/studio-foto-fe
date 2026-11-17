@@ -84,6 +84,39 @@ from the tracked `.env`. If `external`, it fetches the `assets/` folder of
 set by `ASSETS_REPO` / `ASSETS_REF` at the top of the workflow) into `ASSETS_DIR` (default `src/assets_external/`).
 The tracked `.env` keeps `internal`; to deploy external assets, set `ASSETS_SOURCE=external` in `.env` and commit.
 
+Auto rebuild after assets change: the deploy workflow also listens for `repository_dispatch`
+(`assets-updated`). Such a run builds and deploys only when the tracked `.env` has `ASSETS_SOURCE=external`;
+with `internal` the build/deploy jobs are skipped. Push to `master` and manual runs always build.
+
+Setup on the assets repo side (one-time):
+
+1. Fine-grained personal access token (owner of `studio-foto-fe`): repository access only `studio-foto-fe`,
+   permission **Contents: Read and write** (needed for the dispatch API). Save it in the assets repo as
+   Actions secret `SITE_DISPATCH_TOKEN`.
+2. Assets repo workflow `.github/workflows/notify-site.yml`:
+
+```yaml
+name: Rebuild site
+on:
+  push:
+    branches: [main]
+    paths: ['assets/**']
+  workflow_dispatch:
+jobs:
+  dispatch:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          curl -fsS -X POST \
+            -H "Accept: application/vnd.github+json" \
+            -H "Authorization: Bearer ${{ secrets.SITE_DISPATCH_TOKEN }}" \
+            https://api.github.com/repos/kmalon/studio-foto-fe/dispatches \
+            -d '{"event_type":"assets-updated"}'
+```
+
+Test: "Run workflow" on *Rebuild site* in the assets repo -> new *Deploy to GitHub Pages* run (event
+`repository_dispatch`) here. 403/404 from curl = token lacks access to `studio-foto-fe`.
+
 When using external assets, add/edit photos, `overview.md`, `altText.ts` and `slideFocus.ts` in the external dir;
 the paths in the sections below (`src/assets/...`) are then relative to that dir.
 
