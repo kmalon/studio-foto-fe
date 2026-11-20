@@ -132,6 +132,37 @@ CI sets `BUILD_SHA` (`github.sha`) and `ASSETS_SHA` (checked-out assets commit; 
 `client_payload.sha` sent by the assets repo). Locally both come from `git rev-parse HEAD`
 (internal assets -> assets SHA = site SHA; external dir not a git repo -> `unknown`).
 
+## CMS (/admin/)
+
+`https://angelikamalon.pl/admin/` = [Sveltia CMS](https://sveltiacms.app) (static `public/admin/index.html` +
+`config.yml`, not linked from the site, meta `noindex`; deliberately NOT disallowed in robots.txt, so crawlers can see the noindex). It commits directly to the
+**assets repo** `amalonart/studio_foto_assets` (`assets/`, branch `main`); every commit triggers a site rebuild
+(assets repo notify -> `repository_dispatch`), live after a few minutes.
+
+Login (token only, stored in the browser):
+
+1. GitHub -> Settings -> Developer settings -> Fine-grained tokens -> Generate: repository access
+   *Only select repositories* = `studio_foto_assets`, permission **Contents: Read and write**.
+2. Open `/admin/` -> *Sign In with Token* -> paste token.
+
+Editable:
+
+- **Sesje (galeria)**: each `assets/gallery/<folder>/overview.md` (raw markdown; line 1 `# Title`, line 2 intro/meta
+  description). New entry = new session folder: type the slug `N_nazwa_sesji` (N = order, higher = first). Images
+  uploaded in an entry go to its `full/`.
+- **Assets** (asset library): upload/delete files in `start/`, `portfolio/full` + `portfolio/thumbs`, `about/`,
+  `gallery/<folder>/…`.
+
+Uploads are converted in the browser (Sveltia image optimization, `media_libraries` in `config.yml`): raster images ->
+**WebP, max 2048x2048 (never enlarged), quality 90**, Exif stripped, file name slugified (`01 Opis.JPG` ->
+`01-opis.webp`). Same as the `full` profile of `convert-images.sh`. Limits: one profile for every folder (thumbnails
+uploaded to `portfolio/thumbs` / `thumbial/` are NOT 800px/q80 - make those with the script), no copyright XMP,
+animated files uploaded as-is; check orientation of rotated/HEIC photos after upload.
+
+Still manual (git): alt texts (`altText.ts`), slide focus (`slideFocus.ts`), `thumbial/` thumbnails (800px).
+Keep the naming rules below (`NN-opis.webp`), otherwise order/alt text break. Dev: `npm run dev` -> `/admin/index.html`
+(works against the real repo).
+
 # Content: adding photos
 
 All photos live in the **assets dir** (`src/assets` by default, or an external dir, see

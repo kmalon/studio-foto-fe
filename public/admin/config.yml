@@ -1,0 +1,56 @@
+# Sveltia CMS config (https://sveltiacms.app/en/docs). Edits the assets repo, not this one;
+# each commit there triggers a site rebuild (notify -> repository_dispatch assets-updated).
+backend:
+  name: github
+  repo: amalonart/studio_foto_assets
+  branch: main
+  auth_methods: [token] # fine-grained PAT: studio_foto_assets, Contents read/write
+  commit_messages:
+    create: 'cms: dodaj {{collection}} "{{slug}}"'
+    update: 'cms: zmień {{collection}} "{{slug}}"'
+    delete: 'cms: usuń {{collection}} "{{slug}}"'
+    uploadMedia: 'cms: dodaj plik "{{path}}"'
+    deleteMedia: 'cms: usuń plik "{{path}}"'
+
+site_url: https://angelikamalon.pl
+display_url: https://angelikamalon.pl
+
+# Global asset library: browse start/, portfolio/{full,thumbs}, about/, gallery/<sesja>/... via breadcrumbs.
+# File names: NN-opis-zdjecia.webp (NN = kolejność). Alt texts: altText.ts (manual).
+media_folder: assets
+public_folder: /assets
+
+# Uploads (asset library + entries) -> WebP, fit inside 2048x2048 (never enlarged), q90, Exif stripped.
+# Mirrors convert-images.sh "full" profile (FULL_SIZE/FULL_Q). Sveltia has no per-folder transforms,
+# so thumbs (portfolio/thumbs, thumbial/) get the same profile; 800px thumbs -> script. No XMP copyright.
+media_libraries:
+  all:
+    slugify_filename: true # "01 Opis.JPG" -> 01-opis.webp (keeps NN-opis naming)
+    transformations:
+      raster_image:
+        format: webp
+        quality: 90 # FULL_Q
+        width: 2048 # FULL_SIZE 2048x2048>
+        height: 2048
+
+collections:
+  - name: gallery
+    label: Sesje (galeria)
+    label_singular: Sesja
+    description: 'Folder sesji w assets/gallery: overview.md + zdjęcia w full/ (miniatury thumbial/ opcjonalne, ręcznie).'
+    folder: assets/gallery
+    path: '{{slug}}/overview'
+    format: raw
+    extension: md
+    create: true
+    delete: false
+    slug:
+      editable: true
+      hint: 'Nazwa folderu: N_nazwa_sesji (N = kolejność, wyższy = wyżej na stronie), małe litery, bez polskich znaków, "_" zamiast spacji.'
+    media_folder: full
+    public_folder: full
+    fields:
+      - name: body
+        label: Opis sesji
+        widget: markdown
+        hint: 'Linia 1: "# Tytuł" (bez spacji przed #). Linia 2: krótki opis (też meta description). Dalej dowolny tekst.'
