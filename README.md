@@ -145,12 +145,15 @@ Login (token only, stored in the browser):
    *Only select repositories* = `studio_foto_assets`, permission **Contents: Read and write**.
 2. Open `/admin/` -> *Sign In with Token* -> paste token.
 
-Editable: **Assets** only (asset library, global `assets` folder): upload/replace/delete files in `start/`,
+Editable:
+
+- **Ustawienia**: `altText.ts` and `slideFocus.ts` as raw text (keep valid TS syntax, otherwise the site build fails).
+- **Assets** (asset library, global `assets` folder): upload/replace/delete files in `start/`,
 `portfolio/full` + `portfolio/thumbs`, `about/`, `gallery/<folder>/` (`overview.md`, `full/`, `thumbial/`).
 There is no text editor for `overview.md`: edit it locally (line 1 `# Title`, line 2 intro/meta description) and upload
 it with the same name to replace it. New session: in `gallery/` create folder `N_nazwa_sesji` (N = order, higher =
 first; lowercase, no Polish letters, `_` for spaces), upload `overview.md` there, create `full/` and upload photos.
-Why no collection: Sveltia shows a file either as a collection entry or as an asset, never both, and a collection's own
+Why no gallery collection: Sveltia shows a file either as a collection entry or as an asset, never both, and a collection's own
 media folder inside `gallery/` would hide `gallery/` from the Assets tree.
 
 Uploads are converted in the browser (Sveltia image optimization, `media_libraries` in `config.yml`): raster images ->
@@ -159,7 +162,7 @@ Uploads are converted in the browser (Sveltia image optimization, `media_librari
 uploaded to `portfolio/thumbs` / `thumbial/` are NOT 800px/q80 - make those with the script), no copyright XMP,
 animated files uploaded as-is; check orientation of rotated/HEIC photos after upload.
 
-Still manual (git): alt texts (`altText.ts`), slide focus (`slideFocus.ts`), `thumbial/` thumbnails (800px).
+Still manual (git/script): `thumbial/` and `portfolio/thumbs` thumbnails (800px).
 Keep the naming rules below (`NN-opis.webp`), otherwise order/alt text break. Dev: `npm run dev` -> `/admin/index.html`
 (works against the real repo).
 

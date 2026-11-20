@@ -105,3 +105,43 @@ Global Assets now shows gallery/<sesja>/{full,thumbial} but not overview.md. Cau
 
 ## Unresolved questions
 No questions
+
+---
+
+# 26 fix 4: "At least one collection must be visible"
+
+## Issue
+Fix 3 (`collections: []`) -> Sveltia error "At least one collection must be visible. Check the hide option." (`parser/collections/index.js`: needs ≥1 non-hidden collection or singleton). User chose: files collection for `assets/altText.ts` + `assets/slideFocus.ts` (outside assets/gallery -> overview.md stays an asset).
+
+## Fix
+1. `public/admin/config.yml` replace `collections: []` + comment:
+   ```yaml
+   collections:
+     - name: settings
+       label: Ustawienia
+       format: raw            # raw never mismatches extension (format.js)
+       editor: { preview: false }
+       files:
+         - name: alt_text
+           label: Teksty alternatywne (altText.ts)
+           file: assets/altText.ts
+           fields: [{ name: body, label: altText.ts, widget: text, hint: '"<folder>/<plik>": "opis", ...' }]
+         - name: slide_focus
+           label: Kadrowanie slajdów (slideFocus.ts)
+           file: assets/slideFocus.ts
+           fields: [{ name: body, label: slideFocus.ts, widget: text, hint: object-position per start slide }]
+   ```
+   comment: never put a collection on assets/gallery (file = entry XOR asset); these 2 files leave Assets list. Re-add commit_messages `update` (`cms: zmień {{collection}} "{{slug}}"`); no create/delete (files collection).
+2. README CMS: Editable = Assets + Ustawienia (altText.ts/slideFocus.ts raw text, TS syntax must stay valid else build fails); "Still manual" -> drop altText/slideFocus.
+3. app_description CMS line: collection `settings` (raw altText.ts/slideFocus.ts), altText/slideFocus editable in CMS.
+4. Append to `claude/plans/claude_output/26_resize_by_sveltia_cms.md` + `## Branch feature/26_overviewfiles_visible_in_global_assets_in_cms`; commit on current branch.
+
+## Verification
+- js-yaml parse; `ASSETS_SOURCE=internal npm run build` -> dist/admin/config.yml updated.
+- Manual (user, `npm run dev` -> /admin/index.html): no error; Ustawienia shows both files with TS text; Assets -> gallery/<sesja> still shows overview.md.
+
+## Unresolved questions
+No questions
+
+## Branch
+feature/26_overviewfiles_visible_in_global_assets_in_cms
