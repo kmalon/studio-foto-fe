@@ -6,6 +6,7 @@ backend:
   branch: main
   auth_methods: [token] # fine-grained PAT: studio_foto_assets, Contents read/write
   commit_messages:
+    update: 'cms: zmień {{collection}} "{{slug}}"'
     uploadMedia: 'cms: dodaj plik "{{path}}"'
     deleteMedia: 'cms: usuń plik "{{path}}"'
 
@@ -30,8 +31,30 @@ media_libraries:
         width: 2048 # FULL_SIZE 2048x2048>
         height: 2048
 
-# Assets-only CMS on purpose. Sveltia lists a file either as a collection entry or as an asset, never both
-# (and any extra asset folder at/in assets/gallery hides gallery/ from the global tree), so there is no
-# gallery collection: overview.md is a plain file in Assets (edit locally, upload with the same name to replace;
-# line 1 "# Tytuł", line 2 opis/meta description). An empty array is valid (only "is array" is checked).
-collections: []
+# Never put a collection on assets/gallery: Sveltia lists a file either as a collection entry or as an asset,
+# never both (and any extra asset folder there hides gallery/ from the global tree). overview.md is a plain file
+# in Assets (edit locally, upload with the same name to replace; line 1 "# Tytuł", line 2 opis/meta description).
+# Sveltia needs >= 1 visible collection -> raw editors for altText.ts / slideFocus.ts (they leave the Assets list).
+collections:
+  - name: settings
+    label: Ustawienia
+    format: raw # raw never mismatches the extension, whole file = body
+    editor:
+      preview: false
+    files:
+      - name: alt_text
+        label: Teksty alternatywne (altText.ts)
+        file: assets/altText.ts
+        fields:
+          - name: body
+            label: altText.ts
+            widget: text
+            hint: 'Wpis: "<folder>/<plik>": "opis zdjęcia", (np. "gallery/4_sesja.../full/01-x.webp"). Zachowaj składnię TS (cudzysłowy, przecinki), inaczej build się nie uda.'
+      - name: slide_focus
+        label: Kadrowanie slajdów (slideFocus.ts)
+        file: assets/slideFocus.ts
+        fields:
+          - name: body
+            label: slideFocus.ts
+            widget: text
+            hint: 'Plik slajdu (start/) -> object-position, np. "30% 50%" (gdzie są ludzie na pionowym ekranie). Zachowaj składnię TS.'
