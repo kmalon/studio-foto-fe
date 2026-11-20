@@ -22,3 +22,6 @@ No questions
 
 ## Branch
 feature/25_sveltia_cms
+
+## Follow-up
+- Removed robots `Disallow: /admin/` (blocked crawl hides meta noindex); admin relies on meta noindex only.

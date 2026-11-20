@@ -135,7 +135,7 @@ CI sets `BUILD_SHA` (`github.sha`) and `ASSETS_SHA` (checked-out assets commit; 
 ## CMS (/admin/)
 
 `https://angelikamalon.pl/admin/` = [Sveltia CMS](https://sveltiacms.app) (static `public/admin/index.html` +
-`config.yml`, not linked from the site, `noindex` + `Disallow: /admin/` in robots.txt). It commits directly to the
+`config.yml`, not linked from the site, meta `noindex`; deliberately NOT disallowed in robots.txt, so crawlers can see the noindex). It commits directly to the
 **assets repo** `amalonart/studio_foto_assets` (`assets/`, branch `main`); every commit triggers a site rebuild
 (assets repo notify -> `repository_dispatch`), live after a few minutes.
 
