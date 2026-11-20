@@ -145,14 +145,13 @@ Login (token only, stored in the browser):
    *Only select repositories* = `studio_foto_assets`, permission **Contents: Read and write**.
 2. Open `/admin/` -> *Sign In with Token* -> paste token.
 
-Editable:
-
-- **Sesje (galeria)**: each `assets/gallery/<folder>/overview.md` (raw markdown; line 1 `# Title`, line 2 intro/meta
-  description). New entry = new session folder: type the slug `N_nazwa_sesji` (N = order, higher = first).
-- **Assets** (asset library, global `assets` folder): upload/delete files in `start/`, `portfolio/full` +
-  `portfolio/thumbs`, `about/`, `gallery/<folder>/full` + `thumbial`. Session photos are uploaded here (new session:
-  create the entry first, then in Assets open `gallery/<folder>`, create folder `full` and upload). The collection's
-  `media_folder` is deliberately the global one: a separate gallery media folder would hide `gallery/` from this tree.
+Editable: **Assets** only (asset library, global `assets` folder): upload/replace/delete files in `start/`,
+`portfolio/full` + `portfolio/thumbs`, `about/`, `gallery/<folder>/` (`overview.md`, `full/`, `thumbial/`).
+There is no text editor for `overview.md`: edit it locally (line 1 `# Title`, line 2 intro/meta description) and upload
+it with the same name to replace it. New session: in `gallery/` create folder `N_nazwa_sesji` (N = order, higher =
+first; lowercase, no Polish letters, `_` for spaces), upload `overview.md` there, create `full/` and upload photos.
+Why no collection: Sveltia shows a file either as a collection entry or as an asset, never both, and a collection's own
+media folder inside `gallery/` would hide `gallery/` from the Assets tree.
 
 Uploads are converted in the browser (Sveltia image optimization, `media_libraries` in `config.yml`): raster images ->
 **WebP, max 2048x2048 (never enlarged), quality 90**, Exif stripped, file name slugified (`01 Opis.JPG` ->
