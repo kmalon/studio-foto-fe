@@ -153,7 +153,13 @@ Editable:
 - **Assets** (asset library): upload/delete files in `start/`, `portfolio/full` + `portfolio/thumbs`, `about/`,
   `gallery/<folder>/…`.
 
-Still manual (git): alt texts (`altText.ts`), slide focus (`slideFocus.ts`), `thumbial/` thumbnails, WebP conversion.
+Uploads are converted in the browser (Sveltia image optimization, `media_libraries` in `config.yml`): raster images ->
+**WebP, max 2048x2048 (never enlarged), quality 90**, Exif stripped, file name slugified (`01 Opis.JPG` ->
+`01-opis.webp`). Same as the `full` profile of `convert-images.sh`. Limits: one profile for every folder (thumbnails
+uploaded to `portfolio/thumbs` / `thumbial/` are NOT 800px/q80 - make those with the script), no copyright XMP,
+animated files uploaded as-is; check orientation of rotated/HEIC photos after upload.
+
+Still manual (git): alt texts (`altText.ts`), slide focus (`slideFocus.ts`), `thumbial/` thumbnails (800px).
 Keep the naming rules below (`NN-opis.webp`), otherwise order/alt text break. Dev: `npm run dev` -> `/admin/index.html`
 (works against the real repo).
 
