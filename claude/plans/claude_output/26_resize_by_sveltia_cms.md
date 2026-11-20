@@ -84,3 +84,24 @@ Sveltia skips adding a collection asset folder when it's not entry-relative and 
 
 ## Unresolved questions
 No questions
+
+---
+
+# 26 fix 3: overview.md not visible in global Assets
+
+## Issue
+Global Assets now shows gallery/<sesja>/{full,thumbial} but not overview.md. Cause (Sveltia `services/backends/process.js` createFileList): file in a collection entry folder -> entry only, never asset. overview.md = `gallery` collection entry -> hidden from Assets. User chose: drop Sesje collection -> overview.md listed as plain asset (upload/replace/download/delete, no in-CMS text editing).
+
+## Fix
+1. `public/admin/config.yml`: replace whole `collections:` gallery block with `collections: []` (Sveltia only requires collections to be an array, `parser/collections/index.js`) + comment: assets-only CMS, overview.md handled as file in Assets (edit locally, re-upload same name; keep line 1 `# Title`, line 2 desc). Drop commit_messages create/update/delete (no entries) — keep uploadMedia/deleteMedia.
+2. Note: `slugify_filename` would rename uploaded `overview.md`? -> stays `overview.md` (already slug). OK. Transformations: raster only, md untouched.
+3. README CMS: remove Sesje bullet; Assets covers gallery incl. overview.md; new session = in Assets gallery/ create folder `N_nazwa`, upload overview.md + `full/` photos; no text editor.
+4. app_description CMS line: no collections (assets-only), overview.md as asset.
+5. Append to `claude/plans/claude_output/26_resize_by_sveltia_cms.md`; commit on `feature/26_sveltia_webp_resize`.
+
+## Verification
+- js-yaml parse; `ASSETS_SOURCE=internal npm run build` -> dist/admin/config.yml has `collections: []`.
+- Manual (user, `npm run dev` -> /admin/index.html): no config error; Assets -> gallery -> <sesja> shows overview.md + full/thumbial.
+
+## Unresolved questions
+No questions
