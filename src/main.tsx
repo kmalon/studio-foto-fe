@@ -15,6 +15,12 @@ import './index.css'
 import App from './App.tsx'
 import { ROUTER_BASENAME } from './seo/site.ts'
 
+// hidden build info (also <meta name="build"> + /version.json)
+const short = (sha: string) => sha.slice(0, 7)
+console.info(
+    `site ${short(__BUILD_INFO__.site)} | assets ${short(__BUILD_INFO__.assets)} (${__BUILD_INFO__.assetsSource}) | built ${__BUILD_INFO__.built}`,
+)
+
 const root = document.getElementById('root')!
 const app = (
     <StrictMode>

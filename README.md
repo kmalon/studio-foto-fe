@@ -120,6 +120,18 @@ Test: "Run workflow" on *Rebuild site* in the assets repo -> new *Deploy to GitH
 When using external assets, add/edit photos, `overview.md`, `altText.ts` and `slideFocus.ts` in the external dir;
 the paths in the sections below (`src/assets/...`) are then relative to that dir.
 
+## Deployed version (site + assets SHA)
+
+Each build records the site commit and the assets commit (invisible on the page):
+
+- `https://angelikamalon.pl/version.json` -> `{ site, assets, assetsSource, built }`
+- `<meta name="build" content="site=… assets=… built=…">` in every page head (view source)
+- browser console on load: `site abc1234 | assets def5678 (external) | built …`
+
+CI sets `BUILD_SHA` (`github.sha`) and `ASSETS_SHA` (checked-out assets commit; a dispatch builds exactly
+`client_payload.sha` sent by the assets repo). Locally both come from `git rev-parse HEAD`
+(internal assets -> assets SHA = site SHA; external dir not a git repo -> `unknown`).
+
 # Content: adding photos
 
 All photos live in the **assets dir** (`src/assets` by default, or an external dir, see

@@ -22,3 +22,11 @@ declare module '@assets/slideFocus.ts' {
     const slideFocus: Record<string, string>
     export default slideFocus
 }
+
+/** Build-time commit info (vite.config.ts `define`): site + assets SHAs, assets source, ISO build time. */
+declare const __BUILD_INFO__: {
+    readonly site: string
+    readonly assets: string
+    readonly assetsSource: string
+    readonly built: string
+}
