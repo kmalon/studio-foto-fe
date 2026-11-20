@@ -29,22 +29,22 @@ const loadImages = (images: Record<string, string>) =>
         Object.entries(images).map(([path, url]) => [path.split('/').pop()!, url]),
     )
 
-// full + thumbs are paired by file name; ordered by file name
+// full + thumbial are paired by file name; ordered by file name
 const portfolioFull = loadImages(
     import.meta.glob<string>('@assets/portfolio/full/*.{jpg,jpeg,png,webp}', {
         eager: true,
         import: 'default',
     }),
 )
-const portfolioThumbs = loadImages(
-    import.meta.glob<string>('@assets/portfolio/thumbs/*.{jpg,jpeg,png,webp}', {
+const portfolioThumbial = loadImages(
+    import.meta.glob<string>('@assets/portfolio/thumbial/*.{jpg,jpeg,png,webp}', {
         eager: true,
         import: 'default',
     }),
 )
 
 const portfolioSizes = loadSizes(
-    import.meta.glob<ImageSize>('@assets/portfolio/{full,thumbs}/*.{jpg,jpeg,png,webp}', {
+    import.meta.glob<ImageSize>('@assets/portfolio/{full,thumbial}/*.{jpg,jpeg,png,webp}', {
         eager: true,
         query: '?size',
         import: 'default',
@@ -53,7 +53,7 @@ const portfolioSizes = loadSizes(
 
 export const photos: Photo[] = Object.entries(portfolioFull).map(([name, src], i) => ({
     src,
-    thumb: portfolioThumbs[name] ?? src,
+    thumb: portfolioThumbial[name] ?? src,
     ...portfolioSizes[name],
     alt: altText[`portfolio/${name}`] ?? `Fotografia ślubna i portretowa | Angelika Malon, zdjęcie ${i + 1}`,
     caption: '',
