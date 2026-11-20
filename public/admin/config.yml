@@ -15,19 +15,10 @@ backend:
 site_url: https://angelikamalon.pl
 display_url: https://angelikamalon.pl
 
-# Global asset library: browse start/, portfolio/{full,thumbs}, about/ via breadcrumbs (gallery/ -> asset_collections below).
+# Global asset library: browse start/, portfolio/{full,thumbs}, about/, gallery/<sesja>/{full,thumbial} via breadcrumbs.
 # File names: NN-opis-zdjecia.webp (NN = kolejność). Alt texts: altText.ts (manual).
 media_folder: assets
 public_folder: /assets
-
-# assets/gallery is the `gallery` collection folder (entry-relative media) -> Sveltia hides it from the global
-# tree and lists it flat. A fixed-path asset collection makes it browsable: <sesja>/full, <sesja>/thumbial.
-asset_collections:
-  - name: gallery_assets
-    label: Galeria (pliki)
-    icon: photo_library
-    media_folder: /assets/gallery
-    public_folder: /assets/gallery
 
 # Uploads (asset library + entries) -> WebP, fit inside 2048x2048 (never enlarged), q90, Exif stripped.
 # Mirrors convert-images.sh "full" profile (FULL_SIZE/FULL_Q). Sveltia has no per-folder transforms,
@@ -56,8 +47,11 @@ collections:
     slug:
       editable: true
       hint: 'Nazwa folderu: N_nazwa_sesji (N = kolejność, wyższy = wyżej na stronie), małe litery, bez polskich znaków, "_" zamiast spacji.'
-    media_folder: full
-    public_folder: full
+    # Same as global on purpose: any other asset folder at/inside assets/gallery (entry-relative `full`,
+    # asset_collections) becomes its own sidebar location and Sveltia drops gallery/ from the global tree.
+    # overview.md never references images (site globs full/), so upload photos via Assets -> gallery/<sesja>/full.
+    media_folder: /assets
+    public_folder: /assets
     fields:
       - name: body
         label: Opis sesji

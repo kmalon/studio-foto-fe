@@ -60,3 +60,27 @@ Asset Library tree under global `assets` shows start/portfolio/about but no `gal
 
 ## Unresolved questions
 No questions
+
+---
+
+# 26 fix 2: gallery/ still missing in global Assets tree
+
+## Issue
+After fix 1 (asset_collections `/assets/gallery`) global `assets` tree still has no `gallery/`. Cause (Sveltia source `services/assets/subfolders.js`, `config/folders/assets.js`): any configured asset folder nested in another is its own sidebar location, never listed as subfolder of the outer one ("deepest folder wins"). Two such folders sat on assets/gallery: fix 1 asset collection + `gallery` collection's entry-relative media folder (`full`). Fix 1 made it worse, not better.
+Sveltia skips adding a collection asset folder when it's not entry-relative and equals global media/public folder (assets.js ~L220).
+
+## Fix
+1. `public/admin/config.yml`:
+   - remove `asset_collections` block + its comment.
+   - collection `gallery`: `media_folder: full`/`public_folder: full` -> `/assets` / `/assets` (= global -> no separate folder) + comment why (overview.md never references images; photos are globbed from `full/`, so entry-relative uploads not needed).
+   - global comment: gallery/<sesja>/{full,thumbial} browsable in global tree.
+2. README CMS: drop "Galeria (pliki)" + "images uploaded in an entry go to full/"; upload session photos via Assets -> assets -> gallery -> <folder> -> full (new session: create entry, then in Assets create `full` folder in it/upload).
+3. app_description CMS line: remove asset_collections, collection media = global.
+4. Append to `claude/plans/claude_output/26_resize_by_sveltia_cms.md`; commit on `feature/26_sveltia_webp_resize`.
+
+## Verification
+- js-yaml parse; `ASSETS_SOURCE=internal npm run build` -> dist/admin/config.yml updated.
+- Manual (user, `npm run dev` -> /admin/index.html, hard reload): Assets -> assets -> gallery -> 4 session folders -> full/thumbial.
+
+## Unresolved questions
+No questions
