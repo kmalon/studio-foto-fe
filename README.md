@@ -132,6 +132,31 @@ CI sets `BUILD_SHA` (`github.sha`) and `ASSETS_SHA` (checked-out assets commit; 
 `client_payload.sha` sent by the assets repo). Locally both come from `git rev-parse HEAD`
 (internal assets -> assets SHA = site SHA; external dir not a git repo -> `unknown`).
 
+## CMS (/admin/)
+
+`https://angelikamalon.pl/admin/` = [Sveltia CMS](https://sveltiacms.app) (static `public/admin/index.html` +
+`config.yml`, not linked from the site, `noindex` + `Disallow: /admin/` in robots.txt). It commits directly to the
+**assets repo** `amalonart/studio_foto_assets` (`assets/`, branch `main`); every commit triggers a site rebuild
+(assets repo notify -> `repository_dispatch`), live after a few minutes.
+
+Login (token only, stored in the browser):
+
+1. GitHub -> Settings -> Developer settings -> Fine-grained tokens -> Generate: repository access
+   *Only select repositories* = `studio_foto_assets`, permission **Contents: Read and write**.
+2. Open `/admin/` -> *Sign In with Token* -> paste token.
+
+Editable:
+
+- **Sesje (galeria)**: each `assets/gallery/<folder>/overview.md` (raw markdown; line 1 `# Title`, line 2 intro/meta
+  description). New entry = new session folder: type the slug `N_nazwa_sesji` (N = order, higher = first). Images
+  uploaded in an entry go to its `full/`.
+- **Assets** (asset library): upload/delete files in `start/`, `portfolio/full` + `portfolio/thumbs`, `about/`,
+  `gallery/<folder>/…`.
+
+Still manual (git): alt texts (`altText.ts`), slide focus (`slideFocus.ts`), `thumbial/` thumbnails, WebP conversion.
+Keep the naming rules below (`NN-opis.webp`), otherwise order/alt text break. Dev: `npm run dev` -> `/admin/index.html`
+(works against the real repo).
+
 # Content: adding photos
 
 All photos live in the **assets dir** (`src/assets` by default, or an external dir, see

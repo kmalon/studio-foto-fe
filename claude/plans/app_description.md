@@ -19,6 +19,7 @@ Visual direction: minimal dark wedding-photographer portfolio.
 - `vite.config.ts` base: `/` (site at domain root); alias `@assets` -> assets dir (`.env` `ASSETS_SOURCE=internal` -> src/assets | `external` -> `ASSETS_DIR` e.g. `../assets_external`, CI workflow fetches it before build; default `src/assets_external` gitignored, tracked .env keeps internal; missing -> error; `server.fs.allow` adds it); ALL asset imports/globs via `@assets/…` (gallery parses glob keys from path tail); custom plugin `imageSize`: `?size` import -> `{width,height}` via sharp metadata (no emitted file)
 - build info (hidden): `vite.config.ts` `buildInfo` -> `__BUILD_INFO__` define {site, assets, assetsSource, built}; site = env `BUILD_SHA` (CI github.sha) || git HEAD; assets = env `ASSETS_SHA` (CI checked-out assets commit) || internal -> site sha || git HEAD of assets dir || unknown. Exposed: `<meta name="build">` (injected before `<!--head-->`, all prerendered pages), `dist/version.json`, `console.info` in main.tsx
 - homepage: https://angelikamalon.pl
+- CMS: Sveltia at `/admin/` (static `public/admin/{index.html,config.yml}`, unpkg unversioned script, not linked, noindex + robots `Disallow: /admin/`); github backend -> assets repo amalonart/studio_foto_assets main, token auth only (fine-grained PAT Contents RW); collection `gallery` = `assets/gallery/{{slug}}/overview` raw md (slug editable = folder `N_name`), media -> entry `full/`; global media_folder `assets`. altText/slideFocus/thumbial manual. Commits -> auto rebuild via dispatch
 - workflow: `.github/workflows/deploy.yml` (triggers: push master, manual, `repository_dispatch` `assets-updated` from assets repo (notify-site.yml + `SITE_DISPATCH_TOKEN` PAT there) -> build + deploy (each guarded) only if .env external; jobs config (sparse .env -> source/dir) -> build -> deploy; build: [if .env ASSETS_SOURCE=external: sparse checkout `assets/` of `ASSETS_REPO` amalonart/studio_foto_assets@`ASSETS_REF` main -> ASSETS_DIR] -> npm ci + build -> Pages); dispatch checks out `client_payload.sha` (assets repo notify-fe.yml sends sha/ref)
 
 ## Routes (`src/App.tsx`)
@@ -85,6 +86,7 @@ src/
 scripts/prerender.mjs post-build static pages, 404, redirects, sitemap, robots (see Deploy)
 scripts/make-icons.mjs one-off: public/favicon.svg (gold Cormorant "A" path on #0d0d0d) -> favicon.ico (48/32/16), apple-touch-icon.png 180, icon-192/512.png; rerun + commit after svg edit
 public/CNAME      custom domain for GH Pages
+public/admin/     Sveltia CMS (index.html + config.yml)
 public/logo.svg   logo (stable URL, used in JSON-LD)
 public/site.webmanifest icons 192/512
 ```

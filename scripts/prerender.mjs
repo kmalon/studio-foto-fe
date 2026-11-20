@@ -84,7 +84,7 @@ ${pages.map(urlEntry).join('\n')}
 `,
 )
 
-writeFileSync(join(dist, 'robots.txt'), `User-agent: *\nAllow: /\n\nSitemap: ${SITE_URL}/sitemap.xml\n`)
+writeFileSync(join(dist, 'robots.txt'), `User-agent: *\nAllow: /\nDisallow: /admin/\n\nSitemap: ${SITE_URL}/sitemap.xml\n`)
 
 rmSync(ssrDir, { recursive: true, force: true })
 

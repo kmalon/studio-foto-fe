@@ -1,0 +1,43 @@
+# Sveltia CMS config (https://sveltiacms.app/en/docs). Edits the assets repo, not this one;
+# each commit there triggers a site rebuild (notify -> repository_dispatch assets-updated).
+backend:
+  name: github
+  repo: amalonart/studio_foto_assets
+  branch: main
+  auth_methods: [token] # fine-grained PAT: studio_foto_assets, Contents read/write
+  commit_messages:
+    create: 'cms: dodaj {{collection}} "{{slug}}"'
+    update: 'cms: zmień {{collection}} "{{slug}}"'
+    delete: 'cms: usuń {{collection}} "{{slug}}"'
+    uploadMedia: 'cms: dodaj plik "{{path}}"'
+    deleteMedia: 'cms: usuń plik "{{path}}"'
+
+site_url: https://angelikamalon.pl
+display_url: https://angelikamalon.pl
+
+# Global asset library: browse start/, portfolio/{full,thumbs}, about/, gallery/<sesja>/... via breadcrumbs.
+# File names: NN-opis-zdjecia.webp (NN = kolejność). Alt texts: altText.ts (manual).
+media_folder: assets
+public_folder: /assets
+
+collections:
+  - name: gallery
+    label: Sesje (galeria)
+    label_singular: Sesja
+    description: 'Folder sesji w assets/gallery: overview.md + zdjęcia w full/ (miniatury thumbial/ opcjonalne, ręcznie).'
+    folder: assets/gallery
+    path: '{{slug}}/overview'
+    format: raw
+    extension: md
+    create: true
+    delete: false
+    slug:
+      editable: true
+      hint: 'Nazwa folderu: N_nazwa_sesji (N = kolejność, wyższy = wyżej na stronie), małe litery, bez polskich znaków, "_" zamiast spacji.'
+    media_folder: full
+    public_folder: full
+    fields:
+      - name: body
+        label: Opis sesji
+        widget: markdown
+        hint: 'Linia 1: "# Tytuł" (bez spacji przed #). Linia 2: krótki opis (też meta description). Dalej dowolny tekst.'
