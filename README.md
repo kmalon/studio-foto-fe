@@ -150,8 +150,9 @@ Editable:
 - **Sesje (galeria)**: each `assets/gallery/<folder>/overview.md` (raw markdown; line 1 `# Title`, line 2 intro/meta
   description). New entry = new session folder: type the slug `N_nazwa_sesji` (N = order, higher = first). Images
   uploaded in an entry go to its `full/`.
-- **Assets** (asset library): upload/delete files in `start/`, `portfolio/full` + `portfolio/thumbs`, `about/`,
-  `gallery/<folder>/…`.
+- **Assets** (asset library): upload/delete files in `start/`, `portfolio/full` + `portfolio/thumbs`, `about/`
+  (global `assets` folder). Gallery files: sidebar location **Galeria (pliki)** (`asset_collections`, browse
+  `<folder>/full` + `<folder>/thumbial`); the global tree doesn't show `gallery/` (it is the sessions collection folder).
 
 Uploads are converted in the browser (Sveltia image optimization, `media_libraries` in `config.yml`): raster images ->
 **WebP, max 2048x2048 (never enlarged), quality 90**, Exif stripped, file name slugified (`01 Opis.JPG` ->

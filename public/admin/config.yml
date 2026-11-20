@@ -15,10 +15,19 @@ backend:
 site_url: https://angelikamalon.pl
 display_url: https://angelikamalon.pl
 
-# Global asset library: browse start/, portfolio/{full,thumbs}, about/, gallery/<sesja>/... via breadcrumbs.
+# Global asset library: browse start/, portfolio/{full,thumbs}, about/ via breadcrumbs (gallery/ -> asset_collections below).
 # File names: NN-opis-zdjecia.webp (NN = kolejność). Alt texts: altText.ts (manual).
 media_folder: assets
 public_folder: /assets
+
+# assets/gallery is the `gallery` collection folder (entry-relative media) -> Sveltia hides it from the global
+# tree and lists it flat. A fixed-path asset collection makes it browsable: <sesja>/full, <sesja>/thumbial.
+asset_collections:
+  - name: gallery_assets
+    label: Galeria (pliki)
+    icon: photo_library
+    media_folder: /assets/gallery
+    public_folder: /assets/gallery
 
 # Uploads (asset library + entries) -> WebP, fit inside 2048x2048 (never enlarged), q90, Exif stripped.
 # Mirrors convert-images.sh "full" profile (FULL_SIZE/FULL_Q). Sveltia has no per-folder transforms,

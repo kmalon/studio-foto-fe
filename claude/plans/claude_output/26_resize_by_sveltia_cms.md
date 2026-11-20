@@ -30,3 +30,33 @@ No questions (thumbs = same full profile, accepted limitation since Sveltia has 
 
 ## Branch
 feature/26_sveltia_webp_resize
+
+---
+
+# 26 fix: gallery folder missing in CMS Asset Library
+
+## Issue
+Asset Library tree under global `assets` shows start/portfolio/about but no `gallery/`. Cause (Sveltia docs): `assets/gallery` = folder of collection `gallery` whose media folder is entry-relative (`{{slug}}/overview` + `full`) -> its own sidebar location, listed flat, not a browsable subfolder of global folder.
+
+## Fix
+1. `public/admin/config.yml` add top-level `asset_collections` (fixed path -> browsable subfolders per docs):
+   ```yaml
+   asset_collections:
+     - name: gallery_assets
+       label: Galeria (pliki)
+       icon: photo_library
+       media_folder: /assets/gallery
+       public_folder: /assets/gallery
+   ```
+   + comment why. Name unique vs collection `gallery`. Transformations (media_libraries.all) should apply; verify on upload.
+2. Update stale comment above `media_folder` (claims gallery/ browsable via global tree).
+3. README CMS section: Assets bullet -> gallery via "Galeria (pliki)" location (browse `<folder>/full|thumbial`).
+4. app_description CMS line: + asset_collections gallery.
+5. Append this fix to `claude/plans/claude_output/26_resize_by_sveltia_cms.md`; commit on `feature/26_sveltia_webp_resize`.
+
+## Verification
+- YAML parses (js-yaml); `ASSETS_SOURCE=internal npm run build` -> dist/admin/config.yml has block.
+- Manual (user): `/admin/` Assets sidebar -> "Galeria (pliki)" -> session folders -> full/thumbial; upload jpg -> webp.
+
+## Unresolved questions
+No questions
