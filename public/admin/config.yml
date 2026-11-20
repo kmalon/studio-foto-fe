@@ -13,14 +13,14 @@ backend:
 site_url: https://angelikamalon.pl
 display_url: https://angelikamalon.pl
 
-# Global asset library: browse start/, portfolio/{full,thumbs}, about/, gallery/<sesja>/{overview.md,full,thumbial}.
+# Global asset library: browse start/, portfolio/{full,thumbial}, about/, gallery/<sesja>/{overview.md,full,thumbial}.
 # File names: NN-opis-zdjecia.webp (NN = kolejność). Alt texts: altText.ts (manual).
 media_folder: assets
 public_folder: /assets
 
 # Raster uploads -> WebP, fit inside 2048x2048 (never enlarged), q90, Exif stripped.
 # Mirrors convert-images.sh "full" profile (FULL_SIZE/FULL_Q). Sveltia has no per-folder transforms,
-# so thumbs (portfolio/thumbs, thumbial/) get the same profile; 800px thumbs -> script. No XMP copyright.
+# so thumbs (portfolio/thumbial, thumbial/) get the same profile; 800px thumbs -> script. No XMP copyright.
 media_libraries:
   all:
     slugify_filename: true # "01 Opis.JPG" -> 01-opis.webp (keeps NN-opis naming)

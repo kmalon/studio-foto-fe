@@ -6,7 +6,7 @@
 # !! Originals (jpg/png/...) in in-place directories are DELETED after a
 # !! successful conversion. Keep your exports elsewhere or commit to git first.
 #
-# Typical use: copy the same originals into full/ AND thumbs/, run the script.
+# Typical use: copy the same originals into full/ AND thumbial/, run the script.
 # Re-running is safe: only files that are not WebP yet get converted.
 # Existing WebP files are never re-encoded (that would only lose quality).
 
@@ -23,13 +23,13 @@ shopt -s nullglob nocaseglob extglob
 #               (gallery/*/full = the full/ folder of every session)
 #   OUTPUT DIR  leave empty = convert IN PLACE, original is replaced (normal use)
 #               optional: write to another folder instead, relative to SOURCE dir,
-#               originals kept — e.g. "thumb | portfolio/full | ../thumbs"
+#               originals kept — e.g. "thumb | portfolio/full | ../thumbial"
 #               makes thumbnails from the full-size folder
 #
 DIRS=(
   "full  | src/assets/start 			|"
   "full  | src/assets/portfolio/full		|"
-  "thumb | src/assets/portfolio/thumbs	|"
+  "thumb | src/assets/portfolio/thumbial	|"
   "full  | src/assets/gallery/*/full		|"
   "thumb | src/assets/gallery/*/thumbial	|"
 )
