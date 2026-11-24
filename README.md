@@ -63,7 +63,7 @@ ASSETS_SOURCE=internal               # internal = src/assets, external = ASSETS_
 ASSETS_DIR=./src/assets_external     # relative to project root or absolute
 ```
 
-- External dir must have the same layout as `src/assets`: `start/`, `portfolio/{full,thumbs}/`,
+- External dir must have the same layout as `src/assets`: `start/`, `portfolio/{full,thumbial}/`,
   `about/`, `gallery/<N>_<name>/{full,thumbial,overview.md}`, `altText.ts`, `slideFocus.ts`.
 - It can live anywhere (inside the repo or next to it). The default `src/assets_external/` is gitignored.
 - Code imports assets via the `@assets` alias (`vite.config.ts`), which points to the chosen dir.
@@ -149,7 +149,7 @@ Editable:
 
 - **Ustawienia**: `altText.ts` and `slideFocus.ts` as raw text (keep valid TS syntax, otherwise the site build fails).
 - **Assets** (asset library, global `assets` folder): upload/replace/delete files in `start/`,
-`portfolio/full` + `portfolio/thumbs`, `about/`, `gallery/<folder>/` (`overview.md`, `full/`, `thumbial/`).
+`portfolio/full` + `portfolio/thumbial`, `about/`, `gallery/<folder>/` (`overview.md`, `full/`, `thumbial/`).
 There is no text editor for `overview.md`: edit it locally (line 1 `# Title`, line 2 intro/meta description) and upload
 it with the same name to replace it. New session: in `gallery/` create folder `N_nazwa_sesji` (N = order, higher =
 first; lowercase, no Polish letters, `_` for spaces), upload `overview.md` there, create `full/` and upload photos.
@@ -159,10 +159,10 @@ media folder inside `gallery/` would hide `gallery/` from the Assets tree.
 Uploads are converted in the browser (Sveltia image optimization, `media_libraries` in `config.yml`): raster images ->
 **WebP, max 2048x2048 (never enlarged), quality 90**, Exif stripped, file name slugified (`01 Opis.JPG` ->
 `01-opis.webp`). Same as the `full` profile of `convert-images.sh`. Limits: one profile for every folder (thumbnails
-uploaded to `portfolio/thumbs` / `thumbial/` are NOT 800px/q80 - make those with the script), no copyright XMP,
+uploaded to `portfolio/thumbial` / `thumbial/` are NOT 800px/q80 - make those with the script), no copyright XMP,
 animated files uploaded as-is; check orientation of rotated/HEIC photos after upload.
 
-Still manual (git/script): `thumbial/` and `portfolio/thumbs` thumbnails (800px).
+Still manual (git/script): `thumbial/` and `portfolio/thumbial` thumbnails (800px).
 Keep the naming rules below (`NN-opis.webp`), otherwise order/alt text break. Dev: `npm run dev` -> `/admin/index.html`
 (works against the real repo).
 
@@ -300,7 +300,7 @@ Commit and push to `master` -> GitHub Actions deploys to GitHub Pages.
 
 - **Start slideshow**: `src/assets/start/NN-description.webp` + alt entry `start/<file>`.
   If people are off-center, add the file to `src/assets/slideFocus.ts` (object-position for portrait screens).
-- **Portfolio**: same name in `src/assets/portfolio/full` and `src/assets/portfolio/thumbs`, `NNN-description` (3 digits),
+- **Portfolio**: same name in `src/assets/portfolio/full` and `src/assets/portfolio/thumbial`, `NNN-description` (3 digits),
   alt entry `portfolio/<file>`.
 - Run `bash convert-images.sh` for both (directories configured in `DIRS` inside the script).
 - Content / column images (About): `mogrify -resize 1200x -strip -quality 80 -interlace Plane src/assets/about/*.jpg`
